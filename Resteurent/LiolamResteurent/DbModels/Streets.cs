@@ -11,5 +11,11 @@ namespace LiolamResteurent
         public string StreetName { get; set; }
         public List<Customers> customers { get; set; }
 
+        public Streets() { }
+        public Streets(string streetName)
+        {
+            this.StreetName = streetName;
+        }
+
     }
 }

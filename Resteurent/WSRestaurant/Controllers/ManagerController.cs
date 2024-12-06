@@ -1,6 +1,8 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace WSRestaurant.Controllers
 {
@@ -36,13 +38,17 @@ namespace WSRestaurant.Controllers
 
         [HttpPost]
 
-        public bool AddNewDish(Dishes dish)
-        {
+        public bool AddNewDish(string dishName, string dishDescription, string DishImage, int dishPrice)
+        { 
+            Dishes dish = new Dishes(dishName, dishPrice, DishImage, dishDescription);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.create(dish);
+                dish.DishId = 1; //get id
+                dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish();
+                //connection with types chefs and orders
                 this.dBContext.Close();
                 return flag;
             }
@@ -127,14 +133,22 @@ namespace WSRestaurant.Controllers
             }
         }
 
+        //add city function 
+        //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer(Customers customer)
+        public bool AddNewCustomer(string CustomerUserName, int CustomerHouse, string CityName, string streetName, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
             {
+                Customers customer = new Customers(CustomerUserName, CustomerHouse, CityName, streetName, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
+                customer.cityName = CityName;
+                customer.streetName = streetName;
+                //connection with city 
+                //connection with street
                 this.dBContext.Close();
                 return flag;
             }
@@ -220,8 +234,9 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewChef(Chefs chef)
+        public bool AddNewChef(string chefFirstName, string chefLastName, string chefImage)
         {
+            Chefs chef = new Chefs(chefFirstName, chefLastName, chefImage);
             bool flag = false;
             try
             {
@@ -312,8 +327,9 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewOrder(Orders order)
+        public bool AddNewOrder(DateTime date)
         {
+            Orders order = new Orders(date);
             bool flag = false;
             try
             {
@@ -402,11 +418,11 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
-
         [HttpPost]
 
-        public bool AddNewReservation(Reservations reservation)
+        public bool AddNewReservation(DateTime reserveDate, int amountOfPeople)
         {
+            Reservations reservation = new Reservations(reserveDate, amountOfPeople);
             bool flag = false;
             try
             {
@@ -497,8 +513,9 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewType(Types type)
+        public bool AddNewType(string typeName)
         {
+            Types type = new Types(typeName);
             bool flag = false;
             try
             {

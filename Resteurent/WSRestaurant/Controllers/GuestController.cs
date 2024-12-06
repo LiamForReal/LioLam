@@ -105,32 +105,7 @@ namespace WSRestaurant
             return menu;
         }
 
-        [HttpPost]
-        public bool AddNewUser(Customers customer)
-        {
-            bool flag = false;
-            try
-            {
-                this.dBContext.Open();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                this.dBContext.Close();
-                return flag;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return false;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-
-        }
-
         [HttpGet]
-
         public Dishes GetSingleDish(string id)
         {
             Dishes dish;

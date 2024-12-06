@@ -13,5 +13,13 @@ namespace LiolamResteurent
         public int AmountOfPeople { get; set; }
         public string ReserveHour { get; set; }
 
+        public Reservations() { }
+        public Reservations(DateTime reserveDate, int amountOfPeople)
+        {
+            Customer = null;
+            ReserveDate = reserveDate;
+            AmountOfPeople = amountOfPeople;
+            ReserveHour = reserveDate.ToString("HH:mm");
+        }
     }
 }

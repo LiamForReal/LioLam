@@ -11,6 +11,11 @@ namespace LiolamResteurent
         public string TypeName { get; set; }
         public List<Dishes> dishes { get; set; }
 
-
+        public Types() { }
+        public Types(string typeName)
+        {
+            TypeName = typeName;
+            this.dishes = null;
+        }
     }
 }
