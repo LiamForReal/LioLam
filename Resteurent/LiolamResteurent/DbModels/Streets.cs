@@ -9,7 +9,6 @@ namespace LiolamResteurent
     public class Streets : Models
     {
         public string StreetName { get; set; }
-        public List<Customers> customers { get; set; }
 
         public Streets() { }
         public Streets(string streetName)

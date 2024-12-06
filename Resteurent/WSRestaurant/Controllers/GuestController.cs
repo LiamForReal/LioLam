@@ -113,8 +113,8 @@ namespace WSRestaurant
             {
                 this.dBContext.Open();
                 dish = unitOfWorkReposetory.dishRerposetoryObject.getById(id);
-                dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
-                dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
+                //dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
+                //dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
                 this.dBContext.Close();
                 return dish;
             }

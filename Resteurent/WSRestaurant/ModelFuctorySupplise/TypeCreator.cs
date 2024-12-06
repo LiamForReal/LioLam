@@ -12,7 +12,7 @@ namespace WSRestaurant
         {
             Types type = new Types()
             {
-                TypeId = Convert.ToInt32(src["TypeId"]), 
+                Id = Convert.ToString(src["TypeId"]), 
                 TypeName = Convert.ToString(src["TypeName"]), 
                 dishes = null
             };

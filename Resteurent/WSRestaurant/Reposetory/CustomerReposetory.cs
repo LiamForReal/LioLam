@@ -16,7 +16,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
             this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
+            this.dbContext.AddParameter("@CustomerId", model.Id);
             return this.dbContext.Insert(sql);
             
         }
@@ -64,7 +64,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
             this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-            this.dbContext.AddParameter("@CustomerId", model.CustomerId.ToString());
+            this.dbContext.AddParameter("@CustomerId", model.Id);
             return this.dbContext.Update(sql);
             
         }

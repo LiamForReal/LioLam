@@ -54,7 +54,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@ReserveDate", model.ReserveDate.ToString());
             this.dbContext.AddParameter("@AmountOfPeople", model.AmountOfPeople.ToString());
             this.dbContext.AddParameter("@ReserveHour", model.ReserveHour.ToString());
-            this.dbContext.AddParameter("@ReservationId", model.ReserveId.ToString());
+            this.dbContext.AddParameter("@ReservationId", model.Id);
             return this.dbContext.Update(sql);
         }
 

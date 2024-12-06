@@ -13,6 +13,12 @@ namespace WSRestaurant.Controllers
         DBContext dBContext;
         UnitOfWorkReposetory unitOfWorkReposetory;
 
+        public ManagerController()
+        {
+            this.dBContext = DBContext.GetInstance();
+            this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
+        }
+
         [HttpGet]
         public List<Dishes> GetDishes()
         {
@@ -39,15 +45,15 @@ namespace WSRestaurant.Controllers
         [HttpPost]
 
         public bool AddNewDish(string dishName, string dishDescription, string DishImage, int dishPrice)
-        { 
+        {
             Dishes dish = new Dishes(dishName, dishPrice, DishImage, dishDescription);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.create(dish);
-                dish.DishId = 1; //get id
-                dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish();
+                dish.Id = "1"; //get id
+                //dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish();
                 //connection with types chefs and orders
                 this.dBContext.Close();
                 return flag;
@@ -145,8 +151,6 @@ namespace WSRestaurant.Controllers
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                customer.cityName = CityName;
-                customer.streetName = streetName;
                 //connection with city 
                 //connection with street
                 this.dBContext.Close();

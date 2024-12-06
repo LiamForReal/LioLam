@@ -12,7 +12,7 @@ namespace WSRestaurant
         {
             Reservations reservation = new Reservations()
             {
-                ReserveId = Convert.ToInt32(src["ReserveId"]),
+                Id = Convert.ToString(src["ReserveId"]),
                 Customer = null,
                 ReserveDate = Convert.ToDateTime(src["ReserveDate"]),
                 AmountOfPeople = Convert.ToInt32(src["AmountOfPeople"]),

@@ -11,6 +11,12 @@ namespace WSRestaurant.Controllers
         DBContext dBContext;
         UnitOfWorkReposetory unitOfWorkReposetory;
 
+        public CustomerController()
+        {
+            this.dBContext = DBContext.GetInstance();
+            this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
+        }
+
         [HttpGet]
         public Customers GetLogIn(string userName, string password)
         {

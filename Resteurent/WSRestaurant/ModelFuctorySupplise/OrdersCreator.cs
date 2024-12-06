@@ -12,7 +12,7 @@ namespace WSRestaurant
         {
             Orders order = new Orders()
             {
-                OrderId = Convert.ToInt32(src["OrderId"]),
+                Id = Convert.ToString(src["OrderId"]),
                 OrderDate = Convert.ToDateTime(src["OrderDate"]), 
                 Customer = null,
                 dishes = null
