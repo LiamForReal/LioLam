@@ -12,7 +12,7 @@ namespace WSRestaurant
         {
             Customers customer = new Customers()
             {
-                CustomerId = Convert.ToString(src["CustomerId"]),
+                Id = Convert.ToString(src["CustomerId"]),
                 CustomerUserName = Convert.ToString(src["CustomerUserName"]),
                 CustomerPassword = Convert.ToString(src["CustomerPassword"]),
                 CustomerImage = Convert.ToString(src["CustomerImage"]),
@@ -21,8 +21,8 @@ namespace WSRestaurant
                 CustomerMail = Convert.ToString(src["CustomerMail"]),
                 city = null,
                 street = null,
-                CurrentReservation = null,
-                orders = null
+                //CurrentReservation = null,
+                //orders = null
             };
             return customer;
         }

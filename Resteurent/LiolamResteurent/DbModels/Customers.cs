@@ -16,7 +16,26 @@ namespace LiolamResteurent
         public string CustomerMail { get; set; }
         public string CustomerPassword { get; set; }
         public string CustomerImage { get; set; }
-        public Reservations CurrentReservation { get; set; }
-        public List<Orders> orders { get; set; }
+        //public Reservations CurrentReservation { get; set; }
+      //  public List<Orders> orders { get; set; }
+
+        public Customers(string customerUserName, int customerHouse, string cityName, string streetName, string customerPhone, string customerMail, string customerPassword, string customerImage)
+        {
+            CustomerUserName = customerUserName;
+            CustomerHouse = customerHouse;
+            
+            this.city = new Cities(cityName);
+            this.street = new Streets(streetName);
+            CustomerPhone = customerPhone;
+            CustomerMail = customerMail;
+            CustomerPassword = customerPassword;
+            CustomerImage = customerImage;
+            //CurrentReservation = null;
+            //this.orders = null;
+        }
+        public Customers()
+        {
+
+        }
     }
 }

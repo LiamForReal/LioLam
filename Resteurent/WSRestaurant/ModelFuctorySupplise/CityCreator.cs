@@ -12,9 +12,9 @@ namespace WSRestaurant
         {
             Cities city = new Cities()
             {
-                CityId = Convert.ToInt32(src["CityId"]),
+                Id = Convert.ToString(src["CityId"]),
                 CityName = Convert.ToString(src["CityName"]),
-                customers = null
+                //customers = null
             };
             return city;
         }

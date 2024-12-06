@@ -52,7 +52,7 @@ namespace WSRestaurant
         {
             string sql = $@"UPDATE Types SET TypeName = @TypeName WHERE TypeId == @TypeId;";
             this.dbContext.AddParameter("@TypeName", model.TypeName);
-            this.dbContext.AddParameter("@TypeId", model.TypeId.ToString());
+            this.dbContext.AddParameter("@TypeId", model.Id);
             return this.dbContext.Update(sql);
         }
         

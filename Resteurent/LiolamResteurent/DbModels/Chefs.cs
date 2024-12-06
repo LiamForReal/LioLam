@@ -12,5 +12,14 @@ namespace LiolamResteurent
         public string ChefLastName { get; set; }
         public string ChefImage { get; set; }
         public List<Dishes> DishesMade { get; set; }
+
+        public Chefs() { }
+        public Chefs(string chefFirstName, string chefLastName, string chefImage)
+        {
+            ChefFirstName = chefFirstName;
+            ChefLastName = chefLastName;
+            ChefImage = chefImage;
+            DishesMade = null;
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@ChefFirstName", model.ChefFirstName);
             this.dbContext.AddParameter("@ChefLastName", model.ChefLastName);
             this.dbContext.AddParameter("@ChefImage", model.ChefImage);
-            this.dbContext.AddParameter("@ChefId", model.ChefId.ToString());
+            this.dbContext.AddParameter("@ChefId", model.Id);
             return this.dbContext.Update(sql);
             
         }

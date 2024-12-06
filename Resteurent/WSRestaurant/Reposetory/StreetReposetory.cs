@@ -52,7 +52,7 @@ namespace WSRestaurant
         {
             string sql = $@"UPDATE Streets SET StreetName = @StreetName WHERE StreetId == @StreetId;";
             this.dbContext.AddParameter("@StreetName", model.StreetName);
-            this.dbContext.AddParameter("@StreetId", model.StreetId.ToString());
+            this.dbContext.AddParameter("@StreetId", model.Id);
             return this.dbContext.Update(sql);
         }
     }

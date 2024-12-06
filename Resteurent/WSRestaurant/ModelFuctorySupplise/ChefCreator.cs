@@ -13,7 +13,7 @@ namespace WSRestaurant
             
             Chefs chef = new Chefs()
             {
-                ChefId = Convert.ToInt32(src["ChefId"]),
+                Id = Convert.ToString(src["ChefId"]),
                 ChefFirstName = Convert.ToString(src["ChefFirstName"]),
                 ChefLastName = Convert.ToString(src["ChefLastName"]),
                 ChefImage = Convert.ToString(src["ChefImage"]),

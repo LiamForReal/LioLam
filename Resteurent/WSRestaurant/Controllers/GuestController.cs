@@ -105,32 +105,7 @@ namespace WSRestaurant
             return menu;
         }
 
-        [HttpPost]
-        public bool AddNewUser(Customers customer)
-        {
-            bool flag = false;
-            try
-            {
-                this.dBContext.Open();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                this.dBContext.Close();
-                return flag;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return false;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-
-        }
-
         [HttpGet]
-
         public Dishes GetSingleDish(string id)
         {
             Dishes dish;
@@ -138,8 +113,8 @@ namespace WSRestaurant
             {
                 this.dBContext.Open();
                 dish = unitOfWorkReposetory.dishRerposetoryObject.getById(id);
-                dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
-                dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
+                //dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
+                //dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
                 this.dBContext.Close();
                 return dish;
             }

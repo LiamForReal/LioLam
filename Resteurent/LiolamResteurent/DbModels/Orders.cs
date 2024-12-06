@@ -11,5 +11,12 @@ namespace LiolamResteurent
         public DateTime OrderDate { get; set; }
         public Customers Customer { get; set; }
         public List<Dishes> dishes { get; set; }
+        public Orders() { }
+        public Orders(DateTime orderDate)
+        {
+            OrderDate = orderDate;
+            Customer = null;
+            this.dishes = null;
+        }
     }
 }

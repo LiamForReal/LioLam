@@ -42,7 +42,7 @@ namespace WSRestaurant
 
         public Dishes getById(string id)
         {
-            string sql = "SELECT FROM Dishes WHERE DishId = @DishId";
+            string sql = "SELECT * FROM Dishes WHERE DishId = @DishId";
             this.dbContext.AddParameter("@DishId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -57,7 +57,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishDescription", model.DishName);
             this.dbContext.AddParameter("@DishPrice", model.DishName);
             this.dbContext.AddParameter("@DishImage", model.DishName);
-            this.dbContext.AddParameter("@DishId", model.DishId.ToString());
+            this.dbContext.AddParameter("@DishId", model.Id);
             return this.dbContext.Update(sql);
         }
 

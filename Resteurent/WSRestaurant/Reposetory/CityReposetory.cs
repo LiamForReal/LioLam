@@ -30,7 +30,6 @@ namespace WSRestaurant
             {
                 while (dataReader.Read())
                 {
-                    
                     list.Add(this.modelFactory.createCityObject.CreateModel(dataReader));
                 }
             }
@@ -51,7 +50,7 @@ namespace WSRestaurant
         {
             string sql = $@"UPDATE Cities SET CityName = @CityName WHERE CityId == @CityId;";
             this.dbContext.AddParameter("@CityName", model.CityName);
-            this.dbContext.AddParameter("@CityId", model.CityId.ToString());
+            this.dbContext.AddParameter("@CityId", model.Id);
              return this.dbContext.Update(sql);
             
         }

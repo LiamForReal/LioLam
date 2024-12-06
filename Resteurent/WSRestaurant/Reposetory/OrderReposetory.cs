@@ -49,7 +49,7 @@ namespace WSRestaurant
         {
             string sql = $@"UPDATE Orders SET OrderDate = @OrderDate WHERE OrderId == @OrderId";
             this.dbContext.AddParameter("@OrderName", model.OrderDate.ToString());
-            this.dbContext.AddParameter("@OrderId", model.OrderId.ToString());
+            this.dbContext.AddParameter("@OrderId", model.Id);
             return this.dbContext.Update(sql);
         }
     }

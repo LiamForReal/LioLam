@@ -11,6 +11,12 @@ namespace WSRestaurant.Controllers
         DBContext dBContext;
         UnitOfWorkReposetory unitOfWorkReposetory;
 
+        public CustomerController()
+        {
+            this.dBContext = DBContext.GetInstance();
+            this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
+        }
+
         [HttpGet]
         public Customers GetLogIn(string userName, string password)
         {
@@ -73,14 +79,14 @@ namespace WSRestaurant.Controllers
                 reservations = unitOfWorkReposetory.reservationRerposetoryObject.getAll();
                 foreach (Reservations reservationObject in reservations)
                 {
-                    if(reservationObject.ReserveDate >= DateTime.Now.Date)
+                    if (reservationObject.ReserveDate >= DateTime.Now.Date)
                     {
                         if ((int.Parse)(reservationObject.ReserveHour) < DateTime.Now.TimeOfDay.Hours)
                         {
                             flag = unitOfWorkReposetory.reservationRerposetoryObject.create(reservation);
                         }
                     }
-                   
+
                 }
                 this.dBContext.Close();
                 return flag;
@@ -98,7 +104,6 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-
         public Reservations GetLastReservation(string customerId)
         {
             List<Reservations> reservations;
@@ -109,7 +114,7 @@ namespace WSRestaurant.Controllers
                 reservations = unitOfWorkReposetory.reservationRerposetoryObject.GetByCustomer(customerId);
                 foreach (Reservations reservationObject in reservations)
                 {
-                    
+
                     if (reservationObject.ReserveDate > dateTime)
                     {
                         dateTime = reservationObject.ReserveDate;
@@ -131,8 +136,9 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewOrder(Orders order)
+        public bool AddNewOrder(DateTime date)
         {
+            Orders order = new Orders(date);
             bool flag = false;
             try
             {
