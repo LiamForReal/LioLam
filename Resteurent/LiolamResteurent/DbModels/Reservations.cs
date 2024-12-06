@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LiolamResteurent
+{
+    public class Reservations : Models
+    {
+        public Customers Customer { get; set; }
+        public DateTime ReserveDate { get; set; }
+        public int AmountOfPeople { get; set; }
+        public string ReserveHour { get; set; }
+
+    }
+}
