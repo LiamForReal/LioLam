@@ -66,12 +66,12 @@ namespace WSRestaurant
             List<Chefs> list = new List<Chefs>();
             string sql = "SELECT Chefs.ChefId, Chefs.ChefFirstName, Chefs.ChefLastName, Chefs.ChefPicture" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
-                " WHERE DishChef.DishId=" + dishId + ";";
+                " WHERE DishChef.DishId=@DishId;";
+            this.dbContext.AddParameter("@DishId", dishId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
                 {
-
                     list.Add(this.modelFactory.CreateChefObject.CreateModel(dataReader));
                 }
             }

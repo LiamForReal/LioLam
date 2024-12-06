@@ -61,7 +61,8 @@ namespace WSRestaurant
             List<Types> list = new List<Types>();
             string sql = "SELECT Types.TypeId, Types.TypeName" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
-                " WHERE DishType.DishId=" + dishId + ";";
+                " WHERE DishType.DishId=@DishId;";
+            this.dbContext.AddParameter("@DishId", dishId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())

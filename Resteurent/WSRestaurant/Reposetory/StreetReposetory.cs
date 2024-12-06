@@ -55,5 +55,20 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@StreetId", model.Id);
             return this.dbContext.Update(sql);
         }
+
+        public Streets getByCustomer(string customerId)
+        {
+            string sql = "SELECT Streets.StreetId, Streets.StreetName" +
+                " FROM Streets INNER JOIN Customers ON Streets.StreetId = Customers.StreetId" +
+                " WHERE Customers.CustomerId= @CustomerId ;";
+            this.dbContext.AddParameter("@CustomerId", customerId);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                if(dataReader.Read())
+                    return this.modelFactory.createStreetObject.CreateModel(dataReader);
+            }
+            return null;
+        }
+       
     }
 }

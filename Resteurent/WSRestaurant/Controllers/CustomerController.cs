@@ -23,14 +23,20 @@ namespace WSRestaurant.Controllers
             List<Customers> customers;
             try
             {
-                this.dBContext.Open();
+                this.dBContext.Open();//add cities and streets and house number 
                 customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                this.dBContext.Close();
+                
                 foreach (Customers customer in customers)
                 {
                     if (customer.CustomerUserName == userName && customer.CustomerPassword == password)
+                    {
+                        customer.city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(customer.Id);
+                        customer.street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(customer.Id);
+                        this.dBContext.Close();
                         return customer;
-                }
+                    }
+                       
+                } // get street and city names from ids!
                 return null;
             }
             catch (Exception ex)
@@ -46,13 +52,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(Customers customer)
+        public bool UpdateExistingUser(string customerId) //user details
         {
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+                flag = unitOfWorkReposetory.customerRerposetoryObject.update(unitOfWorkReposetory.customerRerposetoryObject.getById(customerId));
                 this.dBContext.Close();
                 return flag;
             }
@@ -69,9 +75,10 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool ScheduleReservation(Reservations reservation)
+        public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople)
         {
             bool flag = false;
+            Reservations reservation = new Reservations(reserveDate, amountOfPeople);
             List<Reservations> reservations;
             try
             {

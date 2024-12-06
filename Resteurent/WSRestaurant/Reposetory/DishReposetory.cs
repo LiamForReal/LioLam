@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Net.Http.Headers;
 using LiolamResteurent;
 
 namespace WSRestaurant
@@ -66,7 +67,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage, Dishes.DishId, Orders.OrderId" +
                 " FROM Orders INNER JOIN (Dishes INNER JOIN DishOrder ON Dishes.DishId = DishOrder.DishId) ON Orders.OrderId = DishOrder.OrderId" +
-                " WHERE Orders.OrderId=" + OrderId + ";";
+                " WHERE Orders.OrderId=@OrderId;";
+            this.dbContext.AddParameter("@OrderId", OrderId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
@@ -83,7 +85,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
-                " WHERE chefs.ChefId="+ chefId +";";
+                " WHERE chefs.ChefId=@ChefId;";
+            this.dbContext.AddParameter("@ChefId", chefId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
@@ -99,7 +102,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
-                " WHERE Types.TypeId=" + typefId + ";";
+                " WHERE Types.TypeId=@TypeId;";
+            this.dbContext.AddParameter("@TypeId", typefId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())

@@ -44,9 +44,10 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@ReservationId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
-                dataReader.Read();
-                return this.modelFactory.createReservationObject.CreateModel(dataReader);
+                if(dataReader.Read())
+                    return this.modelFactory.createReservationObject.CreateModel(dataReader);
             }
+            return null;
         }
         public bool update(Reservations model)
         {
@@ -63,7 +64,8 @@ namespace WSRestaurant
             List<Reservations> list = new List<Reservations>();
             string sql = "SELECT Reservations.ReserveId, Reservations.CustomerId, Reservations.ReserveDate, Reservations.ReserveHour, Reservations.PeopleAmount" +
                 " FROM Reservations INNER JOIN Customers  ON Customers.CustomerId = Reservations.CustomerId" +
-                " WHERE Customers.CustomerId = " + customerId + ";";
+                " WHERE Customers.CustomerId = @CustomerId;";
+            this.dbContext.AddParameter("@CustomerId", customerId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())

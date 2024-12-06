@@ -54,5 +54,18 @@ namespace WSRestaurant
              return this.dbContext.Update(sql);
             
         }
+        public Cities getByCustomer(string customerId)
+        {
+            string sql = "SELECT Cities.CityId, Cities.CityName" +
+                " FROM Cities INNER JOIN Customers ON Cities.CityId = Customers.CityId " +
+                " WHERE Customers.CustomerId=@CustomerId;";
+            this.dbContext.AddParameter("@CustomerId", customerId);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                if(dataReader.Read())
+                    return this.modelFactory.createCityObject.CreateModel(dataReader);  
+            }
+            return null;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace WSRestaurant
             Streets street = new Streets()
             {
                 Id = Convert.ToString(src["StreetId"]),
-                StreetName = Convert.ToString(src["StreetName"]),
+                StreetName = Convert.ToString(src["StreetName"])
                 //customers = null
             };
             return street;
