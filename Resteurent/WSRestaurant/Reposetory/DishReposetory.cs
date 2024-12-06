@@ -42,7 +42,7 @@ namespace WSRestaurant
 
         public Dishes getById(string id)
         {
-            string sql = "SELECT FROM Dishes WHERE DishId = @DishId";
+            string sql = "SELECT * FROM Dishes WHERE DishId = @DishId";
             this.dbContext.AddParameter("@DishId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
