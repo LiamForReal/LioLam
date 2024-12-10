@@ -52,13 +52,17 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(string customerId) //user details
+        public bool UpdateExistingUser(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
         {
             bool flag = false;
             try
             {
+                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
+                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
+
+                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.update(unitOfWorkReposetory.customerRerposetoryObject.getById(customerId));
+                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 this.dBContext.Close();
                 return flag;
             }
@@ -75,7 +79,37 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople)
+        public bool signUp(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
+        {
+            bool flag = false;
+            try
+            {
+                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
+                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(StreetId);
+
+                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                this.dBContext.Open();
+                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
+                //connection with city 
+                //connection with street
+                this.dBContext.Close();
+                return flag;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return false;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpPost]
+        public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople, string CustomerId)
         {
             bool flag = false;
             Reservations reservation = new Reservations(reserveDate, amountOfPeople);
@@ -83,7 +117,8 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                reservations = unitOfWorkReposetory.reservationRerposetoryObject.getAll();
+                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
+                reservations = unitOfWorkReposetory.reservationRerposetoryObject.GetByCustomer(CustomerId);
                 foreach (Reservations reservationObject in reservations)
                 {
                     if (reservationObject.ReserveDate >= DateTime.Now.Date)
@@ -127,7 +162,6 @@ namespace WSRestaurant.Controllers
                         dateTime = reservationObject.ReserveDate;
                     }
                 }
-                this.dBContext.Close();
                 return unitOfWorkReposetory.reservationRerposetoryObject.GetByDate(dateTime, reservations);
             }
             catch (Exception ex)
@@ -143,13 +177,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewOrder(DateTime date)
+        public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
         {
             Orders order = new Orders(date);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
+                order.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
                 flag = unitOfWorkReposetory.orderRerposetoryObject.create(order);
                 this.dBContext.Close();
                 return flag;

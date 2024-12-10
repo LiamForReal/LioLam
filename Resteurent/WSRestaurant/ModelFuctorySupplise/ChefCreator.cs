@@ -17,7 +17,6 @@ namespace WSRestaurant
                 ChefFirstName = Convert.ToString(src["ChefFirstName"]),
                 ChefLastName = Convert.ToString(src["ChefLastName"]),
                 ChefImage = Convert.ToString(src["ChefPicture"]),
-                DishesMade = null
             };
             return chef;
         }

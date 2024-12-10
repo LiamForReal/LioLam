@@ -8,10 +8,12 @@ namespace WSRestaurant
         public CustomerRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Customers model)
         {
-            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage ) " +
-            " VALUES (@CustomerId, @CustomerUserName, @CustomerHouse, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
+            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage ) " +
+            " VALUES (@CustomerId, @CustomerUserName, @CustomerHouse,@CityId, @StreetId, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
+            this.dbContext.AddParameter("@CityId", model.city.Id.ToString());
+            this.dbContext.AddParameter("@StreetId", model.street.Id.ToString());
             this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
@@ -56,10 +58,12 @@ namespace WSRestaurant
         }
         public bool update(Customers model)
         {
-            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse, CustomerPhone =  @CustomerPhone," +
+            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone," +
                        ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId == @CustomerId";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
+            this.dbContext.AddParameter("@CityId", model.city.Id);
+            this.dbContext.AddParameter("@StreetId", model.street.Id);
             this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);

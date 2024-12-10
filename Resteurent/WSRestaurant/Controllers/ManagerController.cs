@@ -52,7 +52,6 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.create(dish);
-                dish.Id = "1"; //get id
                 //dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish();
                 //connection with types chefs and orders
                 this.dBContext.Close();
@@ -71,13 +70,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateDish(string dishId)
+        public bool UpdateDish(string dishId, string dishName, string dishDescription, string DishImage, int dishPrice)
         {
+            Dishes dish = new Dishes(dishName, dishPrice, DishImage, dishDescription);
+            dish.Id = dishId;
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.update(unitOfWorkReposetory.dishRerposetoryObject.getById(dishId));
+                flag = unitOfWorkReposetory.dishRerposetoryObject.update(dish);
                 this.dBContext.Close();
                 return flag;
             }
@@ -142,14 +143,17 @@ namespace WSRestaurant.Controllers
         //add city function 
         //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer(string CustomerUserName, int CustomerHouse, string CityName, string streetName, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
             {
-                Customers customer = new Customers(CustomerUserName, CustomerHouse, CityName, streetName, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
-                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
+                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
+
+                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
+                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
                 //connection with city 
                 //connection with street
@@ -169,13 +173,20 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCustomer(string CustomerId)
+        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
             {
+                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
+                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
+
+                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.update(unitOfWorkReposetory.dishRerposetoryObject.getById(CustomerId));
+                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+                //connection with city 
+                //connection with street
                 this.dBContext.Close();
                 return flag;
             }
@@ -262,13 +273,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateChef(string chefId)
+        public bool UpdateChef(string chefId, string chefFirstName, string chefLastName, string chefImage)
         {
+            Chefs chef = new Chefs(chefFirstName, chefLastName, chefImage);
+            chef.Id = chefId;
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.chefRepositoryObject.update(unitOfWorkReposetory.chefRepositoryObject.getById(chefId));
+                flag = unitOfWorkReposetory.chefRepositoryObject.update(chef);
                 this.dBContext.Close();
                 return flag;
             }
@@ -331,53 +344,6 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewOrder(DateTime date)
-        {
-            Orders order = new Orders(date);
-            bool flag = false;
-            try
-            {
-                this.dBContext.Open();
-                flag = unitOfWorkReposetory.orderRerposetoryObject.create(order);
-                this.dBContext.Close();
-                return flag;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return false;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-        }
-
-        [HttpPost]
-        public bool UpdateOrder(string orderId)
-        {
-            bool flag = false;
-            try
-            {
-                this.dBContext.Open();
-                flag = unitOfWorkReposetory.orderRerposetoryObject.update(unitOfWorkReposetory.orderRerposetoryObject.getById(orderId));
-                this.dBContext.Close();
-                return flag;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return false;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-        }
-
-        [HttpPost]
         public bool DeleteOrder(string orderId)
         {
             bool flag = false;
@@ -422,15 +388,16 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
-        [HttpPost]
 
-        public bool AddNewReservation(DateTime reserveDate, int amountOfPeople)
+        [HttpPost]
+        public bool AddNewReservation(string CustomerId, DateTime reserveDate, int amountOfPeople)
         {
             Reservations reservation = new Reservations(reserveDate, amountOfPeople);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
+                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.create(reservation);
                 this.dBContext.Close();
                 return flag;
@@ -448,13 +415,16 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateReservation(string reservationId)
+        public bool UpdateReservation(string CustomerId, string reservationId, DateTime reserveDate, int amountOfPeople)
         {
+            Reservations reservation = new Reservations(reserveDate, amountOfPeople);
+            reservation.Id = reservationId;
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.reservationRerposetoryObject.update(unitOfWorkReposetory.reservationRerposetoryObject.getById(reservationId));
+                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
+                flag = unitOfWorkReposetory.reservationRerposetoryObject.update(reservation);
                 this.dBContext.Close();
                 return flag;
             }
@@ -541,13 +511,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool Updatetype(string typeId)
+        public bool UpdateType(string typeId, string typeName)
         {
+            Types type = new Types(typeName);
+            type.Id = typeId;
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.typeReposetoryObject.update(unitOfWorkReposetory.typeReposetoryObject.getById(typeId));
+                flag = unitOfWorkReposetory.typeReposetoryObject.update(type);
                 this.dBContext.Close();
                 return flag;
             }

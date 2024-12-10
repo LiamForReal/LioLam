@@ -8,7 +8,8 @@ namespace WSRestaurant
         public OrderRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Orders model)
         {
-            string sql = $@"INSERT INTO Orders (OrderDate) VALUES (@OrderDate)";
+            string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
+            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
             this.dbContext.AddParameter("@OrderDescription", model.OrderDate.ToString());
             return this.dbContext.Insert(sql);
         }
@@ -47,9 +48,9 @@ namespace WSRestaurant
         }
         public bool update(Orders model)
         {
-            string sql = $@"UPDATE Orders SET OrderDate = @OrderDate WHERE OrderId == @OrderId";
-            this.dbContext.AddParameter("@OrderName", model.OrderDate.ToString());
-            this.dbContext.AddParameter("@OrderId", model.Id);
+            string sql = $@"UPDATE Orders SET CustomerId = @CustomerId, OrderDate = @OrderDate WHERE OrderId == @OrderId";
+            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
+            this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
             return this.dbContext.Update(sql);
         }
     }

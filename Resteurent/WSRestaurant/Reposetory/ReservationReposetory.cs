@@ -8,7 +8,8 @@ namespace WSRestaurant
         public ReservationRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Reservations model)
         {
-            string sql = $@"INSERT INTO Reservations (ReserveDate, AmountOfPeople, ReserveHour) VALUSE (@ReserveDate, @AmountOfPeople, @ReserveHour)";
+            string sql = $@"INSERT INTO Reservations (CustomerId, ReserveDate, AmountOfPeople, ReserveHour) VALUSE (@CustomerId, @ReserveDate, @AmountOfPeople, @ReserveHour)";
+            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
             this.dbContext.AddParameter("@ReserveDate", model.ReserveDate.ToString());
             this.dbContext.AddParameter("@AmountOfPeople", model.AmountOfPeople.ToString());
             this.dbContext.AddParameter("@ReserveHour", model.ReserveHour.ToString());
@@ -51,7 +52,8 @@ namespace WSRestaurant
         }
         public bool update(Reservations model)
         {
-            string sql = $@"UPDATE Reservations SET ReserveDate = @ReserveDate, AmountOfPeople = @AmountOfPeople, ReserveHour = @ReserveHour WHERE ReserveId = @ReserveId";
+            string sql = $@"UPDATE Reservations SET CustomerId = @CustomerId, ReserveDate = @ReserveDate, AmountOfPeople = @AmountOfPeople, ReserveHour = @ReserveHour WHERE ReserveId = @ReserveId";
+            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
             this.dbContext.AddParameter("@ReserveDate", model.ReserveDate.ToString());
             this.dbContext.AddParameter("@AmountOfPeople", model.AmountOfPeople.ToString());
             this.dbContext.AddParameter("@ReserveHour", model.ReserveHour.ToString());
