@@ -32,7 +32,6 @@ namespace WSRestaurant
             {
                 while (dataReader.Read())
                 {
-
                     list.Add(this.modelFactory.createReservationObject.CreateModel(dataReader));
                 }
             }

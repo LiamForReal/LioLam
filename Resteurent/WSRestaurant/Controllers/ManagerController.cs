@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace WSRestaurant.Controllers
 {
@@ -209,7 +210,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.delete(customerId);
+                flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
                 this.dBContext.Close();
                 return flag;
             }
@@ -304,7 +305,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.delete(chefId);
+                flag = unitOfWorkReposetory.chefRepositoryObject.delete(chefId);
                 this.dBContext.Close();
                 return flag;
             }
@@ -350,7 +351,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.delete(orderId);
+                flag = unitOfWorkReposetory.orderRerposetoryObject.delete(orderId);
                 this.dBContext.Close();
                 return flag;
             }
@@ -447,7 +448,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.delete(reservationId);
+                flag = unitOfWorkReposetory.reservationRerposetoryObject.delete(reservationId);
                 this.dBContext.Close();
                 return flag;
             }
@@ -542,7 +543,8 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.dishRerposetoryObject.delete(typeId);
+                Console.WriteLine($"{typeId} deleted type");
+                flag = unitOfWorkReposetory.typeReposetoryObject.delete(typeId);
                 this.dBContext.Close();
                 return flag;
             }
