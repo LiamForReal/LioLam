@@ -11,6 +11,6 @@ namespace WebApiClient
         Task<T> Get();
         Task<bool> Post(T model);
         Task<bool> Post(T model, Stream file);
-        Task<bool> Post(T model, List<Stream> file);
+        Task<bool> Post(T model, List<Stream> files);
     }
 }

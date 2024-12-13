@@ -1,6 +1,6 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using LiolamResteurent;
-
 namespace WSRestaurant
 {
     public class OrderRerposetory : Reposetory, IReposetory<Orders>
@@ -8,10 +8,34 @@ namespace WSRestaurant
         public OrderRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Orders model)
         {
+            
+            List<int> counts = new List<int>();
+            List<Dishes> dishes = new List<Dishes>();
             string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
             this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
             this.dbContext.AddParameter("@OrderDescription", model.OrderDate.ToString());
-            return this.dbContext.Insert(sql);
+            bool ok = this.dbContext.Insert(sql);
+            foreach(Dishes dish in model.dishes)
+            {
+                if(dishes.IndexOf(dish) == -1)
+                {
+                    dishes.Add(dish);
+                    counts.Add(model.dishes.Count(dish));
+                }
+
+            }
+            if (ok)
+            {
+
+                foreach (Dishes dish in model.dishes)//TO fix
+                {
+                    sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
+                    this.dbContext.AddParameter("@DishId", dish.Id);
+                    this.dbContext.AddParameter("@OrderDescription", model.OrderDate.ToString());
+                }
+                
+            }
+            else throw new Exception("return false");
         }
 
         public bool delete(string id)
