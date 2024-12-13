@@ -25,7 +25,7 @@ namespace WSRestaurant
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@TypeId", type.Id);
-                if (this.dbContext.Insert(sql))
+                if (!this.dbContext.Insert(sql))
                 {
                     throw new Exception("return false seconed");
                 }
@@ -36,7 +36,7 @@ namespace WSRestaurant
                 sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@ChefId", chef.Id);
-                if (this.dbContext.Insert(sql))
+                if (!this.dbContext.Insert(sql))
                 {
                     throw new Exception("return false seconed");
                 }
@@ -110,7 +110,7 @@ namespace WSRestaurant
                 sql = $@"UPDATE DishType SET TypeId=@TypeId WHERE (SELECT DishId FROM DishType WHERE ORDER BY TypeId LIMIT 1) = @DishId";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@TypeId", type.Id);
-                if (this.dbContext.Insert(sql))
+                if (!this.dbContext.Insert(sql))
                 {
                     throw new Exception("return false seconed");
                 }
@@ -121,7 +121,7 @@ namespace WSRestaurant
                 sql = $@"UPDATE DishChef ChefId = @ChefId WHERE (SELECT DishId FROM DishChef WHERE ORDER BY ChefId LIMIT 1) = @DishId";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@ChefId", chef.Id);
-                if (this.dbContext.Insert(sql))
+                if (!this.dbContext.Insert(sql))
                 {
                     throw new Exception("return false seconed");
                 }
