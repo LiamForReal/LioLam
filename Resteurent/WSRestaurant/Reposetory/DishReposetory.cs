@@ -21,9 +21,24 @@ namespace WSRestaurant
 
         public bool delete(string id)
         {
-            string sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
+            string sql = $@"DELETE FROM DishType WHERE DishId=@DishId";
             this.dbContext.AddParameter("@DishId", id);
-            return this.dbContext.Delete(sql);
+            bool flagType = this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM DishChef WHERE DishId=@DishId";
+            this.dbContext.AddParameter("@DishId", id);
+            bool flagChef = this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM DishOrder WHERE DishId=@DishId"; //ajust to order
+            this.dbContext.AddParameter("@DishId", id);
+            bool flagOrder = this.dbContext.Delete(sql);
+            if (flagOrder && flagType && flagChef)
+            {
+                sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
+                this.dbContext.AddParameter("@DishId", id);
+                return this.dbContext.Delete(sql);
+            }
+            else throw new Exception("return false");
             
         }
 

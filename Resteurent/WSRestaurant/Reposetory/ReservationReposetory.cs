@@ -24,6 +24,14 @@ namespace WSRestaurant
             
         }
 
+        public bool deleteByCustomer(string CustomerId)
+        {
+            string sql = $@"DELETE FROM Reservations WHERE CustomerId=@CustomerId";
+            this.dbContext.AddParameter("@CustomerId", CustomerId);
+            return this.dbContext.Delete(sql);
+
+        }
+
         public List<Reservations> getAll()
         {
             List<Reservations> list = new List<Reservations>();

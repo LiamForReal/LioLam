@@ -56,6 +56,7 @@ namespace WSRestaurant
         public Menu GetSortedMenu(int pageNumber = 1,int chefId = -1, int typeId = -1, int amountPerPage = 12)
         {
             Menu menu = new Menu();
+            int newAmount;
             try
             {
                 
@@ -79,15 +80,18 @@ namespace WSRestaurant
                 {
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 }
-
                 int PageAmount = menu.Dishes.Count() / amountPerPage;
-                if(PageAmount < pageNumber)
+                if(PageAmount < (pageNumber - 1))
                 {
                     throw new Exception("you dont have anough dishes to fill this page");
                 }
-                if (menu.Dishes.Count() <= (pageNumber - 1) * amountPerPage)
-                    return null;
-                menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * amountPerPage, amountPerPage);
+                if(menu.Dishes.Count() < amountPerPage * pageNumber)
+                {
+                    newAmount = menu.Dishes.Count() % amountPerPage;
+                    menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * amountPerPage, newAmount);
+                }
+                else menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * amountPerPage, amountPerPage);
+
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
                 menu.PageNumber = pageNumber;
@@ -98,6 +102,7 @@ namespace WSRestaurant
             catch (Exception ex)
             {
                 string msg = ex.Message;
+                Console.WriteLine(msg);
                 return null;
             }
             finally

@@ -210,7 +210,12 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
+                if (unitOfWorkReposetory.orderRerposetoryObject.deleteByCustomer(customerId) &&
+                    unitOfWorkReposetory.reservationRerposetoryObject.deleteByCustomer(customerId))
+                {
+                    flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
+                }
+                else throw new Exception("return false");
                 this.dBContext.Close();
                 return flag;
             }
