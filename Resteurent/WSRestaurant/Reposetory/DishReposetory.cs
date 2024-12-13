@@ -102,12 +102,16 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishId", model.Id);
             bool ok = this.dbContext.Update(sql);
             if (ok)
-            {
                 throw new Exception("return false");
-            }
+
+            sql = "DELETE FROM DishType WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
             foreach (Types type in model.types)
             {
-                sql = $@"UPDATE DishType SET TypeId=@TypeId WHERE (SELECT DishId FROM DishType WHERE ORDER BY TypeId LIMIT 1) = @DishId";
+                sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@TypeId", type.Id);
                 if (!this.dbContext.Insert(sql))
@@ -116,9 +120,14 @@ namespace WSRestaurant
                 }
             }
 
+            sql = "DELETE FROM DishChef WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
             foreach (Chefs chef in model.chefs)
             {
-                sql = $@"UPDATE DishChef ChefId = @ChefId WHERE (SELECT DishId FROM DishChef WHERE ORDER BY ChefId LIMIT 1) = @DishId";
+                sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
                 this.dbContext.AddParameter("@ChefId", chef.Id);
                 if (!this.dbContext.Insert(sql))

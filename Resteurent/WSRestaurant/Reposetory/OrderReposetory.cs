@@ -93,7 +93,7 @@ namespace WSRestaurant
                 return this.modelFactory.createOrderObject.CreateModel(dataReader);
             }
         }
-        public bool update(Orders model)
+        public bool update(Orders model) //not in use
         {
             List<int> counts = new List<int>();
             List<Dishes> dishes = new List<Dishes>();
@@ -114,7 +114,7 @@ namespace WSRestaurant
                 int i = 0;
                 foreach (Dishes dish in dishes)//TO fix
                 {
-                    sql = $@"UPDATE DishOrder OrderId = @OrderId Price = @Price, Quantity = @Quantity WHERE (SELECT OrderId FROM DishOrder WHERE ORDER BY DishId LIMIT 1) = @DishId";
+                    sql = $@"UPDATE DishOrder OrderId = @OrderId, Price = @Price, Quantity = @Quantity WHERE (SELECT OrderId FROM DishOrder WHERE ORDER BY DishId LIMIT 1) = @DishId";
                     this.dbContext.AddParameter("@DishId", dish.Id);
                     this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
                     this.dbContext.AddParameter("@Price", dish.DishPrice.ToString());
