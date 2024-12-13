@@ -13,7 +13,7 @@ namespace WSRestaurant
             Cities city = new Cities()
             {
                 Id = Convert.ToString(src["CityId"]),
-                CityName = Convert.ToString(src["CityName"]),
+                CityName = Convert.ToString(src["CityName"])
                 //customers = null
             };
             return city;

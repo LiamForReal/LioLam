@@ -67,7 +67,6 @@ namespace WSRestaurant
         public bool Delete(string sql)
         {
             bool flag = executeSql(sql);
-            clearCollection();
             return flag;
         }
 
@@ -79,7 +78,6 @@ namespace WSRestaurant
         public bool Insert(string sql)
         {
             bool flag = executeSql(sql);
-            clearCollection();
             return flag;
         }
 
@@ -125,7 +123,6 @@ namespace WSRestaurant
         public bool Update(string sql)
         {
             bool flag = executeSql(sql);
-            clearCollection();
             return flag;
         }
 
@@ -154,6 +151,7 @@ namespace WSRestaurant
         private bool executeSql(string sql)
         {
             this.command.CommandText = sql;
+            Console.WriteLine(this.command.CommandText);
             bool flag = this.command.ExecuteNonQuery() > 0;
             clearCollection();
             return flag;

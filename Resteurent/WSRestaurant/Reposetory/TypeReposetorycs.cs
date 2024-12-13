@@ -18,9 +18,15 @@ namespace WSRestaurant
 
         public bool delete(string id)
         {
-            string sql = $@"DELETE FROM Types WHERE TypeId=@TypeId";
+            string sql = $@"DELETE FROM DishType WHERE TypeId=@TypeId;";
             this.dbContext.AddParameter("@TypeId", id);
-            return this.dbContext.Delete(sql);
+            if (this.dbContext.Delete(sql))
+            {
+                sql = $@"DELETE FROM Types WHERE TypeId=@TypeId";
+                this.dbContext.AddParameter("@TypeId", id);
+                return this.dbContext.Delete(sql);
+            }
+            else throw new Exception("get false");
         }
 
         public List<Types> getAll()
@@ -61,7 +67,8 @@ namespace WSRestaurant
             List<Types> list = new List<Types>();
             string sql = "SELECT Types.TypeId, Types.TypeName" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
-                " WHERE DishType.DishId=" + dishId + ";";
+                " WHERE DishType.DishId=@DishId;";
+            this.dbContext.AddParameter("@DishId", dishId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())

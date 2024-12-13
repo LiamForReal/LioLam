@@ -16,16 +16,18 @@ namespace LiolamResteurent
         public string CustomerMail { get; set; }
         public string CustomerPassword { get; set; }
         public string CustomerImage { get; set; }
-        //public Reservations CurrentReservation { get; set; }
-      //  public List<Orders> orders { get; set; }
 
-        public Customers(string customerUserName, int customerHouse, string cityName, string streetName, string customerPhone, string customerMail, string customerPassword, string customerImage)
+        //public Reservations CurrentReservation { get; set; }
+        //public List<Orders> orders { get; set; }
+
+        public Customers(string customerId,string customerUserName, int customerHouse, Cities city, Streets street, string customerPhone, string customerMail, string customerPassword, string customerImage)
         {
+            Id = customerId;
             CustomerUserName = customerUserName;
             CustomerHouse = customerHouse;
             
-            this.city = new Cities(cityName);
-            this.street = new Streets(streetName);
+            this.city = city;
+            this.street = street;
             CustomerPhone = customerPhone;
             CustomerMail = customerMail;
             CustomerPassword = customerPassword;

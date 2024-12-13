@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using LiolamResteurent;
 
 namespace WSRestaurant
@@ -13,15 +15,55 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishName", model.DishName);
             this.dbContext.AddParameter("@DishPrice", model.DishName);
             this.dbContext.AddParameter("@DishImage", model.DishName);
-            return this.dbContext.Insert(sql);
-            
+            bool ok = this.dbContext.Insert(sql);
+            if (ok)
+            {
+                throw new Exception("return false");
+            }
+            foreach(Types type in model.types)
+            {
+                sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@TypeId", type.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+
+            foreach (Chefs chef in model.chefs)
+            {
+                sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@ChefId", chef.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+            return ok;
         }
 
         public bool delete(string id)
         {
-            string sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
+            string sql = $@"DELETE FROM DishType WHERE DishId=@DishId";
             this.dbContext.AddParameter("@DishId", id);
-            return this.dbContext.Delete(sql);
+            bool flagType = this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM DishChef WHERE DishId=@DishId";
+            this.dbContext.AddParameter("@DishId", id);
+            bool flagChef = this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM DishOrder WHERE DishId=@DishId"; //ajust to order
+            this.dbContext.AddParameter("@DishId", id);
+            bool flagOrder = this.dbContext.Delete(sql);
+            if (flagOrder && flagType && flagChef)
+            {
+                sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
+                this.dbContext.AddParameter("@DishId", id);
+                return this.dbContext.Delete(sql);
+            }
+            else throw new Exception("return false");
             
         }
 
@@ -58,7 +100,42 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishPrice", model.DishName);
             this.dbContext.AddParameter("@DishImage", model.DishName);
             this.dbContext.AddParameter("@DishId", model.Id);
-            return this.dbContext.Update(sql);
+            bool ok = this.dbContext.Update(sql);
+            if (ok)
+                throw new Exception("return false");
+
+            sql = "DELETE FROM DishType WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
+            foreach (Types type in model.types)
+            {
+                sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@TypeId", type.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+
+            sql = "DELETE FROM DishChef WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
+            foreach (Chefs chef in model.chefs)
+            {
+                sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@ChefId", chef.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+            return ok;
         }
 
         public List<Dishes> GetByOrder(string OrderId)
@@ -66,7 +143,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage, Dishes.DishId, Orders.OrderId" +
                 " FROM Orders INNER JOIN (Dishes INNER JOIN DishOrder ON Dishes.DishId = DishOrder.DishId) ON Orders.OrderId = DishOrder.OrderId" +
-                " WHERE Orders.OrderId=" + OrderId + ";";
+                " WHERE Orders.OrderId=@OrderId;";
+            this.dbContext.AddParameter("@OrderId", OrderId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
@@ -83,7 +161,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
-                " WHERE chefs.ChefId="+ chefId +";";
+                " WHERE chefs.ChefId=@ChefId;";
+            this.dbContext.AddParameter("@ChefId", chefId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
@@ -99,7 +178,8 @@ namespace WSRestaurant
             List<Dishes> list = new List<Dishes>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
-                " WHERE Types.TypeId=" + typefId + ";";
+                " WHERE Types.TypeId=@TypeId;";
+            this.dbContext.AddParameter("@TypeId", typefId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())

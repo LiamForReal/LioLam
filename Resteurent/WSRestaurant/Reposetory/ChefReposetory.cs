@@ -21,9 +21,15 @@ namespace WSRestaurant
 
         public bool delete(string id)
         {
-            string sql = $@"DELETE FROM Chefs WHERE ChefId=@ChefId";
+            string sql = $@"DELETE FROM DishChef WHERE ChefId=@ChefId";
             this.dbContext.AddParameter("@ChefId", id);
-            return this.dbContext.Delete(sql);
+            if (this.dbContext.Delete(sql))
+            {
+                sql = $@"DELETE FROM Chefs WHERE ChefId=@ChefId";
+                this.dbContext.AddParameter("@ChefId", id);
+                return this.dbContext.Delete(sql);
+            }
+            else throw new Exception("return false");
         }
 
         public List<Chefs> getAll()
@@ -66,12 +72,12 @@ namespace WSRestaurant
             List<Chefs> list = new List<Chefs>();
             string sql = "SELECT Chefs.ChefId, Chefs.ChefFirstName, Chefs.ChefLastName, Chefs.ChefPicture" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
-                " WHERE DishChef.DishId=" + dishId + ";";
+                " WHERE DishChef.DishId=@DishId;";
+            this.dbContext.AddParameter("@DishId", dishId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 while (dataReader.Read())
                 {
-
                     list.Add(this.modelFactory.CreateChefObject.CreateModel(dataReader));
                 }
             }

@@ -17,9 +17,9 @@ namespace WSRestaurant
                 DishName = Convert.ToString(src["DishName"]),
                 DishPrice = Convert.ToInt32(src["DishPrice"]),
                 DishImage = Convert.ToString(src["DishImage"]),
-               // orders = null,
-               // chefs = null, 
-               // types = null
+                chefs = null, 
+                types = null,
+                // orders = null,
             };
             return dish;
         }

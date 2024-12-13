@@ -14,7 +14,6 @@ namespace WSRestaurant
             {
                 Id = Convert.ToString(src["TypeId"]), 
                 TypeName = Convert.ToString(src["TypeName"]), 
-                dishes = null
             };
             return type;
         }
