@@ -86,6 +86,7 @@ namespace WebApiClient
         public async Task<bool> Post(T model, Stream file)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri= new Uri(this.uriBuilder.ToString());
             MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             StreamContent streamContent = new StreamContent(file);
@@ -107,6 +108,7 @@ namespace WebApiClient
         public async Task<bool> Post(T model, List<Stream> files)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
             MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             foreach(Stream file in files)
