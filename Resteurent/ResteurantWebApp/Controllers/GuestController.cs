@@ -7,18 +7,23 @@ namespace ResteurantWebApp.Controllers
     public class GuestController : Controller
     {
         [HttpGet]
-        public async Task<IActionResult> GetMenu(int pageNumber = 1, int dishesPerPage = 12, string? chefId = null, string? typeId = null)
+        public IActionResult GetMenu(int pageNumber = 1, int dishesPerPage = 12, string? chefId = null, string? typeId = null)
         {
-            //WebClient<Menu> client = new WebClient<Menu>
-            //    ("localhost:37878", "Guest", "GetMenu");
-            //client.AddParameter("pageNumber", pageNumber.ToString());
-            //client.AddParameter("amountPerPage", dishesPerPage.ToString());
-            //if(chefId != null)
-            //    client.AddParameter("chefId", chefId.ToString());
-            //if(typeId != null)
-            //    client.AddParameter("typeId", typeId.ToString());
-            //Menu menu = await client.GetAsnc();
-            //return View(menu);
+            WebClient<Menu> client = new WebClient<Menu>();
+            client.Scheme = "http";
+            client.port = 5356;
+            client.host = "localhost/api/Guest/GetMenu";
+            client.path = "api/Guest/GetMenu";
+            Menu menu = client.Get().Result;
+            //if(pageNumber == 1)
+            client.AddParameter("pageNumber", pageNumber.ToString());
+            client.AddParameter("amountPerPage", dishesPerPage.ToString());
+            if (chefId != null)
+                client.AddParameter("chefId", chefId.ToString());
+            if (typeId != null)
+                client.AddParameter("typeId", typeId.ToString());
+            //Menu menu = await client.Get().Result;
+            return View(menu);
             return View();
         }
 
