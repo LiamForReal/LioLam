@@ -12,10 +12,9 @@ body
     height: 100px;
     display:block;
 }
-i
-{
-    font-size:28px;
-    color:gold;
+.headerIcon{
+    font-size: 28px;
+    color: gold;
     margin-left: 1%;
     margin-top: 35px;
 }
@@ -25,7 +24,6 @@ i
     margin-top: 25px;
     display:inline;
     font-size:24px;
-    color:gold;
 }
 .headerMenu {
     margin-left: 3%;
@@ -56,4 +54,36 @@ i
 .firstHeaderMenu:hover {
     background-color: #1a1a2e;
     color: gold;
+}
+
+.body
+{
+
+}
+.bodyTitle
+{
+
+}
+.bodyDescription
+{
+
+}
+.bodyImg{
+
+}
+.bodyExamples
+{
+
+}
+.bodyIcon
+{
+
+}
+.bodyExamplesTitle
+{
+
+}
+.bodyExampleDescription
+{
+
 }
