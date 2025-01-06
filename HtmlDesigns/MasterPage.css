@@ -1,30 +1,31 @@
-body 
-{
+body {
     margin: 0 0 0 0;
-    font-family:David;
-    width:100%;
-    color:white;
-    font-size:20px;
+    font-family: David;
+    width: 100%;
+    color: white;
+    font-size: 20px;
 }
 
 .header {
     background-color: #1a1a2e;
     height: 100px;
-    display:block;
+    display: block;
 }
-.headerIcon{
+
+.headerIcon {
     font-size: 28px;
     color: gold;
     margin-left: 1%;
     margin-top: 35px;
 }
-.headerTitle 
-{
+
+.headerTitle {
     margin-left: 3%;
     margin-top: 25px;
-    display:inline;
-    font-size:24px;
+    display: inline;
+    font-size: 24px;
 }
+
 .headerMenu {
     margin-left: 3%;
     margin-top: 25px;
@@ -35,10 +36,11 @@ body
     font-size: 16px;
     display: inline-block;
 }
-.headerMenu:hover {
-    background-color: #1a1a2e;
-    color:gold;
-}
+
+    .headerMenu:hover {
+        background-color: #1a1a2e;
+        color: gold;
+    }
 
 .firstHeaderMenu {
     margin-left: 27%;
@@ -51,39 +53,80 @@ body
     font-size: 16px;
     display: inline-block;
 }
+
 .firstHeaderMenu:hover {
-    background-color: #1a1a2e;
-    color: gold;
+        background-color: #1a1a2e;
+        color: gold;
 }
 
-.body
-{
-
+.body {
+    background-color: #22243d;
+    width:100%;
 }
-.bodyTitle
-{
 
+.bodyTitle {
+    margin-top: 15%;
+    margin-left: 5%;
+    font-size: 40px;
+    font-weight:bold;
+    display:inline;
+    text-align:center;
 }
-.bodyDescription
-{
 
+.bodyDescription {
+    margin-top: 1%;
+    font-size: 16px;
+    margin-left: 5%;
 }
-.bodyImg{
 
+.bodyImg {
+    width: 35%;
+    height: auto;
+    display: flex;
 }
-.bodyExamples
-{
 
+.bodyExamples {
+    margin-top: 25%;
+    margin-left: 5%;
+    width: 20%;
+    height: 120px;
+    display: inline;
 }
-.bodyIcon
-{
 
+.bodyIcon {
+    border: 2px solid #1a1a2e;
+    padding: 1.2% 1.2% 1.2% 1.2%;
 }
-.bodyExamplesTitle
-{
 
+.bodyExamplesTitle {
+    font-size: 20px;
+    margin-left: 2%;
 }
-.bodyExampleDescription
-{
 
+.bodyExampleDescription {
+    font-size: 16px;
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 0;
+}
+
+.footer {
+    width: 100%;
+    height:50px;
+    margin: 0px 0px 0px 0px;
+    background-color: #1a1a2e; /* Example background */
+    color: white;
+}
+.footerBles {
+    margin-left: 2%;
+    font-size: 18px;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.footerphone {
+    margin-left: 65%;
+    font-size: 18px;
+    margin-bottom: 0;
+    display: inline-block;
 }
