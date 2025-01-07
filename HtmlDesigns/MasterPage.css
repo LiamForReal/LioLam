@@ -1,9 +1,9 @@
 body {
-    margin: 0 0 0 0;
     font-family: David;
     width: 100%;
     color: white;
     font-size: 20px;
+    margin: 0 0 0 0;
 }
 
 .header {
@@ -54,43 +54,55 @@ body {
     display: inline-block;
 }
 
-.firstHeaderMenu:hover {
+    .firstHeaderMenu:hover {
         background-color: #1a1a2e;
         color: gold;
-}
+    }
 
 .body {
     background-color: #22243d;
-    width:100%;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    box-sizing: border-box;
 }
 
 .bodyTitle {
-    margin-top: 15%;
+    position: relative;
+    margin-top: 10%;
     margin-left: 5%;
     font-size: 40px;
-    font-weight:bold;
-    display:inline;
-    text-align:center;
+    margin-bottom: 0;
+    display: inline-block;
+    font-weight: bold;
+    text-align: left;
 }
 
 .bodyDescription {
-    margin-top: 1%;
+    margin-top: 2%;
     font-size: 16px;
     margin-left: 5%;
+    display: block;
+    text-align: left;
 }
+
 
 .bodyImg {
     width: 35%;
     height: auto;
-    display: flex;
+    float: right;
+    margin-right: 10%;
+    margin-top: -20%;
 }
 
 .bodyExamples {
-    margin-top: 25%;
+    margin-top: 18%;
     margin-left: 5%;
-    width: 20%;
-    height: 120px;
-    display: inline;
+    width: 13%;
+    margin-bottom: 8%;
+    /* height: 120px; */
+    /* display: inline-table; */
+    display: inline-block;
 }
 
 .bodyIcon {
@@ -112,11 +124,11 @@ body {
 
 .footer {
     width: 100%;
-    height:50px;
-    margin: 0px 0px 0px 0px;
-    background-color: #1a1a2e; /* Example background */
+    height: 50px;
+    background-color: #1a1a2e;
     color: white;
 }
+
 .footerBles {
     margin-left: 2%;
     font-size: 18px;
