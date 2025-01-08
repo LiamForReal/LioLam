@@ -1,5 +1,5 @@
-﻿using LiolamResteurent;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using LiolamResteurent;
 using WebApiClient;
 
 namespace ResteurantWebApp.Controllers
@@ -11,7 +11,7 @@ namespace ResteurantWebApp.Controllers
         {
             WebClient<Menu> client = new WebClient<Menu>();
             client.Scheme = "http";
-            client.port = 5356;
+            client.port = 5125;
             client.host = "localhost/api/Guest/GetMenu";
             client.path = "api/Guest/GetMenu";
             Menu menu = client.Get().Result;
@@ -24,7 +24,6 @@ namespace ResteurantWebApp.Controllers
                 client.AddParameter("typeId", typeId.ToString());
             //Menu menu = await client.Get().Result;
             return View(menu);
-            return View();
         }
 
         [HttpGet]
@@ -36,7 +35,7 @@ namespace ResteurantWebApp.Controllers
             //return View(dish);
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult SignUpForm()
         {
@@ -48,6 +47,6 @@ namespace ResteurantWebApp.Controllers
         {
             return View();
         }
-        
+
     }
 }

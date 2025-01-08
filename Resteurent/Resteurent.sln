@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WSRestaurant", "WSRestauran
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient", "WebApiClient\WebApiClient.csproj", "{A2552119-E7D9-4C03-AD3F-53C9C98AE30C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResteurantWebApp", "ResteurantWebApp\ResteurantWebApp.csproj", "{34CCC9DA-E2CF-447D-9170-DE2F762CF34E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebApp", "RestaurantWebApp\RestaurantWebApp.csproj", "{2E8A7376-C4E5-4FC1-B5D3-CEAB8C6D536F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{A2552119-E7D9-4C03-AD3F-53C9C98AE30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2552119-E7D9-4C03-AD3F-53C9C98AE30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2552119-E7D9-4C03-AD3F-53C9C98AE30C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34CCC9DA-E2CF-447D-9170-DE2F762CF34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34CCC9DA-E2CF-447D-9170-DE2F762CF34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34CCC9DA-E2CF-447D-9170-DE2F762CF34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34CCC9DA-E2CF-447D-9170-DE2F762CF34E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8A7376-C4E5-4FC1-B5D3-CEAB8C6D536F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8A7376-C4E5-4FC1-B5D3-CEAB8C6D536F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8A7376-C4E5-4FC1-B5D3-CEAB8C6D536F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8A7376-C4E5-4FC1-B5D3-CEAB8C6D536F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
