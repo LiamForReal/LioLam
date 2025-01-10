@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LiolamResteurent;
 using WebApiClient;
+using System.Runtime.CompilerServices;
 
 namespace ResteurantWebApp.Controllers
 {
@@ -20,14 +21,22 @@ namespace ResteurantWebApp.Controllers
             client.port = 5125;
             client.host = "localhost/api/GuestController/GetMenu";
             client.path = "api/GuestController/GetMenu";
-            Menu menu = client.Get().Result;
-            client.AddParameter("pageNumber", pageNumber.ToString());
-            client.AddParameter("amountPerPage", dishesPerPage.ToString());
-            if (chefId != null)
-                client.AddParameter("chefId", chefId.ToString());
-            if (typeId != null)
-                client.AddParameter("typeId", typeId.ToString());
-            return View(menu);
+            try
+            {
+                Menu menu = client.Get().Result;
+                client.AddParameter("pageNumber", pageNumber.ToString());
+                client.AddParameter("amountPerPage", dishesPerPage.ToString());
+                if (chefId != null)
+                    client.AddParameter("chefId", chefId.ToString());
+                if (typeId != null)
+                    client.AddParameter("typeId", typeId.ToString());
+                return View(menu);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return View();
         }
 
         [HttpGet]
