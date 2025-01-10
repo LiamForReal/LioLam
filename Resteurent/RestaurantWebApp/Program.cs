@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "GuestController",
-    pattern: "{controller=Guest}/{action=GetDifaultScreen}/{id?}");
+    pattern: "{controller=Guest}/{action=GetDefaultScreen}/{id?}");
 
 app.Run();

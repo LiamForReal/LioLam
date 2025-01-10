@@ -7,7 +7,7 @@ namespace ResteurantWebApp.Controllers
     public class GuestController : Controller
     {
         [HttpGet]
-        public IActionResult GetDifaultScreen()
+        public IActionResult GetDefaultScreen()
         {
             return View();
         }
