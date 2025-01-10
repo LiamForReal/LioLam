@@ -16,4 +16,11 @@
     <ProjectReference Include="..\WebApiClient\WebApiClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Chefs\" />
+    <Folder Include="wwwroot\Images\Dishes\" />
+    <Folder Include="wwwroot\Images\Customers\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

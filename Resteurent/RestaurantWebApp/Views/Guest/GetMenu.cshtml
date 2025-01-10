@@ -1,10 +1,17 @@
 ﻿@using LiolamResteurent
 @model Menu
-
 @{
     ViewData["Title"] = "GetMenu";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
+
 <h1>GetMenu</h1>
+@foreach(Dishes dish in Model.Dishes)
+{
+    <div class="dish">
+        <p class="dishName">@dish.DishName</p>
+        <img src="@dish.DishImage" alt="dish Image"/>
+    </div>
+}
 

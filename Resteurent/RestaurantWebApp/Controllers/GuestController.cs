@@ -51,6 +51,5 @@ namespace ResteurantWebApp.Controllers
         {
             return View();
         }
-
     }
 }

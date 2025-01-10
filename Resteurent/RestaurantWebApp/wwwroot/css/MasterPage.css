@@ -21,7 +21,7 @@ body {
 
 .headerTitle {
     margin-left: 3%;
-    margin-top: 25px;
+    margin-top: 45px;
     display: inline;
     font-size: 24px;
 }
@@ -44,7 +44,7 @@ body {
 
 .firstHeaderMenu {
     margin-left: 27%;
-    margin-top: 25px;
+    margin-top: 45px;
     border-color: #1a1a2e;
     border-width: 0;
     color: white;
@@ -137,8 +137,9 @@ body {
 }
 
 .footerphone {
-    margin-left: 65%;
     font-size: 18px;
     margin-bottom: 0;
     display: inline-block;
+    float: right;
+    margin-right: 2%;
 }

@@ -3,23 +3,36 @@
     ViewData["Title"] = "MasterPage";
 }
 
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+VN:wght@100..400&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link href="~/css/masterpage.css" rel="stylesheet" />
 <script src="~/javascript/masterpage.js"></script>
     <div class="header">
-        <i class="fas fa-utensils headerIcon"></i>
+        <box-icon type="solid" class="bodyIcon" name="dish"></box-icon>
         <p class="headerTitle">LioLam</p>
-        <button class="firstHeaderMenu" onclick="HomePage()">Home</button>
-        <button class="headerMenu">Menu</button>
-        <button class="headerMenu">LogIn</button>
-        <button class="headerMenu">SignUp</button>
+        <a href="http://localhost:7287/Guest/GetDifaultScreen" class="firstHeaderMenu" onclick="HomePage()">Home</a>
+        @if(TempData["id"] != null)
+        {
+            <a class="headerMenu">Log Out</a>
+            <a href="http://localhost:7287/Guest/GetMenu" class="headerMenu">Menu</a>
+            <a class="headerMenu">Reservation</a>
+            <a class="headerMenu">Orders</a>
+        }
+
+        @if (TempData["id"] == null)
+        {
+            <a href="http://localhost:7287/Guest/GetMenu" class="headerMenu">Menu</a>
+            <a class="headerMenu">SignUp</a>
+            <a class="headerMenu">LogIn</a>
+        }
     </div>
     <div class="body">
-@RenderBody()
+        @RenderBody()
     </div>
     <div class="footer">
         <p class="footerBles">We hope you enjoy your future meals with us!</p>
         <p class="footerphone">Contact us at 7777 for inquiries!</p>
     </div>
-
-
-
