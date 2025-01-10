@@ -11,23 +11,12 @@
 <link href="~/css/masterpage.css" rel="stylesheet" />
 <script src="~/javascript/masterpage.js"></script>
     <div class="header">
-        <box-icon type="solid" class="bodyIcon" name="dish"></box-icon>
+        <i class="fas fa-utensils headerIcon"></i>
         <p class="headerTitle">LioLam</p>
-        <a href="http://localhost:7287/Guest/GetDifaultScreen" class="firstHeaderMenu" onclick="HomePage()">Home</a>
-        @if(TempData["id"] != null)
-        {
-            <a class="headerMenu">Log Out</a>
-            <a href="http://localhost:7287/Guest/GetMenu" class="headerMenu">Menu</a>
-            <a class="headerMenu">Reservation</a>
-            <a class="headerMenu">Orders</a>
-        }
-
-        @if (TempData["id"] == null)
-        {
-            <a href="http://localhost:7287/Guest/GetMenu" class="headerMenu">Menu</a>
-            <a class="headerMenu">SignUp</a>
-            <a class="headerMenu">LogIn</a>
-        }
+        <a href="https://localhost:7287/" class="firstHeaderMenu" onclick="HomePage()">Home</a>
+        <a href="https://localhost:7287/Guest/GetMenu" class="headerMenu">Menu</a>
+        <a class="headerMenu">LogIn</a>
+        <a class="headerMenu">SignUp</a>
     </div>
     <div class="body">
         @RenderBody()
