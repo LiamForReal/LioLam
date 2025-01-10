@@ -16,20 +16,30 @@ namespace ResteurantWebApp.Controllers
         [HttpGet]
         public IActionResult GetMenu(int pageNumber = 1, int dishesPerPage = 12, string? chefId = null, string? typeId = null)
         {
-            WebClient<Menu> client = new WebClient<Menu>();
-            client.Scheme = "http";
-            client.port = 5125;
-            client.host = "localhost/api/GuestController/GetMenu";
-            client.path = "api/GuestController/GetMenu";
             try
             {
+                
+                WebClient<Menu> client = new WebClient<Menu>();
+                client.Scheme = "http";
+                client.Port = 5125;
+
+                if(pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null)
+                {
+                    client.Host = "localhost/api/GuestController/GetMenu";
+                    client.Path = "api/GuestController/GetMenu";
+                }
+                else
+                {
+                    client.Host = "localhost/api/GuestController/GetSortedMenu";
+                    client.Path = "api/GuestController/GetSortedMenu";
+                    client.AddParameter("pageNumber", pageNumber.ToString());
+                    client.AddParameter("amountPerPage", dishesPerPage.ToString());
+                    if (chefId != null)
+                        client.AddParameter("chefId", chefId.ToString());
+                    if (typeId != null)
+                        client.AddParameter("typeId", typeId.ToString());
+                }
                 Menu menu = client.Get().Result;
-                client.AddParameter("pageNumber", pageNumber.ToString());
-                client.AddParameter("amountPerPage", dishesPerPage.ToString());
-                if (chefId != null)
-                    client.AddParameter("chefId", chefId.ToString());
-                if (typeId != null)
-                    client.AddParameter("typeId", typeId.ToString());
                 return View(menu);
             }
             catch (Exception ex)

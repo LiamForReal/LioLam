@@ -18,6 +18,7 @@ namespace WebApiClient
         public WebClient()
         {
             this.uriBuilder = new UriBuilder();
+            this.uriBuilder.Query = String.Empty;
             this.request = new HttpRequestMessage();
         }
         public string Scheme //protocol http in this case
@@ -25,17 +26,17 @@ namespace WebApiClient
             set { this.uriBuilder.Scheme = value; }
         }
 
-        public string host
+        public string Host
         {
             set { this.uriBuilder.Host = value; }
         }
 
-        public int port
+        public int Port
         {
             set { this.uriBuilder.Port = value; }
         }
 
-        public string path
+        public string Path
         {
             set { this.uriBuilder.Path = value; }
         }
@@ -52,7 +53,8 @@ namespace WebApiClient
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
-            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
+            this.request.RequestUri = this.uriBuilder.Uri;
+            Console.WriteLine("query to run: " + uriBuilder.Query);
             using(HttpClient client = new HttpClient())
             {
                 this.response = await client.SendAsync(this.request);

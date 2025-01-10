@@ -43,7 +43,7 @@ body {
     }
 
 .firstHeaderMenu {
-    margin-left: 27%;
+    margin-left: 23.5%;
     margin-top: 45px;
     border-color: #1a1a2e;
     border-width: 0;
@@ -106,6 +106,7 @@ body {
 }
 
 .bodyIcon {
+    color:gold;
     border: 2px solid #1a1a2e;
     padding: 1.2% 1.2% 1.2% 1.2%;
 }
