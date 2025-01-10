@@ -3,5 +3,23 @@
     ViewData["Title"] = "MasterPage";
 }
 
-<h1>MasterPage</h1>
+<link href="~/css/masterpage.css" rel="stylesheet" />
+<script src="~/javascript/masterpage.js"></script>
+    <div class="header">
+        <i class="fas fa-utensils headerIcon"></i>
+        <p class="headerTitle">LioLam</p>
+        <button class="firstHeaderMenu" onclick="HomePage()">Home</button>
+        <button class="headerMenu">Menu</button>
+        <button class="headerMenu">LogIn</button>
+        <button class="headerMenu">SignUp</button>
+    </div>
+    <div class="body">
+@RenderBody()
+    </div>
+    <div class="footer">
+        <p class="footerBles">We hope you enjoy your future meals with us!</p>
+        <p class="footerphone">Contact us at 7777 for inquiries!</p>
+    </div>
+
+
 

@@ -7,22 +7,26 @@ namespace ResteurantWebApp.Controllers
     public class GuestController : Controller
     {
         [HttpGet]
+        public IActionResult GetDifaultScreen()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult GetMenu(int pageNumber = 1, int dishesPerPage = 12, string? chefId = null, string? typeId = null)
         {
             WebClient<Menu> client = new WebClient<Menu>();
             client.Scheme = "http";
             client.port = 5125;
-            client.host = "localhost/api/Guest/GetMenu";
-            client.path = "api/Guest/GetMenu";
+            client.host = "localhost/api/GuestController/GetMenu";
+            client.path = "api/GuestController/GetMenu";
             Menu menu = client.Get().Result;
-            //if(pageNumber == 1)
             client.AddParameter("pageNumber", pageNumber.ToString());
             client.AddParameter("amountPerPage", dishesPerPage.ToString());
             if (chefId != null)
                 client.AddParameter("chefId", chefId.ToString());
             if (typeId != null)
                 client.AddParameter("typeId", typeId.ToString());
-            //Menu menu = await client.Get().Result;
             return View(menu);
         }
 
