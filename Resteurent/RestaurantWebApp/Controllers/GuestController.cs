@@ -18,20 +18,18 @@ namespace ResteurantWebApp.Controllers
         {
             try
             {
-                
                 WebClient<Menu> client = new WebClient<Menu>();
                 client.Scheme = "http";
                 client.Port = 5125;
-
-                if(pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null)
+                if (pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null)
                 {
-                    client.Host = "localhost/api/GuestController/GetMenu";
-                    client.Path = "api/GuestController/GetMenu";
+                    client.Host = "localhost";
+                    client.Path = "api/Guest/GetMenu";
                 }
                 else
                 {
-                    client.Host = "localhost/api/GuestController/GetSortedMenu";
-                    client.Path = "api/GuestController/GetSortedMenu";
+                    client.Host = "localhost";
+                    client.Path = "api/Guest/GetSortedMenu";
                     client.AddParameter("pageNumber", pageNumber.ToString());
                     client.AddParameter("amountPerPage", dishesPerPage.ToString());
                     if (chefId != null)

@@ -55,10 +55,11 @@ namespace WebApiClient
             this.request.Method = HttpMethod.Get;
             this.request.RequestUri = this.uriBuilder.Uri;
             Console.WriteLine("query to run: " + uriBuilder.Query);
-            using(HttpClient client = new HttpClient())
+            HttpClient client = new HttpClient();
+            using (client)
             {
                 this.response = await client.SendAsync(this.request);
-                if(this.response.IsSuccessStatusCode == true)
+                if (this.response.IsSuccessStatusCode == true)
                 {
                     T viewModel = await this.response.Content.ReadAsAsync<T>();
                     return viewModel;

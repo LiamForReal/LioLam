@@ -31,9 +31,9 @@ namespace WSRestaurant
             try
             {
                 this.dBContext.Open();
-                menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
-                menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
-                menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
+                menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll().Take(12).ToList();
+                menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll().Take(12).ToList();
+                menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll().Take(12).ToList();
                 menu.PageNumber = 1;
                 menu.ChefId = -1;
                 menu.TypeId = -1;
