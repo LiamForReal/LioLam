@@ -21,14 +21,10 @@ namespace ResteurantWebApp.Controllers
                 WebClient<Menu> client = new WebClient<Menu>();
                 client.Scheme = "http";
                 client.Port = 5125;
-                if (pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null)
+                client.Host = "localhost";
+                client.Path = "api/Guest/GetMenu";
+                if (!(pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null))
                 {
-                    client.Host = "localhost";
-                    client.Path = "api/Guest/GetMenu";
-                }
-                else
-                {
-                    client.Host = "localhost";
                     client.Path = "api/Guest/GetSortedMenu";
                     client.AddParameter("pageNumber", pageNumber.ToString());
                     client.AddParameter("amountPerPage", dishesPerPage.ToString());
