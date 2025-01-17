@@ -36,11 +36,11 @@ namespace WSRestaurant
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
 
-                totalPages = menu.Dishes.Count() / 12;
+                totalPages = menu.Dishes.Count() / 12; 
                 if (menu.Dishes.Count() % 12 != 0)
                     totalPages++;
-
-                menu.totalPages = menu.Dishes.Count() / 12;
+                
+                menu.totalPages = totalPages;
                 menu.Dishes = menu.Dishes.Take(12).ToList();
                 menu.PageNumber = 1;
                 menu.ChefId = -1;

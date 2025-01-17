@@ -59,6 +59,7 @@ namespace WebApiClient
             using (client)
             {
                 this.response = await client.SendAsync(this.request);
+                this.uriBuilder.Query = "";
                 if (this.response.IsSuccessStatusCode == true)
                 {
                     T viewModel = await this.response.Content.ReadAsAsync<T>();

@@ -50,9 +50,7 @@
         <div class="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                <a href="https://localhost:7287/Guest/GetMenu?pageNumber=@Model.PageNumber" class="page-number @(i == Model.PageNumber ? "active" : "")">
-                    @i
-                </a>
+                <a href="https://localhost:7287/Guest/GetMenu?pageNumber=@i" class="page-number @(i == Model.PageNumber ? "active" : "")">@i</a>
             }
         </div>
     }
