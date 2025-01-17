@@ -42,7 +42,6 @@
                         <a class="link" href="https://localhost:7287/Guest/GetMenu?typeId=@type.Id">
                             <li>@type.TypeName</li>
                         </a>
-                      
                     }
                 </ul>
             </div>
@@ -51,7 +50,7 @@
         <div class="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                <a href="?page=@i" class="page-number @(i == Model.PageNumber ? "active" : "")">
+                <a href="https://localhost:7287/Guest/GetMenu?pageNumber=@Model.PageNumber" class="page-number @(i == Model.PageNumber ? "active" : "")">
                     @i
                 </a>
             }
