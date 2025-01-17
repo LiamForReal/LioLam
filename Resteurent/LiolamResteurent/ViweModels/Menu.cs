@@ -12,6 +12,7 @@ namespace LiolamResteurent
         public List<Types> Types { get; set; }
         public List<Chefs> Chefs { get; set; }
 
+        public int totalPages { get; set; }
         public int PageNumber { get; set; }
         public int ChefId { get; set; }
         public int TypeId { get; set; }

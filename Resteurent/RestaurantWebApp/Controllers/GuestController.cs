@@ -14,7 +14,7 @@ namespace ResteurantWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetMenu(int pageNumber = 1, int dishesPerPage = 12, string? chefId = null, string? typeId = null)
+        public IActionResult GetMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishesPerPage = 12)
         {
             try
             {
@@ -25,13 +25,14 @@ namespace ResteurantWebApp.Controllers
                 client.Path = "api/Guest/GetMenu";
                 if (!(pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null))
                 {
+                    Console.WriteLine("got call!");
                     client.Path = "api/Guest/GetSortedMenu";
                     client.AddParameter("pageNumber", pageNumber.ToString());
                     client.AddParameter("amountPerPage", dishesPerPage.ToString());
                     if (chefId != null)
-                        client.AddParameter("chefId", chefId.ToString());
+                        client.AddParameter("chefId", chefId);
                     if (typeId != null)
-                        client.AddParameter("typeId", typeId.ToString());
+                        client.AddParameter("typeId", typeId);
                 }
                 Menu menu = client.Get().Result;
                 return View(menu);
