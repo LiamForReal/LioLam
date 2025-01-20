@@ -7,6 +7,7 @@ namespace ResteurantWebApp.Controllers
 {
     public class GuestController : Controller
     {
+        WebClient<Menu> client = new WebClient<Menu>();
         [HttpGet]
         public IActionResult GetDefaultScreen()
         {
@@ -18,17 +19,22 @@ namespace ResteurantWebApp.Controllers
         {
             try
             {
-                WebClient<Menu> client = new WebClient<Menu>();
                 client.Scheme = "http";
                 client.Port = 5125;
                 client.Host = "localhost";
                 client.Path = "api/Guest/GetMenu";
-                if (!(pageNumber == 1 && dishesPerPage == 12 && chefId == null && typeId == null))
+                if(pageNumber != 1)
                 {
-                    Console.WriteLine("got call!");
-                    client.Path = "api/Guest/GetSortedMenu";
                     client.AddParameter("pageNumber", pageNumber.ToString());
+                }
+                if(dishesPerPage != 12) 
+                {
                     client.AddParameter("amountPerPage", dishesPerPage.ToString());
+                }
+                if (!(chefId == null && typeId == null))
+                {
+                    client.clearQuery();
+                    client.Path = "api/Guest/GetSortedMenu";
                     if (chefId != null)
                         client.AddParameter("chefId", chefId);
                     if (typeId != null)

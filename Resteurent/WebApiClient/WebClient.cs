@@ -40,7 +40,6 @@ namespace WebApiClient
         {
             set { this.uriBuilder.Path = value; }
         }
-
         public void AddParameter(string name, string value)
         {
             if(this.uriBuilder.Query == string.Empty)
@@ -50,16 +49,20 @@ namespace WebApiClient
             else this.uriBuilder.Query += "&";
             this.uriBuilder.Query += $"{name}={value}";
         }
+
+        public void clearQuery()
+        {
+            this.uriBuilder.Query = "";
+        }
+
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
             this.request.RequestUri = this.uriBuilder.Uri;
-            Console.WriteLine("query to run: " + uriBuilder.Query);
             HttpClient client = new HttpClient();
             using (client)
             {
                 this.response = await client.SendAsync(this.request);
-                this.uriBuilder.Query = "";
                 if (this.response.IsSuccessStatusCode == true)
                 {
                     T viewModel = await this.response.Content.ReadAsAsync<T>();

@@ -2,7 +2,7 @@ body {
     font-family: David;
     width: 100%;
     color: white;
-    height:100%;
+    height: 100%;
     font-size: 20px;
     margin: 0 0 0 0;
 }
@@ -63,14 +63,14 @@ body {
 .body {
     background-color: #22243d;
     width: 100%;
-    height: auto;
+    height: 100%;
     margin: auto;
     box-sizing: border-box;
 }
 
 .bodyTitle {
     position: relative;
-    margin-top: 10%;
+    margin-top: 15%;
     margin-left: 5%;
     font-size: 40px;
     margin-bottom: 0;
@@ -93,7 +93,7 @@ body {
     height: auto;
     float: right;
     margin-right: 10%;
-    margin-top: -20%;
+    margin-top: -23%;
 }
 
 .bodyExamples {
@@ -105,7 +105,7 @@ body {
 }
 
 .bodyIcon {
-    color:gold;
+    color: gold;
     border: 2px solid #1a1a2e;
     padding: 1.2% 1.2% 1.2% 1.2%;
 }
@@ -123,9 +123,9 @@ body {
 }
 
 .footer {
-    position:relative;
+    position: absolute;
     bottom: 0;
-    left:0;
+    left: 0;
     width: 100%;
     height: 50px;
     background-color: #1a1a2e;
