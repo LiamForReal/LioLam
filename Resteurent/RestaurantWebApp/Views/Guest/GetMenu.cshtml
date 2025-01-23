@@ -16,10 +16,12 @@
         <div class="dishes">
             @foreach (Dishes dish in Model.Dishes)
             {
-                <div class="dish">
-                    <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
-                    <p class="dish-name">@dish.DishName</p>
-                </div>
+                <a class="link" href="https://localhost:7287/Guest/GetDish">
+                    <div class="dish">
+                        <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
+                        <p class="dish-name">@dish.DishName</p>
+                    </div>
+                </a>
             }
         </div>
         <div class="side-panel">
