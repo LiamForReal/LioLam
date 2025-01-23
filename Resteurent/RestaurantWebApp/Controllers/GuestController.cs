@@ -23,23 +23,23 @@ namespace ResteurantWebApp.Controllers
                 client.Port = 5125;
                 client.Host = "localhost";
                 client.Path = "api/Guest/GetMenu";
-                if(pageNumber != 1)
+                if(chefId != null || typeId != null || pageNumber != 1 || dishesPerPage != 12)
                 {
-                    client.AddParameter("pageNumber", pageNumber.ToString());
-                }
-                if(dishesPerPage != 12) 
-                {
-                    client.AddParameter("amountPerPage", dishesPerPage.ToString());
-                }
-                if (!(chefId == null && typeId == null))
-                {
-                    client.clearQuery();
                     client.Path = "api/Guest/GetSortedMenu";
+                    if (pageNumber != 1)
+                    {
+                        client.AddParameter("pageNumber", pageNumber.ToString());
+                    }
+                    if (dishesPerPage != 12)
+                    {
+                        client.AddParameter("amountPerPage", dishesPerPage.ToString());
+                    }
                     if (chefId != null)
                         client.AddParameter("chefId", chefId);
                     if (typeId != null)
                         client.AddParameter("typeId", typeId);
                 }
+
                 Menu menu = client.Get().Result;
                 return View(menu);
             }
