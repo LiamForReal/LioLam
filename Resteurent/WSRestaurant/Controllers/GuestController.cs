@@ -92,7 +92,12 @@ namespace WSRestaurant
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 }
                 int PageAmount = menu.Dishes.Count() / amountPerPage;
-                if(PageAmount < (pageNumber - 1))
+                if (menu.Dishes.Count % 12 != 0)
+                {
+                    PageAmount++;
+                }
+
+                if (PageAmount < (pageNumber - 1))
                 {
                     throw new Exception("you dont have anough dishes to fill this page");
                 }
@@ -104,10 +109,6 @@ namespace WSRestaurant
                 else menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * amountPerPage, amountPerPage);
 
                 menu.totalPages = PageAmount;
-                if (unitOfWorkReposetory.dishRerposetoryObject.getAll().Count % 12 != 0)
-                {
-                    menu.totalPages++;
-                }
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
                 menu.PageNumber = pageNumber;

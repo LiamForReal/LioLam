@@ -1,8 +1,44 @@
-﻿
+﻿@using LiolamResteurent
+@model Dishes
 @{
     ViewData["Title"] = "GetDish";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
-
-<h1>GetDish</h1>
-
+<link href="~/css/guest/getdish.css" rel="stylesheet" />
+@if (Model == null)
+{
+    <h3 class="error">The connection is lost. Try again later.</h3>
+}
+else
+{
+    <div class="dish-container">
+        <div class="dish-image-container">
+            <img src="@Model.DishImage" alt="@Model.DishName" class="dish-image" />
+        </div>
+        <div class="dish-info">
+            <h1 class="dish-name">@Model.DishName</h1>
+            <p class="dish-description">@Model.DishDescription</p>
+            <div class="chef-list">
+                <h3 class="category-title">Chefs</h3>
+                <ul>
+                    @foreach (var chef in Model.chefs)
+                    {
+                        <li>
+                            <img src="@chef.ChefImage" alt="@chef.ChefFirstName @chef.ChefLastName" class="chef-image" />
+                            @chef.ChefFirstName @chef.ChefLastName
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="dish-types">
+                <h3 class="category-title">Dish Types</h3>
+                <p>@string.Join(", ", Model.types.Select(t => t.TypeName))</p>
+            </div>
+            <div class="dish-price">
+                <h3>Price</h3>
+                <p>@Model.DishPrice $</p>
+            </div>
+            <button class="menu-button" onclick="window.history.back()">Back to Menu</button>
+        </div>
+    </div>
+}

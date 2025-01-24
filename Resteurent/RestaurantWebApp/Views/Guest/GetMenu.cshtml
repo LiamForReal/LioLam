@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
+<link href="~/css/guest/getmenu.css" rel="stylesheet" />
 <div class="menu-container">
     @if (Model == null)
     {
@@ -12,11 +13,11 @@
     }
     else
     {
-        
+
         <div class="dishes">
             @foreach (Dishes dish in Model.Dishes)
             {
-                <a class="link" href="https://localhost:7287/Guest/GetDish">
+                <a class="link" href="https://localhost:7287/Guest/GetDish?dishId=@dish.Id">
                     <div class="dish">
                         <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                         <p class="dish-name">@dish.DishName</p>
@@ -53,7 +54,16 @@
         <div class="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                <a href="https://localhost:7287/Guest/GetMenu?pageNumber=@i" class="page-number @(i == Model.PageNumber ? "active" : "")">@i</a>
+                string link = "https://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
+                @if(Model.ChefId != -1)
+                {
+                    link += "&chefId=" + @Model.ChefId;
+                }
+                if(Model.TypeId != -1)
+                {
+                    link += "&typeId=" + @Model.TypeId;
+                }
+                <a href="@link" class="page-number @(i == Model.PageNumber ? "active" : "")">@i</a>
             }
         </div>
     }

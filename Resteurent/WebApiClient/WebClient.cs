@@ -49,12 +49,6 @@ namespace WebApiClient
             else this.uriBuilder.Query += "&";
             this.uriBuilder.Query += $"{name}={value}";
         }
-
-        public void clearQuery()
-        {
-            this.uriBuilder.Query = "";
-        }
-
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;

@@ -7,7 +7,6 @@ namespace ResteurantWebApp.Controllers
 {
     public class GuestController : Controller
     {
-        WebClient<Menu> client = new WebClient<Menu>();
         [HttpGet]
         public IActionResult GetDefaultScreen()
         {
@@ -19,6 +18,7 @@ namespace ResteurantWebApp.Controllers
         {
             try
             {
+                WebClient<Menu> client = new WebClient<Menu>();
                 client.Scheme = "http";
                 client.Port = 5125;
                 client.Host = "localhost";
@@ -53,11 +53,14 @@ namespace ResteurantWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDish(string dishId)
         {
-            //WebClient<Menu> client = new WebClient<Menu>
-            //   ("localhost:37878", "Guest", "GetMenu");
-            //Dishes dish = client.AddParameter("dishId", dishId.ToString());
-            //return View(dish);
-            return View();
+            WebClient<Dishes> client = new WebClient<Dishes>();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Guest/GetSingleDish";
+            client.AddParameter("id", dishId);
+            Dishes dish = client.Get().Result;
+            return View(dish);
         }
 
         [HttpGet]
