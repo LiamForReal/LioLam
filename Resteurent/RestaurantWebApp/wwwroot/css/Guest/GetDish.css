@@ -6,79 +6,68 @@
     padding: 0;
 }
 
-.dish-details-container {
+.dish-info-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     padding: 20px;
 }
 
-.dish-info {
+.dish-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: gold;
+    margin-bottom: 20px;
+}
+
+.dish-header {
     display: flex;
-    flex-direction: row;
+    gap: 20px;
     background-color: #2e3156;
     border: 1px solid #3a3d62;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     padding: 20px;
-    gap: 20px;
     max-width: 900px;
     width: 100%;
 }
 
-.dish-image-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .dish-image {
-    width: 100%;
-    max-width: 250px;
+    flex: 4;
+    margin-top: 2%;
+    max-height: 450px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
 }
 
-.dish-details-section {
+.dish-details {
     flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-.dish-name {
-    font-size: 28px;
-    font-weight: bold;
+.section-title {
+    font-size: 20px;
     color: gold;
-    margin: 0;
+    border-bottom: 2px solid gold;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .dish-description {
     font-size: 16px;
     line-height: 1.5;
-    margin: 0;
-}
-
-.dish-price {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.price {
-    color: gold;
-}
-
-.chefs {
-    margin-top: 10px;
+    color: #e4e6f0;
 }
 
 .chefs-list {
     display: flex;
     gap: 15px;
+    list-style: none;
+    padding: 0;
 }
 
-.chef {
+.chef-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,24 +87,21 @@
 }
 
 .dish-types {
-    margin-top: 15px;
+    font-size: 14px;
+    color: #e4e6f0;
 }
 
-    .dish-types h4 {
-        margin: 0;
-        font-size: 18px;
-        color: gold;
-        border-bottom: 2px solid gold;
-        padding-bottom: 5px;
-    }
+.dish-price {
+    font-size: 18px;
+    font-weight: bold;
+}
 
-    .dish-types p {
-        margin: 5px 0 0;
-        font-size: 14px;
-        color: #e4e6f0;
-    }
+.back-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
 
-.back-to-menu {
+.back-button {
     background-color: #ff6f61;
     color: #fff;
     border: none;
@@ -124,18 +110,9 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
-    align-self: flex-start;
 }
 
-    .back-to-menu:hover {
+    .back-button:hover {
         background-color: gold;
         transform: translateY(-2px);
     }
-
-.error {
-    color: red;
-    font-size: 20px;
-    text-align: center;
-    margin: auto;
-}

@@ -2,6 +2,12 @@
     ViewData["Title"] = "MasterPage";
 }
 
+<link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+@section Styles 
+{
+    
+}
+@RenderSection("Styles", required: false)
 <link href="~/css/guest/masterpage.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <script src="/_framework/aspnetcore-browser-refresh.js"></script>
@@ -9,16 +15,16 @@
     <div class="header">
         <i class="fas fa-utensils headerIcon"></i>
         <p class="headerTitle">LioLam</p>
-        <a href="https://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
+        <a href="http://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
         @if(TempData["id"] == null)
         {
-            <a class="headerMenu" href="https://localhost:7287/Guest/GetMenu">Menu</a>
-            <a class="headerMenu" href="https://localhost:7287/Customer/Login">LogIn</a>
-            <a class="headerMenu" href="https://localhost:7287/Customer/SignUp">SignUp</a>
+            <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
+            <a class="headerMenu" href="http://localhost:7287/Customer/Login">LogIn</a>
+            <a class="headerMenu" href="http://localhost:7287/Customer/SignUp">SignUp</a>
         }
         @if(TempData["id"] != null)
         {
-            <a class="headerMenu" href="https://localhost:7287/Guest/GetMenu">Menu</a>
+            <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
             <a class="headerMenu">LogOut</a>
             <a class="headerMenu">Reservations</a>
             <a class="headerMenu">Orders</a>

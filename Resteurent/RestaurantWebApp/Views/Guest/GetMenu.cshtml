@@ -5,7 +5,11 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
+@section Styles 
+{
 <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+}
+
 <div class="menu-container">
     @if (Model == null)
     {
@@ -17,7 +21,7 @@
         <div class="dishes">
             @foreach (Dishes dish in Model.Dishes)
             {
-                <a class="link" href="https://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+                <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
                     <div class="dish">
                         <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                         <p class="dish-name">@dish.DishName</p>
@@ -31,7 +35,7 @@
                 <ul>
                     @foreach (var chef in Model.Chefs)
                     {
-                        <a class="link" href="https://localhost:7287/Guest/GetMenu?chefId=@chef.Id">
+                        <a class="link" href="http://localhost:7287/Guest/GetMenu?chefId=@chef.Id">
                             <li>@chef.ChefFirstName @chef.ChefLastName</li>
                         </a>
                     }
@@ -43,7 +47,7 @@
                 <ul>
                     @foreach (var type in Model.Types)
                     {
-                        <a class="link" href="https://localhost:7287/Guest/GetMenu?typeId=@type.Id">
+                        <a class="link" href="http://localhost:7287/Guest/GetMenu?typeId=@type.Id">
                             <li>@type.TypeName</li>
                         </a>
                     }
@@ -54,7 +58,7 @@
         <div class="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                string link = "https://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
+                string link = "http://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
                 @if(Model.ChefId != -1)
                 {
                     link += "&chefId=" + @Model.ChefId;

@@ -13,7 +13,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Remove or comment out this line to avoid HTTPS redirection
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
