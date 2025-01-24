@@ -15,7 +15,7 @@ namespace WSRestaurant
                 Id = Convert.ToString(src["CustomerId"]),
                 CustomerUserName = Convert.ToString(src["CustomerUserName"]),
                 CustomerPassword = Convert.ToString(src["CustomerPassword"]),
-                CustomerImage = Convert.ToString(src["CustomerImage"]),
+                CustomerImage = "http://localhost:5125/Images/Customers/" + Convert.ToString(src["CustomerImage"]),
                 CustomerHouse = Convert.ToInt32(src["CustomerHouse"]),
                 CustomerPhone = Convert.ToString(src["CustomerPhone"]),
                 CustomerMail = Convert.ToString(src["CustomerMail"]),

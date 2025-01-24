@@ -18,6 +18,7 @@ namespace WebApiClient
         public WebClient()
         {
             this.uriBuilder = new UriBuilder();
+            this.uriBuilder.Query = String.Empty;
             this.request = new HttpRequestMessage();
         }
         public string Scheme //protocol http in this case
@@ -25,21 +26,20 @@ namespace WebApiClient
             set { this.uriBuilder.Scheme = value; }
         }
 
-        public string host
+        public string Host
         {
             set { this.uriBuilder.Host = value; }
         }
 
-        public int port
+        public int Port
         {
             set { this.uriBuilder.Port = value; }
         }
 
-        public string path
+        public string Path
         {
             set { this.uriBuilder.Path = value; }
         }
-
         public void AddParameter(string name, string value)
         {
             if(this.uriBuilder.Query == string.Empty)
@@ -52,14 +52,14 @@ namespace WebApiClient
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
-            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
-            using(HttpClient client = new HttpClient())
+            this.request.RequestUri = this.uriBuilder.Uri;
+            HttpClient client = new HttpClient();
+            using (client)
             {
                 this.response = await client.SendAsync(this.request);
-                if(this.response.IsSuccessStatusCode == true)
+                if (this.response.IsSuccessStatusCode == true)
                 {
-                    string json = await this.response.Content.ReadAsStringAsync();
-                    T viewModel =JsonSerializer.Deserialize<T>(json);
+                    T viewModel = await this.response.Content.ReadAsAsync<T>();
                     return viewModel;
                 }
                 return default(T);
@@ -86,6 +86,7 @@ namespace WebApiClient
         public async Task<bool> Post(T model, Stream file)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri= new Uri(this.uriBuilder.ToString());
             MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             StreamContent streamContent = new StreamContent(file);
@@ -107,6 +108,7 @@ namespace WebApiClient
         public async Task<bool> Post(T model, List<Stream> files)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
             MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             foreach(Stream file in files)

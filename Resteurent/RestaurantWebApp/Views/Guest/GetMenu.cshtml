@@ -1,0 +1,74 @@
+﻿@using LiolamResteurent
+@model Menu
+@{
+    ViewData["Title"] = "GetMenu";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@section Styles 
+{
+<link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+}
+
+<div class="menu-container">
+    @if (Model == null)
+    {
+        <h3 class="error">The connection is lost. Try again later.</h3>
+    }
+    else
+    {
+
+        <div class="dishes">
+            @foreach (Dishes dish in Model.Dishes)
+            {
+                <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+                    <div class="dish">
+                        <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
+                        <p class="dish-name">@dish.DishName</p>
+                    </div>
+                </a>
+            }
+        </div>
+        <div class="side-panel">
+            <div class="chefs-list">
+                <h4>Chefs</h4>
+                <ul>
+                    @foreach (var chef in Model.Chefs)
+                    {
+                        <a class="link" href="http://localhost:7287/Guest/GetMenu?chefId=@chef.Id">
+                            <li>@chef.ChefFirstName @chef.ChefLastName</li>
+                        </a>
+                    }
+                </ul>
+            </div>
+
+            <div class="dish-types">
+                <h4>Dish Types</h4>
+                <ul>
+                    @foreach (var type in Model.Types)
+                    {
+                        <a class="link" href="http://localhost:7287/Guest/GetMenu?typeId=@type.Id">
+                            <li>@type.TypeName</li>
+                        </a>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                string link = "http://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
+                @if(Model.ChefId != -1)
+                {
+                    link += "&chefId=" + @Model.ChefId;
+                }
+                if(Model.TypeId != -1)
+                {
+                    link += "&typeId=" + @Model.TypeId;
+                }
+                <a href="@link" class="page-number @(i == Model.PageNumber ? "active" : "")">@i</a>
+            }
+        </div>
+    }
+</div>

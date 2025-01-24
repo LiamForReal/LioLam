@@ -1,0 +1,144 @@
+body {
+    font-family: David;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    margin: 0 0 0 0;
+}
+
+.header {
+    background-color: #1a1a2e;
+    height: 100px;
+    display: block;
+}
+
+.headerIcon {
+    font-size: 28px;
+    color: gold;
+    margin-left: 1%;
+    margin-top: 35px;
+}
+
+.headerTitle {
+    margin-left: 3%;
+    margin-top: 25px;
+    display: inline;
+    font-size: 24px;
+}
+
+.headerMenu {
+    margin-left: 3%;
+    margin-top: 25px;
+    border-width: 0;
+    color: white;
+    background-color: #1a1a2e;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+}
+
+    .headerMenu:hover {
+        background-color: #1a1a2e;
+        color: gold;
+    }
+
+.firstHeaderMenu {
+    margin-left: 27%;
+    margin-top: 25px;
+    border-color: #1a1a2e;
+    border-width: 0;
+    color: white;
+    background-color: #1a1a2e;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+}
+
+    .firstHeaderMenu:hover {
+        background-color: #1a1a2e;
+        color: gold;
+    }
+
+.body {
+    background-color: #22243d;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.bodyTitle {
+    position: relative;
+    margin-top: 10%;
+    margin-left: 5%;
+    font-size: 40px;
+    margin-bottom: 0;
+    display: inline-block;
+    font-weight: bold;
+    text-align: left;
+}
+
+.bodyDescription {
+    margin-top: 2%;
+    font-size: 16px;
+    margin-left: 5%;
+    display: block;
+    text-align: left;
+}
+
+
+.bodyImg {
+    width: 35%;
+    height: auto;
+    float: right;
+    margin-right: 10%;
+    margin-top: -20%;
+}
+
+.bodyExamples {
+    margin-top: 18%;
+    margin-left: 5%;
+    width: 13%;
+    margin-bottom: 8%;
+    /* height: 120px; */
+    /* display: inline-table; */
+    display: inline-block;
+}
+
+.bodyIcon {
+    border: 2px solid #1a1a2e;
+    padding: 1.2% 1.2% 1.2% 1.2%;
+}
+
+.bodyExamplesTitle {
+    font-size: 20px;
+    margin-left: 2%;
+}
+
+.bodyExampleDescription {
+    font-size: 16px;
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 0;
+}
+
+.footer {
+    width: 100%;
+    height: 50px;
+    background-color: #1a1a2e;
+    color: white;
+}
+
+.footerBles {
+    margin-left: 2%;
+    font-size: 18px;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.footerphone {
+    margin-left: 65%;
+    font-size: 18px;
+    margin-bottom: 0;
+    display: inline-block;
+}

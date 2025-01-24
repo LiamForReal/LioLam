@@ -28,12 +28,20 @@ namespace WSRestaurant
         public Menu GetMenu()
         {
             Menu menu = new Menu();
+            int totalPages = 0;
             try
             {
                 this.dBContext.Open();
                 menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
+
+                totalPages = menu.Dishes.Count() / 12; 
+                if (menu.Dishes.Count() % 12 != 0)
+                    totalPages++;
+                
+                menu.totalPages = totalPages;
+                menu.Dishes = menu.Dishes.Take(12).ToList();
                 menu.PageNumber = 1;
                 menu.ChefId = -1;
                 menu.TypeId = -1;
@@ -53,35 +61,43 @@ namespace WSRestaurant
         }
 
         [HttpGet]
-        public Menu GetSortedMenu(int pageNumber = 1,int chefId = -1, int typeId = -1, int amountPerPage = 12)
+        public Menu GetSortedMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int amountPerPage = 12)
         {
             Menu menu = new Menu();
             int newAmount;
             try
             {
-                
+                menu.ChefId = -1;
+                menu.TypeId = -1;
                 this.dBContext.Open();
-                if (chefId != -1 && typeId != -1)
+                if (chefId != null && typeId != null)
                 {
                     //add bought sorts
-                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId.ToString());
-                    List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId.ToString());
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
+                    List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
                     menu.Dishes = menu.Dishes.Except(dishesByType).ToList();
                 }
-                else if(chefId != -1 )
+                else if(chefId != null)
                 {
-                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId.ToString());
+                    menu.ChefId = int.Parse(chefId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
                 }
-                else if (typeId != -1)
+                else if (typeId != null)
                 {
-                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId.ToString());
+                    menu.TypeId = int.Parse(typeId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
                 }
                 else
                 {
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 }
                 int PageAmount = menu.Dishes.Count() / amountPerPage;
-                if(PageAmount < (pageNumber - 1))
+                if (menu.Dishes.Count % 12 != 0)
+                {
+                    PageAmount++;
+                }
+
+                if (PageAmount < (pageNumber - 1))
                 {
                     throw new Exception("you dont have anough dishes to fill this page");
                 }
@@ -92,11 +108,10 @@ namespace WSRestaurant
                 }
                 else menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * amountPerPage, amountPerPage);
 
+                menu.totalPages = PageAmount;
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
                 menu.PageNumber = pageNumber;
-                menu.ChefId = chefId;
-                menu.TypeId = typeId;
                 this.dBContext.Close();
             }
             catch (Exception ex)

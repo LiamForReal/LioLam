@@ -1,0 +1,50 @@
+﻿@using LiolamResteurent
+@model Dishes
+@{
+    ViewData["Title"] = "GetDish";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@section Styles
+{
+    <link href="~/css/guest/getdish.css" rel="stylesheet" />
+}
+
+<div class="dish-info-container">
+    <h1 class="dish-name">@Model.DishName</h1>
+    <div class="dish-header">
+        <img src="@Model.DishImage" alt="@Model.DishName" class="dish-image" />
+        <div class="dish-details">
+            <div class="description-section">
+                <h2 class="section-title">Description</h2>
+                <p class="dish-description">@Model.DishDescription</p>
+            </div>
+
+            <div class="price-section">
+                <h2 class="section-title">Price</h2>
+                <p class="dish-price">@Model.DishPrice $</p>
+            </div>
+
+            <div class="chefs-section">
+                <h2 class="section-title">Chefs</h2>
+                <ul class="chefs-list">
+                    @foreach (var chef in Model.chefs)
+                    {
+                        <li class="chef-item">
+                            <img src="@chef.ChefImage" alt="@chef.ChefFirstName @chef.ChefLastName" class="chef-image" />
+                            <span class="chef-name">@chef.ChefFirstName @chef.ChefLastName</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="types-section">
+                <h2 class="section-title">Dish Types</h2>
+                <p class="dish-types">@string.Join(", ", Model.types.Select(t => t.TypeName))</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="back-button-container">
+    <a href="/Guest/GetMenu" class="back-button">Back to Menu</a>
+</div>
