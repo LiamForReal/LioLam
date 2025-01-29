@@ -1,2 +1,132 @@
-﻿body {
+﻿
+.formBounts {
+    width: 500px;
+    justify-content: center;
+    height:80vh;
+    align-items: center;
+    padding: 50px;
+    border: 3px gold solid;
+    background-color: #1a1a2e;
+    font-size: 16px;
+}
+
+input::placeholder {
+    font-size: 12px;
+}
+
+input {
+    margin-top: 10px;
+    position: relative;
+}
+
+label {
+    color: gold;
+    margin-top: 10px;
+    position: relative;
+}
+
+.textinputId {
+    color: gold;
+    border-radius: 5px;
+    border-color: black;
+    width: 250px;
+    height: 30px;
+    background-color: #22243d;
+}
+
+.textinputUser {
+    color: gold;
+    border-radius: 5px;
+    border-color: black;
+    width: 250px;
+    height: 30px;
+    background-color: #22243d;
+}
+
+.textinputCity {
+    color: gold;
+    border-radius: 5px;
+    border-color: black;
+    width: 250px;
+    height: 30px;
+        background-color: #22243d;
+    margin-bottom: 30px;
+}
+
+.textinputEmail {
+    color: gold;
+    border-radius: 5px;
+    border-color: black;
+    width: 250px;
+    height: 30px;
+        background-color: #22243d;
+}
+
+.radioText {
+    margin: 0px;
+}
+
+.radioInput {
+    margin-left: 193px;
+    display: inline-block;
+}
+
+.checkBoxText {
+    margin: 0px;
+}
+
+.checkBoxInput {
+    position: relative;
+    padding-top: -5px;
+    margin-left: 193px;
+    display: inline-block;
+}
+
+button {
+    font-size: 14px;
+    width: 100px;
+    height: 50px;
+    color: black;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#moreInfoError {
+    margin-left: -468px;
+}
+
+#cityError {
+    top: 330px;
+    left: 675px;
+}
+
+.textareaTitle {
+    margin: 0px;
+}
+
+.textarea {
+    margin-top: 40px;
+    margin-left: 180px;
+    border-radius: 5px;
+    border: 2px solid black;
+    display: inline-block;
+}
+
+.submit {
+    font-weight: bold;
+    margin-left: 75px;
+    margin-top: 50px;
+}
+
+.error {
+    position: absolute;
+    font-size: 14px;
+    color: red;
+}
+
+.clear {
+    font-weight: bold;
+    margin-left: 125px;
+    margin-top: 50px;
 }

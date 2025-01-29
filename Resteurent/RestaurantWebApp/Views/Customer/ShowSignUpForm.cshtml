@@ -8,11 +8,70 @@
 {
     <link href="~/css/guest/signup.css" rel="stylesheet" />
 }
+@section Js
+{
+    <script src="~/javascript/customer/signup.js"></script>
+}
 
-@if (ViewBag["error"] != null)
+@if (ViewBag.Error == true)
 {
     <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
 }
 
+<form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp">
+    <label>User Id</label>
+    <input class="textinputId" type="text" id="userId" name="userId" placeholder="Enter your Id" /><br>
+    <lable class="error" id="idError"></lable>
+    <label>User Name</label>
+    <input class="textinputUser" type="text" id="userName" name="userName" placeholder="Enter your Name" /><br>
+    <lable class="error" id="userNameError"></lable>
+    <label>Email</label>
+    <input class="textinputEmail" type="email" id="email" name="email" placeholder="Enter your Email" /><br>
+    <lable class="error" id="emailError"></lable>
 
-<h1>got it sign up</h1>
+    <label class="cityText">city</label>
+    <input class="textinputCity" list="cities" id="cityInput">
+    <datalist id="cities" name="cities">
+        <option value="Ramla"></option>
+        <option value="Jerushalem"></option>
+        <option value="Tel Aviv"></option>
+        <option value="Lod"></option>
+        <option value="Kiriat Ono"></option>
+        <option value="Tveria"></option>
+        <option value="Yafo"></option>
+        <option value="Metula"></option>
+        <option value="Rehovot"></option>
+    </datalist>
+    <lable class="error" id="cityError"></lable>
+
+    <p class="radioText">programmer kind</p>
+    <lable class="error" id="programmerKindError"></lable>
+    <input class="radioInput" id="programmerkind" type="radio" name="programmerkind">
+    <label>Front Hand</label><br>
+    <input class="radioInput" id="programmerkind" type="radio" name="programmerkind">
+    <label>Back Hand</label><br>
+    <input class="radioInput" id="programmerkind" type="radio" name="programmerkind">
+    <label>Full Stack</label>
+
+    <p class="checkBoxText">free days to work</p>
+    <lable class="error" id="freeDaysError"></lable>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Sunday</label><br>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Monday</label><br>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Tuesday</label><br>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Wednesday</label><br>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Thursday</label><br>
+    <input class="checkBoxInput" id="freeDays" name="freeDays" type="checkbox">
+    <label>Friday</label><br>
+
+    <p class="textareaTitle">little about you</p>
+    <textarea class="textarea" rows="14" cols="36" id="moreInfo" name="moreInfo"></textarea>
+    <lable class="error" id="moreInfoError"></lable>
+    <button type="button" class="submit" onclick="checkForm()">Submit</button>
+    <button type="reset" class="clear">Clear</button>
+    <script src="checkValid.js"></script>
+</form>

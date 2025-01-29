@@ -2,16 +2,27 @@
     ViewData["Title"] = "MasterPage";
 }
 
-<link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+
 @section Styles 
 {
     
 }
 @RenderSection("Styles", required: false)
+@section Js
+{
+
+}
+@RenderSection("Js", required: false)
+
+@if (!IsSectionDefined("Styles"))
+{
+    <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+}
+
+<script src="~/javascript/masterpage.js"></script>
 <link href="~/css/guest/masterpage.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <script src="/_framework/aspnetcore-browser-refresh.js"></script>
-<script src="~/javascript/masterpage.js"></script>
     <div class="header">
         <i class="fas fa-utensils headerIcon"></i>
         <p class="headerTitle">LioLam</p>

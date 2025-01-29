@@ -16,17 +16,28 @@ namespace RestaurantWebApp.Controllers
             client.Path = "api/Customer/GetLogIn";
             client.AddParameter("userName", userName);
             client.AddParameter("password", password);
-            string customerCheck = client.Get().Result;
-            if(customerCheck == null)
+            try
             {
-                //return someting 
+                string customerCheck = client.Get().Result;
+                if (customerCheck == null)
+                {
+                    //return someting 
+                    ViewBag.Error = true;
+                    return View("ShowLogInForm");
+                }
+                ViewBag.Error = false;
+                HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
+                                                                   //the id property is added to the setion
+                                                                   //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+                return RedirectToAction("Method", "controller");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
                 ViewBag.Error = true;
                 return View("ShowLogInForm");
             }
-            HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
-            //the id property is added to the setion
-            //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-            return RedirectToAction("Method", "controller");
+            
         }
 
         [HttpGet]
