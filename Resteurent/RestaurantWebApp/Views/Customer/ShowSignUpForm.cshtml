@@ -4,5 +4,15 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
-<h1>ShowSignUpForm</h1>
+@section Styles
+{
+    <link href="~/css/guest/signup.css" rel="stylesheet" />
+}
 
+@if (ViewBag["error"] != null)
+{
+    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+}
+
+
+<h1>got it sign up</h1>

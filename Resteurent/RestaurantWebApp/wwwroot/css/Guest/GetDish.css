@@ -35,7 +35,7 @@
 .dish-image {
     flex: 4;
     margin-top: 2%;
-    max-height: 450px;
+    height: 450px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     object-fit: cover;

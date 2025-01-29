@@ -16,13 +16,13 @@
         <i class="fas fa-utensils headerIcon"></i>
         <p class="headerTitle">LioLam</p>
         <a href="http://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
-        @if(TempData["id"] == null)
+        @if(TempData["Id"] == null)
         {
             <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
-            <a class="headerMenu" href="http://localhost:7287/Customer/Login">LogIn</a>
-            <a class="headerMenu" href="http://localhost:7287/Customer/SignUp">SignUp</a>
+            <a class="headerMenu" href="http://localhost:7287/Customer/ShowLogInForm">LogIn</a>
+            <a class="headerMenu" href="http://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
         }
-        @if(TempData["id"] != null)
+        @if(TempData["Id"] != null)
         {
             <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
             <a class="headerMenu">LogOut</a>

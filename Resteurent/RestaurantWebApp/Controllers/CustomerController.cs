@@ -7,7 +7,7 @@ namespace RestaurantWebApp.Controllers
     public class CustomerController : Controller
     {
         [HttpPost]
-        public IActionResult Login(string userName, string password)
+        public IActionResult LogIn(string userName, string password)
         {
             WebClient<string> client = new WebClient<string>();
             client.Scheme = "http";
@@ -21,7 +21,7 @@ namespace RestaurantWebApp.Controllers
             {
                 //return someting 
                 ViewBag.Error = true;
-                return View("ShowLoginForm");
+                return View("ShowLogInForm");
             }
             HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
             //the id property is added to the setion
@@ -30,7 +30,7 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult ShowLoginForm()
+        public IActionResult ShowLogInForm()
         {
             return View();
         }
@@ -38,7 +38,31 @@ namespace RestaurantWebApp.Controllers
         [HttpPost]
         public IActionResult SignUp(Customers customer)
         {
-            return View();
+            WebClient<string> client = new WebClient<string>();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Customer/GetLogIn";
+            client.AddParameter("customerId",customer.Id);
+            client.AddParameter("CustomerUserName", customer.CustomerUserName);
+            client.AddParameter("CustomerHouse", customer.CustomerHouse.ToString());
+            client.AddParameter("CityId", customer.city.Id);
+            client.AddParameter("StreetId", customer.street.Id);
+            client.AddParameter("CustomerPhone", customer.CustomerPhone);
+            client.AddParameter("CustomerMail", customer.CustomerMail);
+            client.AddParameter("CustomerPassword",customer.CustomerPassword);
+            client.AddParameter("CustomerImage", customer.CustomerImage);
+            string customerCheck = client.Get().Result;
+            if (customerCheck == null)
+            {
+                //return someting 
+                ViewBag.Error = true;
+                return View("ShowSignUpForm");
+            }
+            HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
+            //the id property is added to the setion
+            //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+            return RedirectToAction("Method", "controller");
         }
 
         [HttpGet]

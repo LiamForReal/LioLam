@@ -79,7 +79,7 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool signUp(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
+        public string signUp(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
         {
             bool flag = false;
             try
@@ -94,13 +94,15 @@ namespace WSRestaurant.Controllers
                 //connection with city 
                 //connection with street
                 this.dBContext.Close();
-                return flag;
+                if (flag == false)
+                    return null;
+                return customerId;
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
-                return false;
+                return null;
             }
             finally
             {
