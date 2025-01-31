@@ -47,30 +47,23 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(Customers customer)
+
+        public IActionResult SignUp(string customerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
-            WebClient<string> client = new WebClient<string>();
+            WebClient<Customers> client = new WebClient<Customers>();
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/Customer/GetLogIn";
-            client.AddParameter("customerId",customer.Id);
-            client.AddParameter("CustomerUserName", customer.CustomerUserName);
-            client.AddParameter("CustomerHouse", customer.CustomerHouse.ToString());
-            client.AddParameter("CityId", customer.city.Id);
-            client.AddParameter("StreetId", customer.street.Id);
-            client.AddParameter("CustomerPhone", customer.CustomerPhone);
-            client.AddParameter("CustomerMail", customer.CustomerMail);
-            client.AddParameter("CustomerPassword",customer.CustomerPassword);
-            client.AddParameter("CustomerImage", customer.CustomerImage);
-            string customerCheck = client.Get().Result;
-            if (customerCheck == null)
+            client.Path = "api/Customer/SignUp";
+
+            Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+            if (client.Post(customer).Result == false)
             {
                 //return someting 
                 ViewBag.Error = true;
                 return View("ShowSignUpForm");
             }
-            HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
+            HttpContext.Session.SetString("Id", customer.Id);//session is the thread the server allocate to client to handle in my project it is a stateless space
             //the id property is added to the setion
             //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
             return RedirectToAction("Method", "controller");
@@ -80,7 +73,14 @@ namespace RestaurantWebApp.Controllers
         public IActionResult ShowSignUpForm()
         {
             //city and strits lists from ws
-            return View();
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>();
+            registerViewModel registerViewModel = new registerViewModel();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Customer/ShowSignUp";
+            registerViewModel = client.Get().Result;
+            return View(registerViewModel);
         }
     }
 }

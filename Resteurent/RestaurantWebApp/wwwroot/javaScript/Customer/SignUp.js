@@ -5,11 +5,13 @@ function checkForm()
     isFormValid = true;
     checkId();
     checkUserName();
+    checkPassword();
     checkEmail();
+    checkPhone();
     checkCity();
     checkStreet();
-    checkPhone();
     checkHouse();
+
     if (isFormValid == true) {
         document.forms[0].submit();
     }
@@ -56,7 +58,7 @@ function checkHouse()
         isFormValid = false;
         return;
     }
-    var regex = /^[1-9][0-9]{1,0}/
+    var regex = /^[1-9][0-9]?$/
     if (regex.test(id) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "House number need to be number between 1 to 99";
@@ -74,7 +76,7 @@ function checkPhone() {
         isFormValid = false;
         return;
     }
-    var regex = /05^[0-9]{7}/
+    var regex = /05^[0-9]{8}/
     if (regex.test(id) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone is invalid";
@@ -119,42 +121,13 @@ function checkEmail() {
 }
 
 function checkCity() {
-    var input = document.getElementById("cityInput").value;
-    var datalist = document.getElementById("cities");
+    var select = document.getElementById("cities");
     var lbl = document.getElementById("cityError");
-    var options = datalist.getElementsByTagName("option");
+    var options = select.getElementsByTagName("option");
     var flag = false;
     lbl.style.visibility = "hidden";
 
-    if (input == "") {
-        lbl.style.visibility = "visible";
-        lbl.innerHTML = "City can not be empty";
-        isFormValid = false;
-        return;
-    }
-
-    for (var i = 0; i < options.length; i++) {
-        if (input === options[i].value) {
-            flag = true;
-        }
-    }
-
-    if (!flag) {
-        lbl.style.visibility = "visible";
-        lbl.innerHTML = "Choose city from the list";
-        isFormValid = false;
-    }
-}
-
-function checkCity() {
-    var input = document.getElementById("streetInput").value;
-    var datalist = document.getElementById("streets");
-    var lbl = document.getElementById("streetError");
-    var options = datalist.getElementsByTagName("option");
-    var flag = false;
-    lbl.style.visibility = "hidden";
-
-    if (input == "") {
+    if (select.textContent == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Street can not be empty";
         isFormValid = false;
@@ -172,5 +145,31 @@ function checkCity() {
         lbl.innerHTML = "Choose street from the list";
         isFormValid = false;
     }
+}
 
+function checkStreet() {
+    var select = document.getElementById("streets");
+    var lbl = document.getElementById("streetError");
+    var options = select.getElementsByTagName("option");
+    var flag = false;
+    lbl.style.visibility = "hidden";
+    
+    if (select.textContent == "") {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Street can not be empty";
+        isFormValid = false;
+        return;
+    }
+
+    for (var i = 0; i < options.length; i++) {
+        if (input === options[i].value) {
+            flag = true;
+        }
+    }
+
+    if (!flag) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Choose street from the list";
+        isFormValid = false;
+    }
 }

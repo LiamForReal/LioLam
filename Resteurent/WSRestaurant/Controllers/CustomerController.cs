@@ -30,8 +30,8 @@ namespace WSRestaurant.Controllers
                 {
                     if (customer.CustomerUserName == userName && customer.CustomerPassword == password)
                     {
-                        customer.city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(customer.Id);
-                        customer.street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(customer.Id);
+                        customer.cityId = int.Parse(unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(customer.Id).Id);
+                        customer.streetId = int.Parse(unitOfWorkReposetory.streetReposetoryObject.getByCustomer(customer.Id).Id);
                         this.dBContext.Close();
                         return customer;
                     }
@@ -51,17 +51,38 @@ namespace WSRestaurant.Controllers
             }
         }
 
+        [HttpGet]
+        public registerViewModel ShowSignUp()
+        {
+            try
+            {
+                registerViewModel registerViewModel = new registerViewModel();
+                this.dBContext.Open();
+                registerViewModel.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                registerViewModel.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
+                this.dBContext.Close();
+                return registerViewModel;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
         [HttpPost]
-        public bool UpdateExistingUser(string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
+        public bool UpdateExistingUser(string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
         {
             bool flag = false;
             try
-            {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
-
-                Customers customer = new Customers(CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+            {    
                 this.dBContext.Open();
+                Customers customer = new Customers(CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 this.dBContext.Close();
                 return flag;
@@ -79,16 +100,21 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public string signUp(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
+        public string signUp(string customerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
         {
             bool flag = false;
             try
             {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(StreetId);
-
-                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
+                List<Customers> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
+                foreach(Customers Icustomer in customers)
+                {
+                    if(Icustomer.Id == customerId || Icustomer.CustomerUserName == CustomerUserName)
+                    {
+                        return null;
+                    }
+                }
+                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
                 //connection with city 

@@ -1,13 +1,16 @@
 ﻿
 .formBounts {
+    margin-top:20px;
     width: 500px;
     justify-content: center;
-    height:80vh;
+    height:70vh;
+    position:absolute;
     align-items: center;
-    padding: 50px;
+    padding: 30px;
     border: 3px gold solid;
     background-color: #1a1a2e;
     font-size: 16px;
+    margin-bottom:50px;
 }
 
 input::placeholder {
@@ -16,7 +19,7 @@ input::placeholder {
 }
 
 input {
-    margin-top: 10px;
+    margin-top: 18px;
     position: relative;
 }
 
@@ -28,7 +31,8 @@ label {
 .textinputId {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    margin: 0;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
@@ -37,7 +41,7 @@ label {
 .password {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
@@ -46,7 +50,7 @@ label {
 .textinputPhone {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
@@ -55,16 +59,17 @@ label {
 .textinputUser {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
 }
 
-.city {
+.cities {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
+    margin-top: 10px;
     width: 250px;
     height: 30px;
     background-color: #22243d;
@@ -73,16 +78,17 @@ label {
 .textinputHouseNumber {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
 }
-.street {
+.streets {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
+    margin-top:10px;
     height: 30px;
     background-color: #22243d;
 }
@@ -90,7 +96,7 @@ label {
 .email {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
@@ -99,17 +105,14 @@ label {
 .image {
     color: gold;
     border-radius: 5px;
-    border-color: black;
+    border: none;
     width: 250px;
     height: 30px;
     background-color: #22243d;
 }
 button {
     font-size: 14px;
-    width: 100px;
-    height: 50px;
     color: black;
-    border: 2px solid blue;
     border-radius: 5px;
     margin-bottom: 20px;
 }
@@ -126,7 +129,6 @@ button {
 .submit {
     font-weight: bold;
     margin-left: 75px;
-    margin-top: 50px;
     border: 3px gold solid;
     background-color: #1a1a2e;
     color:white;
@@ -144,7 +146,6 @@ button {
     font-weight: bold;
     margin-left: 125px;
     border: 3px gold solid;
-    margin-top: 50px;
     color: white;
     background-color: #1a1a2e;
     padding: 30px;

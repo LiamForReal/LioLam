@@ -1,4 +1,5 @@
-﻿
+﻿@using LiolamResteurent
+@model registerViewModel
 @{
     ViewData["Title"] = "ShowSignUpForm";
     Layout = "~/Views/Shared/MasterPage.cshtml";
@@ -18,62 +19,57 @@
     <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
 }
 
-<form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp">
-    <label>User Id</label>
-    <input class="textinputId" type="text" id="userId" name="userId" placeholder="Enter your Id" /><br>
-    <lable class="error" id="idError"></lable>
-    <label>User Name</label>
-    <input class="textinputUser" type="text" id="userName" name="userName" placeholder="Enter your User Name" /><br>
-    <lable class="error" id="userNameError"></lable>
-    <label>Password</label>
-    <input class="password" type="password" id="password" name="password" placeholder="Enter your Password" /><br>
-    <lable class="error" id="passwordError"></lable>
-    <label>Email</label>
-    <input class="email" type="email" id="email" name="email" placeholder="Enter your Email" /><br>
-    <lable class="error" id="emailError"></lable>
-    <label>Phone</label>
-    <input class="textinputPhone" type="text" id="phone" name="phone" placeholder="Enter your Phone Number" /><br>
-    <lable class="error" id="phoneError"></lable>
+@if (Model == null)
+{
+    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+}
+else
+{
+    <form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp">
+        <label>User Id</label>
+        <input class="textinputId" type="text" id="userId" name="customerId" placeholder="Enter your Id" /><br>
+        <lable class="error" id="idError"></lable>
+        <label>User Name</label>
+        <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" /><br>
+        <lable class="error" id="userNameError"></lable>
+        <label>Password</label>
+        <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password" /><br>
+        <lable class="error" id="passwordError"></lable>
+        <label>Email</label>
+        <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" /><br>
+        <lable class="error" id="emailError"></lable>
+        <label>Phone</label>
+        <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" /><br>
+        <lable class="error" id="phoneError"></lable>
 
-    <label class="cityText">City</label>
-    <input class="city" list="cities" id="cityInput">
-    <datalist id="cities" name="cities">
-        <option value="Ramla"></option>
-        <option value="Jerushalem"></option>
-        <option value="Tel Aviv"></option>
-        <option value="Lod"></option>
-        <option value="Kiriat Ono"></option>
-        <option value="Tveria"></option>
-        <option value="Yafo"></option>
-        <option value="Metula"></option>
-        <option value="Rehovot"></option>
-    </datalist>
-    <lable class="error" id="cityError"></lable>
+        <label class="cityText">City</label>
+        <select id = "cities" class="cities" name="CityId">
+            @foreach (Cities city in Model.Cities)
+            {
+                <option value="@city.Id">@city.CityName</option>
+            }
+        </select>
+        <lable class="error" id="cityError"></lable>
 
-    <label class="streetText"><br />Street</label>
-    <input class="street" list="streets" id="streetInput">
-    <datalist id="streets" name="streets">
-        <option value="Rabmla"></option>
-        <option value="Jerushalem"></option>
-        <option value="Tel Aviv"></option>
-        <option value="Lod"></option>
-        <option value="Kiriat Ono"></option>
-        <option value="Tveria"></option>
-        <option value="Yafo"></option>
-        <option value="Metula"></option>
-        <option value="Rehovot"></option>
-    </datalist>
+        <label class="streetText"><br />Street</label>
+        <select id="streets" class="streets" name="StreetId">
+            @foreach (Streets street in Model.Streets)
+            {
+                <option value="@street.Id">@street.StreetName</option>
+            }
+        </select>
 
-    <lable class="error" id="streetError"></lable>
+        <lable class="error" id="streetError"></lable>
 
-    <label><br />House Number</label>
-    <input class="textinputHouseNumber" type="text" id="houseNumber" name="houseNumber" placeholder="Enter your House Number" /><br>
-    <lable class="error" id="houseNumberError"></lable>
+        <label><br />House Number</label>
+        <input class="textinputHouseNumber" type="text" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" /><br>
+        <lable class="error" id="houseNumberError"></lable>
 
-    <label>Image</label>
-    <input class="image" type="image" id="image" name="image" placeholder="Upload your Image" /><br>
-    <lable class="error" id="ImageError"></lable>
-   
-    <button type="button" class="submit" onclick="checkForm()">Submit</button>
-    <button type="reset" class="clear">Clear</button>
-</form>
+        <label>Image</label>
+        <input class="image" type="image" id="image" name="CustomerImage" placeholder="Upload your Image" /><br>
+        <lable class="error" id="ImageError"></lable>
+
+        <button type="button" class="submit" onclick="checkForm()">Submit</button>
+        <button type="reset" class="clear">Clear</button>
+    </form>
+}
