@@ -47,10 +47,11 @@ else
                     <h2 class="section-title">Dish Types</h2>
                     <p class="dish-types">@string.Join(", ", Model.types.Select(t => t.TypeName))</p>
                 </div>
+                <div class="back-button-container">
+                    <a href="/Guest/GetMenu" class="back-button">Back to Menu</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="back-button-container">
-        <a href="/Guest/GetMenu" class="back-button">Back to Menu</a>
-    </div>
+
 }

@@ -1,15 +1,15 @@
 ﻿var isFormValid;
 
-function checkForm() {
+function checkForm()
+{
     isFormValid = true;
     checkId();
     checkUserName();
     checkEmail();
     checkCity();
-    chackProgramerKind();
-    checkFreeDays();
-    checkMoreInfo();
-
+    checkStreet();
+    checkPhone();
+    checkHouse();
     if (isFormValid == true) {
         document.forms[0].submit();
     }
@@ -31,8 +31,55 @@ function checkId() {
         lbl.innerHTML = "Id is invalid";
         isFormValid = false;
     }
+}
 
+function checkPassword() {
+    var id = document.getElementById("password").value;
+    var lbl = document.getElementById("passwordError");
+    lbl.style.visibility = "hidden";
+    if (id == "") {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password can not be empty";
+        isFormValid = false;
+        return;
+    }
+}
 
+function checkHouse()
+{
+    var id = document.getElementById("houseNumber").value;
+    var lbl = document.getElementById("houseNumberError");
+    lbl.style.visibility = "hidden";
+    if (id == "") {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "House number can not be empty";
+        isFormValid = false;
+        return;
+    }
+    var regex = /^[1-9][0-9]{1,0}/
+    if (regex.test(id) == false) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "House number need to be number between 1 to 99";
+        isFormValid = false;
+    }
+
+}
+function checkPhone() {
+    var id = document.getElementById("phone").value;
+    var lbl = document.getElementById("phoneError");
+    lbl.style.visibility = "hidden";
+    if (id == "") {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Phone can not be empty";
+        isFormValid = false;
+        return;
+    }
+    var regex = /05^[0-9]{7}/
+    if (regex.test(id) == false) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Phone is invalid";
+        isFormValid = false;
+    }
 }
 
 function checkUserName() {
@@ -97,61 +144,33 @@ function checkCity() {
         lbl.innerHTML = "Choose city from the list";
         isFormValid = false;
     }
-
 }
 
-function chackProgramerKind() {
-    var gender = document.getElementsByName("programmerkind");
-    var lbl = document.getElementById("programmerKindError");
-    lbl.style.visibility = "hidden";
-    for (var i = 0; i < gender.length; i++) {
-        if (gender[i].checked) {
-            return;
-        }
-    }
-    lbl.style.visibility = "visible";
-    lbl.innerHTML = "You must choose one option";
-    isFormValid = false;
-}
-
-function checkFreeDays() {
-    var freeDays = document.getElementsByName("freeDays");
-    var lbl = document.getElementById("freeDaysError");
-    var counter = 0;
-    lbl.style.visibility = "hidden"
-
-    for (var i = 0; i < freeDays.length; i++) {
-        if (freeDays[i].checked)
-            counter++;
-    }
-
-    if (counter < 2) {
-        lbl.style.visibility = "visible";
-        lbl.innerHTML = "You must choose at list two";
-        isFormValid = false;
-    }
-
-}
-
-function checkMoreInfo() {
-    var moreInfo = document.getElementById("moreInfo").value;
-    var lbl = document.getElementById("moreInfoError");
-    var max = 500;
-    var min = 50;
+function checkCity() {
+    var input = document.getElementById("streetInput").value;
+    var datalist = document.getElementById("streets");
+    var lbl = document.getElementById("streetError");
+    var options = datalist.getElementsByTagName("option");
+    var flag = false;
     lbl.style.visibility = "hidden";
 
-    if (moreInfo == "") {
+    if (input == "") {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "This input can not be empty";
+        lbl.innerHTML = "Street can not be empty";
         isFormValid = false;
         return;
     }
 
-    if (moreInfo.length > max || moreInfo.length < min) {
+    for (var i = 0; i < options.length; i++) {
+        if (input === options[i].value) {
+            flag = true;
+        }
+    }
+
+    if (!flag) {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Write between " + min + " - " + max + " characters";
+        lbl.innerHTML = "Choose street from the list";
         isFormValid = false;
     }
+
 }
-
-

@@ -52,7 +52,7 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
+        public bool UpdateExistingUser(string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
         {
             bool flag = false;
             try
@@ -60,7 +60,7 @@ namespace WSRestaurant.Controllers
                 Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
                 Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
 
-                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 this.dBContext.Close();

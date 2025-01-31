@@ -35,9 +35,17 @@ namespace LiolamResteurent
             //CurrentReservation = null;
             //this.orders = null;
         }
-        public Customers()
+        public Customers(string customerUserName, int customerHouse, Cities city, Streets street, string customerPhone, string customerMail, string customerPassword, string customerImage)
         {
+            CustomerUserName = customerUserName;
+            CustomerHouse = customerHouse;
 
+            this.city = city;
+            this.street = street;
+            CustomerPhone = customerPhone;
+            CustomerMail = customerMail;
+            CustomerPassword = customerPassword;
+            CustomerImage = customerImage;
         }
     }
 }
