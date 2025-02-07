@@ -7,7 +7,7 @@ namespace RestaurantWebApp.Controllers
     public class CustomerController : Controller
     {
         [HttpPost]
-        public IActionResult LogIn(string userName, string password)
+        public async Task<IActionResult> LogIn(string userName, string password)
         {
             WebClient<string> client = new WebClient<string>();
             client.Scheme = "http";
@@ -18,7 +18,7 @@ namespace RestaurantWebApp.Controllers
             client.AddParameter("password", password);
             try
             {
-                string customerCheck = client.Get().Result;
+                string customerCheck = await client.Get();
                 if (customerCheck == null)
                 {
                     //return someting 
@@ -37,7 +37,7 @@ namespace RestaurantWebApp.Controllers
                 ViewBag.Error = true;
                 return View("ShowLogInForm");
             }
-            
+
         }
 
         [HttpGet]
@@ -47,30 +47,44 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-
-        public IActionResult SignUp(string customerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public async Task<IActionResult> SignUp(string customerId, string CustomerUserName, int CustomerHouse,
+                                                int CityId, int StreetId, string CustomerPhone, string CustomerMail,
+                                                string CustomerPassword, IFormFile Image)
         {
-            WebClient<Customers> client = new WebClient<Customers>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Customer/SignUp";
-
-            Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
-            if (client.Post(customer).Result == false)
+            WebClient<Customers> client = new WebClient<Customers>
             {
-                //return someting 
-                ViewBag.Error = true;
-                return View("ShowSignUpForm");
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/SignUp"
+            };
+
+            Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId,
+                                               CustomerPhone, CustomerMail, CustomerPassword, "default");
+
+            // Read image stream
+            using (var imageStream = Image.OpenReadStream())
+            {
+                // Send the request with customer data and image
+                bool result = await client.Post(customer, imageStream);
+
+                if (!result)
+                {
+                    ViewBag.Error = true;
+                    return View("ShowSignUpForm");
+                }
             }
-            HttpContext.Session.SetString("Id", customer.Id);//session is the thread the server allocate to client to handle in my project it is a stateless space
-            //the id property is added to the setion
-            //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-            return RedirectToAction("Method", "controller");
+
+            // Store session info for logged-in user
+            HttpContext.Session.SetString("Id", customerId);
+
+            // Redirect to a successful page
+            return RedirectToAction("GetDefaultScreen", "Guest"); // Change "Dashboard" to your actual target page
         }
 
+
         [HttpGet]
-        public IActionResult ShowSignUpForm()
+        public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
             WebClient<registerViewModel> client = new WebClient<registerViewModel>();
@@ -79,7 +93,7 @@ namespace RestaurantWebApp.Controllers
             client.Port = 5125;
             client.Host = "localhost";
             client.Path = "api/Customer/ShowSignUp";
-            registerViewModel = client.Get().Result;
+            registerViewModel = await client.Get();
             return View(registerViewModel);
         }
     }

@@ -76,7 +76,7 @@ function checkPhone() {
         isFormValid = false;
         return;
     }
-    var regex = /05^[0-9]{8}/
+    var regex = /^0(5[1-9])[0-9]{7}$/
     if (regex.test(id) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone is invalid";
@@ -94,10 +94,10 @@ function checkUserName() {
         isFormValid = false;
         return;
     }
-    var regex = /^[A-Z]{1}[a-z]{1,20}/
-    if (regex.test(userName) == false) {
+    var regex = /^[A-Za-z][A-Za-z0-9]*$/
+    if (regex.test(id) == false) {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "User name is invalid";
+        lbl.innerHTML = "Username is invalid";
         isFormValid = false;
     }
 }
@@ -135,7 +135,7 @@ function checkCity() {
     }
 
     for (var i = 0; i < options.length; i++) {
-        if (input === options[i].value) {
+        if (select.textContent == options[i].value) {
             flag = true;
         }
     }
@@ -162,7 +162,7 @@ function checkStreet() {
     }
 
     for (var i = 0; i < options.length; i++) {
-        if (input === options[i].value) {
+        if (select.textContent == options[i].value) {
             flag = true;
         }
     }

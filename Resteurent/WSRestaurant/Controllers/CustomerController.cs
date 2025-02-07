@@ -1,6 +1,7 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace WSRestaurant.Controllers
 {
@@ -76,13 +77,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
+        public bool UpdateExistingUser(string Id, string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage, IFormFile pickture) //user details
         {
             bool flag = false;
             try
             {    
                 this.dBContext.Open();
-                Customers customer = new Customers(CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 this.dBContext.Close();
                 return flag;
@@ -100,41 +101,62 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public string signUp(string customerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
+        public async Task<bool> SignUp([FromForm] string Id, [FromForm] string CustomerUserName,
+                                        [FromForm] int CustomerHouse, [FromForm] int CityId,
+                                        [FromForm] int streetId, [FromForm] string CustomerPhone,
+                                        [FromForm] string CustomerMail, [FromForm] string CustomerPassword,
+                                        [FromForm] IFormFile CustomerImage)
         {
-            bool flag = false;
-            try
+            if (CustomerImage != null && CustomerImage.Length > 0)
             {
-                this.dBContext.Open();
-                List<Customers> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                foreach(Customers Icustomer in customers)
+                try
                 {
-                    if(Icustomer.Id == customerId || Icustomer.CustomerUserName == CustomerUserName)
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Customers");
+
+                    // Get file extension
+                    string fileExtension = Path.GetExtension(CustomerImage.FileName);
+
+                    // Create unique file name using the customer ID
+                    string fileName = $"{Id}{fileExtension}";
+                    string filePath = Path.Combine(uploadFolder, fileName);
+
+                    // Save file to disk
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        return null;
+                        await CustomerImage.CopyToAsync(stream);
                     }
+
+                    // Store relative path for web access
+                    string savedFilePath = $"/Images/Customers/{fileName}";
+
+                    // Check if customer exists
+                    var customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
+                    foreach (var Icustomer in customers)
+                    {
+                        if (Icustomer.Id == Id || Icustomer.CustomerUserName == CustomerUserName)
+                        {
+                            return false;
+                        }
+                    }
+
+                    // Create new customer
+                    var customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId,
+                                                 CustomerPhone, CustomerMail, CustomerPassword, savedFilePath);
+
+                    // Save customer to database
+                    bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
+
+
+                    return flag;
                 }
-                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
-                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                //connection with city 
-                //connection with street
-                this.dBContext.Close();
-                if (flag == false)
-                    return null;
-                return customerId;
+                catch (Exception ex)
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return null;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
+            return false;
         }
+
 
         [HttpPost]
         public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople, string CustomerId)

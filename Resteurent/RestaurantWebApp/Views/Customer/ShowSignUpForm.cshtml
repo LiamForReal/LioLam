@@ -6,8 +6,8 @@
 }
 
 @section Styles
-{
-    <link href="~/css/guest/signup.css" rel="stylesheet" />
+{ 
+    <link href="~/css/customer/signup.css" rel="stylesheet" />
 }
 @section Js
 {
@@ -66,7 +66,7 @@ else
         <lable class="error" id="houseNumberError"></lable>
 
         <label>Image</label>
-        <input class="image" type="image" id="image" name="CustomerImage" placeholder="Upload your Image" /><br>
+        <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/png, image/jpeg, image/jpg" /><br>
         <lable class="error" id="ImageError"></lable>
 
         <button type="button" class="submit" onclick="checkForm()">Submit</button>
