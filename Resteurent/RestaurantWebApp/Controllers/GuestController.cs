@@ -63,16 +63,19 @@ namespace ResteurantWebApp.Controllers
             return View(dish);
         }
 
-        [HttpGet]
-        public IActionResult SignUpForm()
+        public async Task<IActionResult> GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1 , int dishPerPage = 12)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SignUp(Customers customer)
-        {
-            return View();
+            WebClient<List<Dishes>> client = new WebClient<List<Dishes>>();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Guest/GetDishList";
+            client.AddParameter("pageNumber", pageNumber.ToString());
+            client.AddParameter("dishPerPage", dishPerPage.ToString());
+            client.AddParameter("chefId", chefId);
+            client.AddParameter("typeId", typeId);
+            List<Dishes> dish = client.Get().Result;
+            return PartialView();
         }
     }
 }

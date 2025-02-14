@@ -179,3 +179,7 @@ button {
 .link {
     text-decoration: none;
 }
+.loader
+{
+   place-content:center;
+}

@@ -1,6 +1,8 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Net.Mime;
 using System.Web;
 
 namespace WSRestaurant.Controllers
@@ -100,24 +102,32 @@ namespace WSRestaurant.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<bool> SignUp([FromForm] string Id, [FromForm] string CustomerUserName,
-                                        [FromForm] int CustomerHouse, [FromForm] int CityId,
-                                        [FromForm] int streetId, [FromForm] string CustomerPhone,
-                                        [FromForm] string CustomerMail, [FromForm] string CustomerPassword,
-                                        [FromForm] IFormFile CustomerImage)
+        /*[HttpPost]
+        public async Task<bool> SignUp(Customers customer, Stream CustomerImage)
         {
             if (CustomerImage != null && CustomerImage.Length > 0)
             {
                 try
                 {
+               
+                    //IFormFile image = new IFormFile();//new IFormFile(CustomerImage);;
                     string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Customers");
 
-                    // Get file extension
-                    string fileExtension = Path.GetExtension(CustomerImage.FileName);
+                    var memoryStream = new MemoryStream();
+                    CustomerImage.CopyTo(memoryStream); // Copy the content of the stream to the MemoryStream
+                    memoryStream.Seek(0, SeekOrigin.Begin); // Reset the position of the MemoryStream to the start
 
+                    // For example purposes, use a default file name and content type
+                    string fileName = "unknownFile";
+                    string contentType = "application/octet-stream"; // You can change it if you have specific content type info
+
+                    // Create the IFormFile instance
+                    IFormFile Image = new FormFile(memoryStream, 0, memoryStream.Length, "file", fileName)
+                    {
+                        ContentType = contentType // Optionally set content type
+                    };
                     // Create unique file name using the customer ID
-                    string fileName = $"{Id}{fileExtension}";
+                    fileName = $"{customer.Id}{Image.FileName}";
                     string filePath = Path.Combine(uploadFolder, fileName);
 
                     // Save file to disk
@@ -133,16 +143,11 @@ namespace WSRestaurant.Controllers
                     var customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
                     foreach (var Icustomer in customers)
                     {
-                        if (Icustomer.Id == Id || Icustomer.CustomerUserName == CustomerUserName)
+                        if (Icustomer.Id == customer.Id || Icustomer.CustomerUserName == customer.CustomerUserName)
                         {
                             return false;
                         }
                     }
-
-                    // Create new customer
-                    var customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId,
-                                                 CustomerPhone, CustomerMail, CustomerPassword, savedFilePath);
-
                     // Save customer to database
                     bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
 
@@ -155,8 +160,7 @@ namespace WSRestaurant.Controllers
                 }
             }
             return false;
-        }
-
+        }*/
 
         [HttpPost]
         public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople, string CustomerId)

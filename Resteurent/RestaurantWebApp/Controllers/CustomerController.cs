@@ -47,9 +47,7 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(string customerId, string CustomerUserName, int CustomerHouse,
-                                                int CityId, int StreetId, string CustomerPhone, string CustomerMail,
-                                                string CustomerPassword, IFormFile Image)
+        public async Task<IActionResult> SignUp(Customers customers, IFormFile file)
         {
             WebClient<Customers> client = new WebClient<Customers>
             {
@@ -59,24 +57,22 @@ namespace RestaurantWebApp.Controllers
                 Path = "api/Customer/SignUp"
             };
 
-            Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, CityId, StreetId,
-                                               CustomerPhone, CustomerMail, CustomerPassword, "default");
 
             // Read image stream
-            using (var imageStream = Image.OpenReadStream())
-            {
+          
                 // Send the request with customer data and image
-                bool result = await client.Post(customer, imageStream);
+                bool result = await client.Post(customers, file.OpenReadStream());
 
                 if (!result)
                 {
                     ViewBag.Error = true;
                     return View("ShowSignUpForm");
                 }
-            }
+      
+
 
             // Store session info for logged-in user
-            HttpContext.Session.SetString("Id", customerId);
+            HttpContext.Session.SetString("Id", customers.Id);
 
             // Redirect to a successful page
             return RedirectToAction("GetDefaultScreen", "Guest"); // Change "Dashboard" to your actual target page
