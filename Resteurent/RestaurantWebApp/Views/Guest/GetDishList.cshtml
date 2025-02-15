@@ -12,7 +12,7 @@
                 </div>
             </a>
         }
-    </div>
+</div>
 <div class="pagination" id="paginationData">
 
         @for (int i = 1; i <= Model.Count; i+=12)
@@ -21,4 +21,4 @@
             int counter = i / 12; 
             <span data-pageNumber="@counter" class="page-number @("active") link" data-pageNumber="@i">@i</span>
         }
-    </div>
+</div>

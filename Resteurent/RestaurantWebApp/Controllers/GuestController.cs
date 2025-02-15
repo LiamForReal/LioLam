@@ -70,12 +70,21 @@ namespace ResteurantWebApp.Controllers
             client.Port = 5125;
             client.Host = "localhost";
             client.Path = "api/Guest/GetDishList";
-            client.AddParameter("pageNumber", pageNumber.ToString());
-            client.AddParameter("dishPerPage", dishPerPage.ToString());
-            client.AddParameter("chefId", chefId);
-            client.AddParameter("typeId", typeId);
-            List<Dishes> dish = client.Get().Result;
-            return PartialView();
+            if (pageNumber != 1)
+            {
+                client.AddParameter("pageNumber", pageNumber.ToString());
+            }
+            if (dishPerPage != 12)
+            {
+                client.AddParameter("dishPerPage", dishPerPage.ToString());
+            }
+            if (chefId != null)
+                client.AddParameter("chefId", chefId);
+            if (typeId != null)
+                client.AddParameter("typeId", typeId);
+            List<Dishes> dishes = client.Get().Result;
+            Console.WriteLine("got " + dishes.Count().ToString() + " items.");
+            return PartialView(dishes);
         }
     }
 }

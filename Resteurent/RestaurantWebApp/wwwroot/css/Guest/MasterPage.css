@@ -2,10 +2,8 @@ body {
     font-family: David;
     width: 100%;
     color: white;
-    height: 100%;
+    height: auto;
     font-size: 20px;
-    margin: 0;
-    padding: 0;
 }
 
 .header {
@@ -35,7 +33,7 @@ body {
     color: white;
     background-color: #1a1a2e;
     text-decoration: none;
-    font-size: 16px;
+
     display: inline-block;
 }
 
@@ -52,7 +50,6 @@ body {
     color: white;
     background-color: #1a1a2e;
     text-decoration: none;
-    font-size: 16px;
     display: inline-block;
 }
 

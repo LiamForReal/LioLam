@@ -182,4 +182,7 @@ button {
 .loader
 {
    place-content:center;
+   position:absolute;
+   width:500px;
+   height:500px;
 }

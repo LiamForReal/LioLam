@@ -21,20 +21,20 @@
                     dataType: "html",
                     beforeSend: function () {
                         let loader = "<div class=loader>" +
-                            "<img src='../../images/loader.png'/>" +
+                            "<img src='..\..\Images\loader.png'/>" +
                             "</div>";
-                        $("#body  ").html(loader);
-
+                        $("#body").html(loader);
                     },
                     error: function () {
                         // your code here;
                     },
                     success: function (data) {
                         setTimeout(function () {
-                            var dishData = data.gffg("#dishData");
-                            var pregmantationData = data.gdsa("#pagination");
+                            
+                            var dishData = $("#dishesData", data);
+                            var paginationData = $("#paginationData", data);
                             $("#dishes").html(dishData); //dishes container id 
-                            $("#pagination").html(pregmantationData);
+                            $("#pagination").html(paginationData);
 
                         }, 3000); //only to simulate real time getting
 
