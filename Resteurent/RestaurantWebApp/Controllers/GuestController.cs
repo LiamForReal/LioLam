@@ -82,7 +82,7 @@ namespace ResteurantWebApp.Controllers
                 client.AddParameter("chefId", chefId);
             if (typeId != null)
                 client.AddParameter("typeId", typeId);
-            List<Dishes> dishes = client.Get().Result;
+            List<Dishes> dishes = await client.Get();
             Console.WriteLine("got " + dishes.Count().ToString() + " items.");
             return PartialView(dishes);
         }

@@ -29,6 +29,7 @@ body {
 .headerMenu {
     margin-left: 3%;
     margin-top: 25px;
+    font-size: 16px;
     border-width: 0;
     color: white;
     background-color: #1a1a2e;
@@ -48,6 +49,7 @@ body {
     border-color: #1a1a2e;
     border-width: 0;
     color: white;
+    font-size: 16px;
     background-color: #1a1a2e;
     text-decoration: none;
     display: inline-block;

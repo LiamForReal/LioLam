@@ -1,48 +1,9 @@
-.formBounts {
-    width: 500px;
-    height: auto;
+.button-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 30px;
-    border: 3px solid gold;
-    background-color: #1a1a2e;
-    font-size: 16px;
-    overflow: hidden;
-}
-
-input::placeholder {
-    font-size: 12px;
-    color: rgba(255, 215, 0, 0.7);
-}
-
-input, label {
-    margin-top: 10px;
-    position: relative;
-}
-
-.textinputId, .password, .textinputPhone, .textinputUser,
-.textinputHouseNumber, .email, .image, .streets, .cities {
-    color: gold;
-    border-radius: 5px;
-    border: none;
-    width: 250px;
-    height: 30px;
-    background-color: #22243d;
-    margin-bottom: 10px;
-}
-
-.cities, .streets {
-    margin-top: 10px;
-}
-
-button {
-    font-size: 14px;
-    color: black;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 10px 20px;
+    gap: 10px; /* Space between buttons */
+    width: 100%;
+    margin-top: 20px;
 }
 
 .submit, .clear {
@@ -54,39 +15,4 @@ button {
     text-align: center;
     width: 100%;
     max-width: 250px;
-}
-
-.clear {
-    margin-top: 10px;
-}
-
-.submit {
-    margin-top: 10px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    width: 100%;
-}
-
-.clear:hover, .submit:hover {
-    color: gold;
-}
-
-.error {
-    position: absolute;
-    font-size: 16px;
-    color: red;
-}
-
-#moreInfoError {
-    margin-left: -468px;
-}
-
-#cityError {
-    top: 330px;
-    left: 675px;
 }

@@ -31,11 +31,10 @@
                     success: function (data) {
                         setTimeout(function () {
                             
-                            var dishData = $("#dishesData", data);
+                            var dishesData = $("#dishesData", data);
                             var paginationData = $("#paginationData", data);
-                            $("#dishes").html(dishData); //dishes container id 
+                            $("#dishes").html(dishesData); //dishes container id 
                             $("#pagination").html(paginationData);
-
                         }, 3000); //only to simulate real time getting
 
                     },
