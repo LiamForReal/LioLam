@@ -36,10 +36,10 @@ function checkId() {
 }
 
 function checkPassword() {
-    var id = document.getElementById("password").value;
+    var password = document.getElementById("password").value;
     var lbl = document.getElementById("passwordError");
     lbl.style.visibility = "hidden";
-    if (id == "") {
+    if (password == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password can not be empty";
         isFormValid = false;
@@ -49,17 +49,17 @@ function checkPassword() {
 
 function checkHouse()
 {
-    var id = document.getElementById("houseNumber").value;
+    var houseNumber = document.getElementById("houseNumber").value;
     var lbl = document.getElementById("houseNumberError");
     lbl.style.visibility = "hidden";
-    if (id == "") {
+    if (houseNumber == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "House number can not be empty";
         isFormValid = false;
         return;
     }
     var regex = /^[1-9][0-9]?$/
-    if (regex.test(id) == false) {
+    if (regex.test(houseNumber) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "House number need to be number between 1 to 99";
         isFormValid = false;
@@ -67,17 +67,17 @@ function checkHouse()
 
 }
 function checkPhone() {
-    var id = document.getElementById("phone").value;
+    var phone = document.getElementById("phone").value;
     var lbl = document.getElementById("phoneError");
     lbl.style.visibility = "hidden";
-    if (id == "") {
+    if (phone == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone can not be empty";
         isFormValid = false;
         return;
     }
     var regex = /^0(5[1-9])[0-9]{7}$/
-    if (regex.test(id) == false) {
+    if (regex.test(phone) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone is invalid";
         isFormValid = false;
@@ -95,7 +95,7 @@ function checkUserName() {
         return;
     }
     var regex = /^[A-Za-z][A-Za-z0-9]*$/
-    if (regex.test(id) == false) {
+    if (regex.test(userName) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Username is invalid";
         isFormValid = false;
@@ -106,13 +106,13 @@ function checkEmail() {
     var email = document.getElementById("email");
     var lbl = document.getElementById("emailError");
     lbl.style.visibility = "hidden";
-    if (email.value == "") {
+    if (email == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Email can not be empty";
         isFormValid = false;
         return;
     }
-
+   
     if (!email.checkValidity()) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Email is invalid";
@@ -134,15 +134,17 @@ function checkCity() {
         return;
     }
 
-    for (var i = 0; i < options.length; i++) {
-        if (select.textContent == options[i].value) {
+    for (var option in options)
+    {
+        if (select.textContent == option.textContent) {
             flag = true;
+            break;
         }
     }
 
     if (!flag) {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Choose street from the list";
+        lbl.innerHTML = "Choose city from the list";
         isFormValid = false;
     }
 }
@@ -161,9 +163,12 @@ function checkStreet() {
         return;
     }
 
-    for (var i = 0; i < options.length; i++) {
-        if (select.textContent == options[i].value) {
+    for (var option in options)
+    {
+        if (select.textContent == option.textContent)
+        {
             flag = true;
+            break;
         }
     }
 

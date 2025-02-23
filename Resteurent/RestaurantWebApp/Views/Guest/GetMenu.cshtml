@@ -7,11 +7,11 @@
 
 @section Styles 
 {
-    <link href="~/css/guest/getmenu.css" rel="stylesheet" />
+    <link href="~/css/guest/GetMenu.css" rel="stylesheet" />
 }
 @section Js
 {
-    <script src="~/javascript/guest/menuajax.js"></script>
+    <script src="~/javascript/guest/MenuAjax.js"></script>
 }
 
 <div class="menu-container">
@@ -25,7 +25,7 @@
         <div class="dishes" id="dishes">
             @foreach (Dishes dish in Model.Dishes)
             {
-                <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+                <a class="link" href="http://localhost:7287/guest/GetDish?dishId=@dish.Id">
                     <div class="dish">
                         <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                         <p class="dish-name">@dish.DishName</p>

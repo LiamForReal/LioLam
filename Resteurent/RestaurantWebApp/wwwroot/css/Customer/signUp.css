@@ -1,91 +1,122 @@
 .formBounts {
-    margin-top: 5%;
-    margin-left: 25%;
+    margin-top: 20px;
     width: 500px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
+    height: 77vh;
+    position: absolute;
     align-items: center;
-    padding: 30px;
-    border: 3px solid gold;
+    padding: 25px;
+    border: 2px gold solid;
     background-color: #1a1a2e;
     font-size: 16px;
-    overflow: hidden;
+    margin-bottom: 50px;
 }
 
 input::placeholder {
     font-size: 12px;
-    color: rgba(255, 215, 0, 0.7);
+    color: gold;
 }
 
-input, label {
+input {
+    margin-top: 18px;
+    position: relative;
+}
+
+label {
     margin-top: 10px;
     position: relative;
 }
 
-.textinputId, .password, .textinputPhone, .textinputUser,
-.textinputHouseNumber, .email, .image, .streets, .cities {
+.textinputId {
+    color: gold;
+    border-radius: 5px;
+    margin: 0;
+    border: none;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.password {
     color: gold;
     border-radius: 5px;
     border: none;
     width: 250px;
-    height: 30px;
+    height: 28px;
     background-color: #22243d;
-    margin-bottom: 10px;
 }
 
-.cities, .streets {
+.textinputPhone {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.textinputUser {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.cities {
+    color: gold;
+    border-radius: 5px;
+    border: none;
     margin-top: 10px;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.textinputHouseNumber {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.streets {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    margin-top: 10px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.email {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    height: 28px;
+    background-color: #22243d;
+}
+
+.image {
+    color: gold;
+    border-radius: 5px;
+    border: none;
+    width: 250px;
+    height: 28px;
+    margin-bottom: 10px;
+    background-color: #22243d;
 }
 
 button {
     font-size: 14px;
     color: black;
     border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 10px 20px;
-}
-
-.submit, .clear {
-    font-weight: bold;
-    border: 3px solid gold;
-    background-color: #1a1a2e;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 250px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Space between buttons */
-    width: 100%;
-    margin-top: 20px;
-}
-
-.submit, .clear {
-    font-weight: bold;
-    border: 3px solid gold;
-    background-color: #1a1a2e;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 250px;
-}
-
-
-    .clear:hover, .submit:hover {
-        color: gold;
-    }
-
-.error {
-    position: absolute;
-    font-size: 16px;
-    color: red;
+    margin-bottom: 20px;
 }
 
 #moreInfoError {
@@ -96,3 +127,34 @@ button {
     top: 330px;
     left: 675px;
 }
+
+.submit {
+    font-weight: bold;
+    margin-left: 75px;
+    border: 2px gold solid;
+    background-color: #1a1a2e;
+    color: white;
+    width: 100px;
+    height: 50px;
+}
+
+.error {
+    position: absolute;
+    font-size: 16px;
+    color: red;
+}
+
+.clear {
+    font-weight: bold;
+    margin-left: 125px;
+    border: 2px gold solid;
+    color: white;
+    background-color: #1a1a2e;
+    width: 100px;
+    height: 50px;
+}
+
+    .clear:hover,
+    .submit:hover {
+        color: gold
+    }

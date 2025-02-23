@@ -57,7 +57,7 @@ namespace ResteurantWebApp.Controllers
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/Guest/GetSingleDish";
+            client.Path = "api/guest/GetSingleDish";
             client.AddParameter("id", dishId);
             Dishes dish = client.Get().Result;
             return View(dish);
