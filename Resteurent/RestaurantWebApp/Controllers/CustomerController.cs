@@ -2,6 +2,7 @@
 using LiolamResteurent;
 using WebApiClient;
 using NuGet.Protocol;
+using System.Runtime.CompilerServices;
 namespace RestaurantWebApp.Controllers
 {
     public class CustomerController : Controller
@@ -29,7 +30,7 @@ namespace RestaurantWebApp.Controllers
                 HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
                                                                    //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-                return RedirectToAction("Method", "controller");
+                return RedirectToAction("GetDefaultScreen", "Guest");
             }
             catch (Exception ex)
             {
@@ -49,7 +50,8 @@ namespace RestaurantWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(Customers customers, IFormFile file)
         {
-            WebClient<Customers> client = new WebClient<Customers>
+            Console.WriteLine($"customer id is {customers.Id}" );
+                WebClient<Customers> client = new WebClient<Customers>
             {
                 Scheme = "http",
                 Port = 5125,
@@ -61,13 +63,13 @@ namespace RestaurantWebApp.Controllers
             // Read image stream
           
                 // Send the request with customer data and image
-                bool result = await client.Post(customers, file.OpenReadStream());
+            bool result = await client.Post(customers, file.OpenReadStream());
 
-                if (!result)
-                {
+            if (!result)
+            {
                     ViewBag.Error = true;
                     return View("ShowSignUpForm");
-                }
+            }
       
 
 

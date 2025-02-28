@@ -1,8 +1,8 @@
 ﻿@using LiolamResteurent
-@model List<Dishes>
+@model Menu
 
-<div class="dishes" id="dishesData">
-        @foreach (Dishes dish in Model)
+<div class="dishes" id="dishes">
+        @foreach (Dishes dish in Model.Dishes)
         {
             <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
                 <div class="dish">
@@ -12,12 +12,9 @@
             </a>
         }
 </div>
-<div class="pagination" id="paginationData">
-
-        @for (int i = 1; i <= Model.Count; i+=12)
-        {
-
-            int counter = i / 12; 
-            <span data-pageNumber="@counter" class="page-number @("active") link" data-pageNumber="@i">@i</span>
-        }
+<div class="pagination" id="pagination">
+    @for (int i = 1; i <= Model.totalPages; i++)
+    {
+        <span data-pageNumber="@i" class="link page-number @(i == Model.PageNumber ? "active" : "")">@i</span>
+    }
 </div>

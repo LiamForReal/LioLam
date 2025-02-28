@@ -61,35 +61,36 @@ namespace WSRestaurant
         }
 
         [HttpGet]
-        public List<Dishes> GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishPerPage = 12)
+        public Menu GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishPerPage = 12)
         {
-            List<Dishes> dishes;
             int newAmount;
             try
             {
+                Menu menu = new Menu();
                 this.dBContext.Open();
                 if (chefId != null && typeId != null)
                 {
                     //add bought sorts
-                    dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
                     List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
-                    dishes = dishes.Except(dishesByType).ToList();
+                    menu.Dishes = menu.Dishes.Except(dishesByType).ToList();
                 }
                 else if (chefId != null)
                 {
-                    
-                    dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
+                    menu.ChefId = int.Parse(chefId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
                 }
                 else if (typeId != null)
                 {
-                    dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
+                    menu.TypeId = int.Parse(typeId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
                 }
                 else
                 {
-                    dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 }
-                int PageAmount = dishes.Count() / dishPerPage;
-                if (dishes.Count % dishPerPage != 0)
+                int PageAmount = menu.Dishes.Count() / dishPerPage;
+                if (menu.Dishes.Count % dishPerPage != 0)
                 {
                     PageAmount++;
                 }
@@ -98,13 +99,20 @@ namespace WSRestaurant
                 {
                     throw new Exception("you dont have anough dishes to fill this page");
                 }
-                if (dishes.Count() < dishPerPage * pageNumber)
+                if (menu.Dishes.Count() < dishPerPage * pageNumber)
                 {
-                    newAmount = dishes.Count() % dishPerPage;
-                    dishes = dishes.GetRange((pageNumber - 1) * dishPerPage, newAmount);
+                    newAmount = menu.Dishes.Count() % dishPerPage;
+                    menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * dishPerPage, newAmount);
                 }
-                else dishes = dishes.GetRange((pageNumber - 1) * dishPerPage, dishPerPage);
-                return dishes;
+                else menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * dishPerPage, dishPerPage);
+
+                menu.totalPages = PageAmount;
+                menu.Chefs = null;
+                menu.Types = null;
+                menu.PageNumber = pageNumber;
+                this.dBContext.Close();
+
+                return menu;
             }
             catch (Exception ex)
             {

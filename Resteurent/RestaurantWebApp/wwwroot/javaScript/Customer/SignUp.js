@@ -8,8 +8,8 @@ function checkForm()
     checkPassword();
     checkEmail();
     checkPhone();
-    checkCity();
-    checkStreet();
+    //checkCity();
+    //checkStreet();
     checkHouse();
 
     if (isFormValid == true) {
@@ -76,7 +76,7 @@ function checkPhone() {
         isFormValid = false;
         return;
     }
-    var regex = /^0(5[1-9])[0-9]{7}$/
+    var regex = /^05[0-9]{8}$/
     if (regex.test(phone) == false) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone is invalid";

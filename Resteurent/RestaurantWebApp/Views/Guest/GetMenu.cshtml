@@ -61,16 +61,7 @@
         <div class="pagination" id="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                string link = "http://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
-                @if (Model.ChefId != -1)
-                {
-                    link += "&chefId=" + @Model.ChefId;
-                }
-                if (Model.TypeId != -1)
-                {
-                    link += "&typeId=" + @Model.TypeId;
-                }
-                <span data-pageNumber="@i" class="page-number @(i == Model.PageNumber ? "active" : "") link" data-pageNumber="@i">@i</span>
+                <span data-pageNumber="@i" class="link page-number @(i == Model.PageNumber ? "active" : "")">@i</span>
             }
         </div>
     }

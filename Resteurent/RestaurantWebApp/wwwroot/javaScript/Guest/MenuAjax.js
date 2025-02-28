@@ -20,23 +20,25 @@
                     method: "GET",
                     dataType: "html",
                     beforeSend: function () {
-                        let loader = "<div class=loader>" +
-                            "<img src='..\..\Images\loader.png'/>" +
+                         let loader = "<div class=loader>" + 
+                           "<img src='../../Images/loader.png'/>" +
                             "</div>";
-                        $("#body").html(loader);
+                        $("#dishes").html(loader);
                     },
                     error: function () {
                         // your code here;
                     },
                     success: function (data) {
                         setTimeout(function () {
-                            
-                            var dishesData = $("#dishesData", data);
-                            var paginationData = $("#paginationData", data);
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(data, 'text/html');
+
+                            const dishesData = doc.querySelector("#dishes").innerHTML;
+                            const paginationData = doc.querySelector("#pagination").innerHTML;
+
                             $("#dishes").html(dishesData); //dishes container id 
                             $("#pagination").html(paginationData);
-                        }, 3000); //only to simulate real time getting
-
+                        }, 0); //only to simulate real time getting
                     },
                     complete: function () {
                         // your code here;

@@ -65,7 +65,7 @@ namespace ResteurantWebApp.Controllers
 
         public async Task<IActionResult> GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1 , int dishPerPage = 12)
         {
-            WebClient<List<Dishes>> client = new WebClient<List<Dishes>>();
+            WebClient<Menu> client = new WebClient<Menu>();
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
@@ -82,9 +82,8 @@ namespace ResteurantWebApp.Controllers
                 client.AddParameter("chefId", chefId);
             if (typeId != null)
                 client.AddParameter("typeId", typeId);
-            List<Dishes> dishes = await client.Get();
-            Console.WriteLine("got " + dishes.Count().ToString() + " items.");
-            return PartialView(dishes);
+            Menu partishial_menu = await client.Get();
+            return PartialView(partishial_menu);
         }
     }
 }
