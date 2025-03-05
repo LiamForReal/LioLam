@@ -21,9 +21,11 @@ namespace WSRestaurant.Controllers
             this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
         }
 
-        [HttpGet]
-        public string GetLogIn(string userName, string password)
+        [HttpPost]
+        public async Task<string> LogIn()
         {
+            string json = Request.Form["model"];
+            Customers otenticationDetails = JsonSerializer.Deserialize<Customers>(json);
             List<Customers> customers;
             try
             {
@@ -32,7 +34,7 @@ namespace WSRestaurant.Controllers
                 
                 foreach (Customers customer in customers)
                 {
-                    if (customer.CustomerUserName == userName && customer.CustomerPassword == password)
+                    if (customer.CustomerUserName == otenticationDetails.CustomerUserName && customer.CustomerPassword == otenticationDetails.CustomerPassword)
                     {
                         return customer.Id;
                     }
@@ -61,7 +63,6 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Open();
                 registerViewModel.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 registerViewModel.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
-                this.dBContext.Close();
                 return registerViewModel;
             }
             catch (Exception ex)
@@ -85,7 +86,6 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Open();
                 Customers customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
-                this.dBContext.Close();
                 return flag;
             }
             catch (Exception ex)

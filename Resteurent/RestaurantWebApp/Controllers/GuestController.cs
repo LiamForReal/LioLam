@@ -83,6 +83,7 @@ namespace ResteurantWebApp.Controllers
             if (typeId != null)
                 client.AddParameter("typeId", typeId);
             Menu partishial_menu = await client.Get();
+            Console.WriteLine("dish list length " + partishial_menu.Dishes.Count());
             return PartialView(partishial_menu);
         }
     }

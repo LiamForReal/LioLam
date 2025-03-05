@@ -10,16 +10,20 @@ namespace RestaurantWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(string userName, string password)
         {
-            WebClient<string> client = new WebClient<string>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Customer/GetLogIn";
-            client.AddParameter("userName", userName);
-            client.AddParameter("password", password);
+
+            WebClient<Customers> client = new WebClient<Customers>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/LogIn"
+            };
+            Customers customer = new Customers();
+            customer.CustomerUserName = userName;
+            customer.CustomerPassword = password;
             try
             {
-                string customerCheck = await client.Get();
+                string customerCheck = await client.Post(customer);
                 if (customerCheck == null)
                 {
                     //return someting 
@@ -51,7 +55,7 @@ namespace RestaurantWebApp.Controllers
         public async Task<IActionResult> SignUp(Customers customers, IFormFile file)
         {
             Console.WriteLine($"customer id is {customers.Id}" );
-                WebClient<Customers> client = new WebClient<Customers>
+            WebClient<Customers> client = new WebClient<Customers>
             {
                 Scheme = "http",
                 Port = 5125,

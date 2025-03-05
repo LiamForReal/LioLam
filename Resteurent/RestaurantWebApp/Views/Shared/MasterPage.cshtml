@@ -24,31 +24,30 @@
 }
 
 
-<script src="~/javascript/guest/menuajax.js"></script>
+<script src="~/javaScript/Guest/MenuAjax.js"></script>
 
-
-    <div class="header">
-        <i class="fas fa-utensils headerIcon"></i>
-        <p class="headerTitle">LioLam</p>
-        <a href="http://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
-        @if(TempData["Id"] == null)
-        {
-            <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
-            <a class="headerMenu" href="http://localhost:7287/Customer/ShowLogInForm">LogIn</a>
-            <a class="headerMenu" href="http://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
-        }
-        @if(TempData["Id"] != null)
-        {
-            <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
-            <a class="headerMenu">LogOut</a>
-            <a class="headerMenu">Reservations</a>
-            <a class="headerMenu">Orders</a>
-        }
-    </div>
-    <div class="body" id="body">
-        @RenderBody()
-    </div>
-    <div class="footer">
-        <p class="footerBles">We hope you enjoy your future meals with us!</p>
-        <p class="footerphone">Contact us at 7777 for inquiries!</p>
-    </div>
+<div class="header">
+    <i class="fas fa-utensils headerIcon"></i>
+    <p class="headerTitle">LioLam</p>
+    <a href="http://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
+    @if (TempData["Id"] == null)
+    {
+        <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
+        <a class="headerMenu" href="http://localhost:7287/Customer/ShowLogInForm">LogIn</a>
+        <a class="headerMenu" href="http://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
+    }
+    @if (TempData["Id"] != null)
+    {
+        <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
+        <a class="headerMenu">LogOut</a>
+        <a class="headerMenu">Reservations</a>
+        <a class="headerMenu">Orders</a>
+    }
+</div>
+<div class="body" id="body">
+    @RenderBody()
+</div>
+<div class="footer">
+    <p class="footerBles">We hope you enjoy your future meals with us!</p>
+    <p class="footerphone">Contact us at 7777 for inquiries!</p>
+</div>

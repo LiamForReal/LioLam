@@ -66,7 +66,7 @@ namespace WebApiClient
             }
         }
 
-        public async Task<bool> Post(T model)
+        public async Task<string> Post(T model)
         {
             this.request.Method = HttpMethod.Post;
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
@@ -76,11 +76,11 @@ namespace WebApiClient
                 this.response = await client.SendAsync(this.request);
                 if (this.response.IsSuccessStatusCode == true)
                 {
-                    return await this.response.Content.ReadAsAsync<bool>();
+                    return await this.response.Content.ReadAsAsync<string>();
                 }
                
             }
-            return false;
+            return "";
         }
 
         public async Task<bool> Post(T model, Stream file)
