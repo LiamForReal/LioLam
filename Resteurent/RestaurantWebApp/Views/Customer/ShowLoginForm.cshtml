@@ -5,7 +5,7 @@
 
 @section Styles
 {
-    <link href="~/css/customer/logIn.css" rel="stylesheet" />
+    <link href="~/css/Customer/logIn.css" rel="stylesheet" />
 }
 
 @if (ViewBag.Error == true)
@@ -18,10 +18,10 @@
         <h2 class="login-title">Login</h2>
         <form class="form-login" method="post" action="http://localhost:7287/customer/LogIn">
             <label class="login-label">User Name</label>
-            <input class="login-input" type="text" value="liam meir" name="userName" id="userName" required />
+            <input class="login-input" type="text" name="userName" id="userName" required />
 
             <label class="login-label">Password</label>
-            <input class="login-input" type="password" value="1234" name="password" id="password" required />
+            <input class="login-input" type="password" name="password" id="password" required />
             <button class="login-button" type="submit"> Login</button>
         </form>
     </div>

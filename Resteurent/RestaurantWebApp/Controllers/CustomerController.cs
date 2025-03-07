@@ -10,33 +10,32 @@ namespace RestaurantWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(string userName, string password)
         {
-            Console.WriteLine($"user {userName}, pass: {password}");
-            WebClient<Customers> client = new WebClient<Customers>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/customer/LogIn";
 
-            Console.WriteLine(client.buildURI());
-            Customers customer = new Customers();
-            customer.CustomerUserName = userName;
-            customer.CustomerPassword = password;
+            WebClient<string> client = new WebClient<string>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/LogIn"
+            };
+            client.AddParameter("userName", userName);
+            client.AddParameter("password", password);
+            
             try
             {
-                Customers customerCheck = await client.Post(customer);
-                if (customerCheck == null)
+                string customerId = await client.Get();
+                if (customerId == null)
                 {
                     //return someting 
                     ViewBag.Error = true;
                     return View("ShowLogInForm");
                 }
                 ViewBag.Error = false;
-                HttpContext.Session.SetString("Id", customer.Id);//session is the thread the server allocate to client to handle in my project it is a stateless space
-                                                                 //the id property is added to the setion
-                                                                 //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-                HttpContext.Session.SetString("UserName", customer.CustomerUserName);
-                HttpContext.Session.SetString("UserImage", customer.CustomerImage);
-                return RedirectToAction("GetDefaultScreen", "guest");
+                TempData["Id"] = customerId;
+                HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
+                                                                   //the id property is added to the setion
+                                                                   //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+                return RedirectToAction("GetDefaultScreen", "Guest");
             }
             catch (Exception ex)
             {
@@ -54,7 +53,7 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(Customers customers, IFormFile file)
+        public async Task<IActionResult> SignUp(Customers customers, IFormFile Image)
         {
             Console.WriteLine($"customer id is {customers.Id}" );
             WebClient<Customers> client = new WebClient<Customers>
@@ -62,14 +61,14 @@ namespace RestaurantWebApp.Controllers
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/customer/SignUp"
+                Path = "api/Customer/SignUp"
             };
-            
+            customers.CustomerImage = Image.FileName;
 
             // Read image stream
-          
-                // Send the request with customer data and image
-            bool result = await client.Post(customers, file.OpenReadStream());
+
+            // Send the request with customer data and image
+            bool result = await client.Post(customers, Image.OpenReadStream());
 
             if (!result)
             {
@@ -96,7 +95,7 @@ namespace RestaurantWebApp.Controllers
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/customer/ShowSignUp";
+            client.Path = "api/Customer/ShowSignUp";
             registerViewModel = await client.Get();
             return View(registerViewModel);
         }

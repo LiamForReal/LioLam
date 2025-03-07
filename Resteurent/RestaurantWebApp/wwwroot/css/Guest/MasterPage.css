@@ -147,20 +147,3 @@ body {
     float: right;
     margin-right: 2%;
 }
-
-.otenticateName 
-{
-    margin-right: 5%;
-    margin-top: 25px;
-    font-size: 14px;
-    border-width: 0;
-    color: gold;
-    display: inline-block;
-}
-
-.otenticateImage 
-{
-    margin-right: 3%;
-    width:2%;
-    height:2%;
-}

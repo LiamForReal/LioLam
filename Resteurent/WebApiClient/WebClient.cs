@@ -49,18 +49,14 @@ namespace WebApiClient
             else this.uriBuilder.Query += "&";
             this.uriBuilder.Query += $"{name}={value}";
         }
-
-        public string buildURI()
-        {
-            return $"{uriBuilder.Scheme}://{uriBuilder.Host}:{uriBuilder.Port}/{uriBuilder.Path}";
-        }
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
-            this.request.RequestUri = this.uriBuilder.Uri;
+           
             HttpClient client = new HttpClient();
             using (client)
             {
+                this.request.RequestUri = new Uri(this.uriBuilder.ToString());
                 this.response = await client.SendAsync(this.request);
                 if (this.response.IsSuccessStatusCode == true)
                 {
@@ -71,10 +67,10 @@ namespace WebApiClient
             }
         }
 
-        public async Task<T> Post(T model)
+        public async Task<string> Post(T model)
         {
             this.request.Method = HttpMethod.Post;
-            this.request.RequestUri = new Uri(this.uriBuilder.ToString()); 
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             this.request.Content = objectContent;
             using (HttpClient client = new HttpClient())
@@ -82,11 +78,11 @@ namespace WebApiClient
                 this.response = await client.SendAsync(this.request);
                 if (this.response.IsSuccessStatusCode == true)
                 {
-                    return await this.response.Content.ReadAsAsync<T>();
+                    return await this.response.Content.ReadAsAsync<string>();
                 }
                
             }
-            throw new Exception("model do not recved");
+            return "";
         }
 
         public async Task<bool> Post(T model, Stream file)
@@ -97,7 +93,7 @@ namespace WebApiClient
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             StreamContent streamContent = new StreamContent(file);
             multipartFormDataContent.Add(objectContent, "model");
-            multipartFormDataContent.Add(streamContent, "file");
+            multipartFormDataContent.Add(streamContent, "file", "file");
             this.request.Content = multipartFormDataContent;
             using (HttpClient client = new HttpClient())
             {

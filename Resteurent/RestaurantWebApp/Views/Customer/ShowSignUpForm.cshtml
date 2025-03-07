@@ -7,11 +7,11 @@
 
 @section Styles
 { 
-    <link href="~/css/customer/signUp.css" rel="stylesheet" />
+    <link href="~/css/Customer/signUp.css" rel="stylesheet" />
 }
 @section Js
 {
-    <script src="~/javascript/customer/SignUp.js"></script>
+    <script src="~/javaScript/Customer/SignUp.js"></script>
 }
 
 @if (ViewBag.Error == true)
@@ -25,7 +25,8 @@
 }
 else
 {
-    <form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp">
+    <form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp" enctype="multipart/form-data">
+        
         <label>User Id</label>
         <input class="textinputId" type="text" id="userId" name="Id" placeholder="Enter your Id" /><br>
         <lable class="error" id="idError"></lable>
@@ -66,7 +67,7 @@ else
         <lable class="error" id="houseNumberError"></lable>
 
         <label>Image</label>
-        <input class="image" type="file" id="Image" name="Image" placeholder="Upload your Image" accept="Image/*"/><br>
+        <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*"/><br>
         <lable class="error" id="ImageError"></lable>
 
         <button type="button" class="submit" onclick="checkForm()">Submit</button>

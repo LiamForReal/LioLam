@@ -1,16 +1,16 @@
 ﻿var isFormValid;
 
-function checkForm() {
+function checkForm()
+{
     isFormValid = true;
     checkId();
     checkUserName();
     checkPassword();
     checkEmail();
     checkPhone();
-    checkCity();
-    checkStreet();
+    //checkCity();
+    //checkStreet();
     checkHouse();
-    checkImage();
 
     if (isFormValid == true) {
         document.forms[0].submit();
@@ -47,7 +47,8 @@ function checkPassword() {
     }
 }
 
-function checkHouse() {
+function checkHouse()
+{
     var houseNumber = document.getElementById("houseNumber").value;
     var lbl = document.getElementById("houseNumberError");
     lbl.style.visibility = "hidden";
@@ -111,7 +112,7 @@ function checkEmail() {
         isFormValid = false;
         return;
     }
-
+   
     if (!email.checkValidity()) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Email is invalid";
@@ -126,15 +127,16 @@ function checkCity() {
     var flag = false;
     lbl.style.visibility = "hidden";
 
-    if (select.value.trim() === "") { // Fix: Use select.value instead of select.textContent
+    if (select.textContent == "") {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Street cannot be empty";
+        lbl.innerHTML = "Street can not be empty";
         isFormValid = false;
         return;
     }
 
-    for (var i = 0; i < options.length; i++) { // Fix: Use for loop instead of for..in
-        if (select.value === options[i].value) { // Fix: Use select.value instead of select.textContent
+    for (var option in options)
+    {
+        if (select.textContent == option.textContent) {
             flag = true;
             break;
         }
@@ -142,7 +144,7 @@ function checkCity() {
 
     if (!flag) {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Choose a street from the list";
+        lbl.innerHTML = "Choose city from the list";
         isFormValid = false;
     }
 }
@@ -153,16 +155,18 @@ function checkStreet() {
     var options = select.getElementsByTagName("option");
     var flag = false;
     lbl.style.visibility = "hidden";
-
-    if (select.value.trim() === "") { // Fix: Use select.value instead of select.textContent
+    
+    if (select.textContent == "") {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Street cannot be empty";
+        lbl.innerHTML = "Street can not be empty";
         isFormValid = false;
         return;
     }
 
-    for (var i = 0; i < options.length; i++) { // Fix: Use for loop instead of for..in
-        if (select.value === options[i].value) { // Fix: Use select.value instead of select.textContent
+    for (var option in options)
+    {
+        if (select.textContent == option.textContent)
+        {
             flag = true;
             break;
         }
@@ -170,32 +174,7 @@ function checkStreet() {
 
     if (!flag) {
         lbl.style.visibility = "visible";
-        lbl.innerHTML = "Choose a street from the list";
+        lbl.innerHTML = "Choose street from the list";
         isFormValid = false;
     }
-}
-
-
-function checkImage() {
-    var image = document.getElementById("Image"); // File input element
-    var lbl = document.getElementById("ImageError"); // Error label
-    lbl.style.visibility = "hidden";
-
-    if (image.files.length === 0) {
-        lbl.innerText = "Please select an image.";
-        isFormValid = false;
-        return;
-    }
-
-    var file = image.files[0];
-    var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
-    var fileExtension = file.name.split('.').pop().toLowerCase();
-
-    if (!allowedExtensions.includes(fileExtension)) {
-        lbl.innerHTML = "Invalid file type. Please select a JPG, PNG, or GIF image.";
-        lbl.style.visibility = "visible";
-        isFormValid = false;
-        return;
-    }
-    lbl.innerText = ""; // Clear error message if valid
 }

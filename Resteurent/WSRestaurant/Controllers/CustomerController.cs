@@ -1,6 +1,7 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net.Mime;
 using System.Text.Json;
@@ -9,6 +10,7 @@ using System.Web;
 namespace WSRestaurant.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [Produces("application/json")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -21,24 +23,21 @@ namespace WSRestaurant.Controllers
             this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
         }
 
-        [HttpPost]
-        public Customers LogIn(Customers customer)
+        [HttpGet]
+        public async Task<string> LogIn(string userName, string password)
         {
+           
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                Customers Check = unitOfWorkReposetory.customerRerposetoryObject.getByUserNameAndPass(customer.CustomerUserName, customer.CustomerPassword);
-                if (Check.Id != "" && Check.Id != null)
-                {
-                    return Check;
-                }
-                return null;
+                string customerId = unitOfWorkReposetory.customerRerposetoryObject.GetCustomerId(userName, password);
+                return customerId;
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
-                return null;
+                return "";
             }
             finally
             {
@@ -95,31 +94,39 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public async Task<bool> SignUp()
         {
+            string json = Request.Form["model"];
+            IFormFile file = Request.Form.Files[0];
+            Customers customer = JsonSerializer.Deserialize<Customers>(json);
+            customer.CustomerImage=$"{customer.Id}{ Path.GetExtension(customer.CustomerImage)}";
             try
             { //216849635
-                string json = Request.Form["model"];
-                IFormFile file = Request.Form.Files[0];
-                Customers customer = JsonSerializer.Deserialize<Customers>(json);
+              
                 dBContext.Open();
-                var customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                foreach (var Icustomer in customers)
-                {
-                    if (Icustomer.Id == customer.Id) return false;
-                }
-                string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "../wwwroot/Images/Customers/");
-                string filePath = uploadFolder + customer.Id + "." + Path.GetFileName(file.FileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(fileStream);
-                };
-                // Save customer to database
+                dBContext.BeginTransaction();
                 bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                dBContext.Close();
-                return flag;
+                if(flag)
+                {
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"\wwwroot\Images\Customers\");
+                    string filePath =$@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyToAsync(fileStream);
+                    };
+                }
+
+                // Save customer to database
+                this.dBContext.Commit();
+              
+                return true;
             }
             catch (Exception ex)
             {
+                this.dBContext.Rollback();
                 return false;
+            }
+            finally
+            {
+                this.dBContext.Close();
             }
             return false;
         }

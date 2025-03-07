@@ -20,11 +20,11 @@
 
 @if (!IsSectionDefined("Styles"))
 {
-    <link href="~/css/guest/GetMenu.css" rel="stylesheet" />
+    <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
 }
 
 
-<script src="~/javascript/guest/MenuAjax.js"></script>
+<script src="~/javaScript/Guest/MenuAjax.js"></script>
 
 <div class="header">
     <i class="fas fa-utensils headerIcon"></i>
@@ -42,8 +42,6 @@
         <a class="headerMenu">LogOut</a>
         <a class="headerMenu">Reservations</a>
         <a class="headerMenu">Orders</a>
-        <p class="otenticateName">welcome back @(TempData["UserName"])</p>
-        <img class="otenticateImage" src="@(TempData["UserImage"])" alt="user image" />
     }
 </div>
 <div class="body" id="body">

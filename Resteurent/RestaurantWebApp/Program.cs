@@ -2,7 +2,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,9 +28,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "GuestController",
-    pattern: "{controller=Guest}/{action=GetDefaultScreen}");
+    pattern: "{controller=Guest}/{action=GetDefaultScreen}/{id?}");
 
 app.Run();

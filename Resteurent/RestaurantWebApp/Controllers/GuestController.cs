@@ -7,10 +7,6 @@ namespace ResteurantWebApp.Controllers
 {
     public class GuestController : Controller
     {
-        public IActionResult Index()
-        {
-            return RedirectToAction("GetDefaultScreen");
-        }
         [HttpGet]
         public IActionResult GetDefaultScreen()
         {
@@ -18,7 +14,7 @@ namespace ResteurantWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishesPerPage = 12)
+        public IActionResult GetMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishesPerPage = 12)
         {
             try
             {
@@ -44,7 +40,7 @@ namespace ResteurantWebApp.Controllers
                         client.AddParameter("typeId", typeId);
                 }
 
-                Menu menu = await client.Get();
+                Menu menu = client.Get().Result;
                 return View(menu);
             }
             catch (Exception ex)
@@ -63,7 +59,7 @@ namespace ResteurantWebApp.Controllers
             client.Host = "localhost";
             client.Path = "api/guest/GetSingleDish";
             client.AddParameter("id", dishId);
-            Dishes dish = await client.Get();
+            Dishes dish = client.Get().Result;
             return View(dish);
         }
 
