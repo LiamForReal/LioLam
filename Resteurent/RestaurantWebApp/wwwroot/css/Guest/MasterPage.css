@@ -2,10 +2,9 @@ body {
     font-family: David;
     width: 100%;
     color: white;
-    height: 100%;
+    height: auto;
+    margin:auto;
     font-size: 20px;
-    margin: 0;
-    padding: 0;
 }
 
 .header {
@@ -31,11 +30,12 @@ body {
 .headerMenu {
     margin-left: 3%;
     margin-top: 25px;
+    font-size: 16px;
     border-width: 0;
     color: white;
     background-color: #1a1a2e;
     text-decoration: none;
-    font-size: 16px;
+
     display: inline-block;
 }
 
@@ -50,9 +50,9 @@ body {
     border-color: #1a1a2e;
     border-width: 0;
     color: white;
+    font-size: 16px;
     background-color: #1a1a2e;
     text-decoration: none;
-    font-size: 16px;
     display: inline-block;
 }
 

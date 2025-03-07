@@ -2,50 +2,101 @@
 using LiolamResteurent;
 using WebApiClient;
 using NuGet.Protocol;
+using System.Runtime.CompilerServices;
 namespace RestaurantWebApp.Controllers
 {
     public class CustomerController : Controller
     {
         [HttpPost]
-        public IActionResult Login(string userName, string password)
+        public async Task<IActionResult> LogIn(string userName, string password)
         {
-            WebClient<string> client = new WebClient<string>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Customer/GetLogIn";
-            client.AddParameter("userName", userName);
-            client.AddParameter("password", password);
-            string customerCheck = client.Get().Result;
-            if(customerCheck == null)
+
+            WebClient<Customers> client = new WebClient<Customers>
             {
-                //return someting 
-                ViewBag.Error = true;
-                return View("ShowLoginForm");
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/LogIn"
+            };
+            Customers customer = new Customers();
+            customer.CustomerUserName = userName;
+            customer.CustomerPassword = password;
+            try
+            {
+                string customerCheck = await client.Post(customer);
+                if (customerCheck == null)
+                {
+                    //return someting 
+                    ViewBag.Error = true;
+                    return View("ShowLogInForm");
+                }
+                ViewBag.Error = false;
+                HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
+                                                                   //the id property is added to the setion
+                                                                   //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+                return RedirectToAction("GetDefaultScreen", "Guest");
             }
-            HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
-            //the id property is added to the setion
-            //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-            return RedirectToAction("Method", "controller");
+            catch (Exception ex)
+            {
+                Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
+                ViewBag.Error = true;
+                return View("ShowLogInForm");
+            }
+
         }
 
         [HttpGet]
-        public IActionResult ShowLoginForm()
+        public IActionResult ShowLogInForm()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult SignUp(Customers customer)
+        public async Task<IActionResult> SignUp(Customers customers, IFormFile file)
         {
-            return View();
+            Console.WriteLine($"customer id is {customers.Id}" );
+            WebClient<Customers> client = new WebClient<Customers>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/SignUp"
+            };
+
+
+            // Read image stream
+          
+                // Send the request with customer data and image
+            bool result = await client.Post(customers, file.OpenReadStream());
+
+            if (!result)
+            {
+                    ViewBag.Error = true;
+                    return View("ShowSignUpForm");
+            }
+      
+
+
+            // Store session info for logged-in user
+            HttpContext.Session.SetString("Id", customers.Id);
+
+            // Redirect to a successful page
+            return RedirectToAction("GetDefaultScreen", "Guest"); // Change "Dashboard" to your actual target page
         }
 
+
         [HttpGet]
-        public IActionResult ShowSignUpForm()
+        public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
-            return View();
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>();
+            registerViewModel registerViewModel = new registerViewModel();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Customer/ShowSignUp";
+            registerViewModel = await client.Get();
+            return View(registerViewModel);
         }
     }
 }

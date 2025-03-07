@@ -57,22 +57,34 @@ namespace ResteurantWebApp.Controllers
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/Guest/GetSingleDish";
+            client.Path = "api/guest/GetSingleDish";
             client.AddParameter("id", dishId);
             Dishes dish = client.Get().Result;
             return View(dish);
         }
 
-        [HttpGet]
-        public IActionResult SignUpForm()
+        public async Task<IActionResult> GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1 , int dishPerPage = 12)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SignUp(Customers customer)
-        {
-            return View();
+            WebClient<Menu> client = new WebClient<Menu>();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/Guest/GetDishList";
+            if (pageNumber != 1)
+            {
+                client.AddParameter("pageNumber", pageNumber.ToString());
+            }
+            if (dishPerPage != 12)
+            {
+                client.AddParameter("dishPerPage", dishPerPage.ToString());
+            }
+            if (chefId != null)
+                client.AddParameter("chefId", chefId);
+            if (typeId != null)
+                client.AddParameter("typeId", typeId);
+            Menu partishial_menu = await client.Get();
+            Console.WriteLine("dish list length " + partishial_menu.Dishes.Count());
+            return PartialView(partishial_menu);
         }
     }
 }

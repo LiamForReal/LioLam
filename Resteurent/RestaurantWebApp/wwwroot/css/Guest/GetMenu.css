@@ -7,6 +7,10 @@
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+}
+
 .menu-container {
     display: flex;
     flex-wrap: wrap;
@@ -51,6 +55,7 @@
     margin-top: 20px;
     font-weight: bold;
     color: #e4e6f0;
+    font-size:16px;
 }
 
 .side-panel {
@@ -178,4 +183,11 @@ button {
 
 .link {
     text-decoration: none;
+}
+.loader
+{
+   place-content:center;
+   position:absolute;
+   width:500px;
+   height:500px;
 }

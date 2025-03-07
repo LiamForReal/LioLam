@@ -1,6 +1,10 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Net.Mime;
+using System.Text.Json;
+using System.Web;
 
 namespace WSRestaurant.Controllers
 {
@@ -17,9 +21,11 @@ namespace WSRestaurant.Controllers
             this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
         }
 
-        [HttpGet]
-        public Customers GetLogIn(string userName, string password)
+        [HttpPost]
+        public async Task<string> LogIn()
         {
+            string json = Request.Form["model"];
+            Customers otenticationDetails = JsonSerializer.Deserialize<Customers>(json);
             List<Customers> customers;
             try
             {
@@ -28,16 +34,36 @@ namespace WSRestaurant.Controllers
                 
                 foreach (Customers customer in customers)
                 {
-                    if (customer.CustomerUserName == userName && customer.CustomerPassword == password)
+                    if (customer.CustomerUserName == otenticationDetails.CustomerUserName && customer.CustomerPassword == otenticationDetails.CustomerPassword)
                     {
-                        customer.city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(customer.Id);
-                        customer.street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(customer.Id);
-                        this.dBContext.Close();
-                        return customer;
+                        return customer.Id;
                     }
                        
                 } // get street and city names from ids!
-                return null;
+                return "";
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return "";
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public registerViewModel ShowSignUp()
+        {
+            try
+            {
+                registerViewModel registerViewModel = new registerViewModel();
+                this.dBContext.Open();
+                registerViewModel.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                registerViewModel.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
+                return registerViewModel;
             }
             catch (Exception ex)
             {
@@ -52,18 +78,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) //user details
+        public bool UpdateExistingUser(string Id, string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage, IFormFile pickture) //user details
         {
             bool flag = false;
             try
-            {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
-
-                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+            {    
                 this.dBContext.Open();
+                Customers customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
-                this.dBContext.Close();
                 return flag;
             }
             catch (Exception ex)
@@ -79,33 +101,35 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool signUp(string customerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage) 
+        public async Task<bool> SignUp()
         {
-            bool flag = false;
             try
-            {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(StreetId);
-
-                Customers customer = new Customers(customerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
-                this.dBContext.Open();
-                List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
-                flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                //connection with city 
-                //connection with street
-                this.dBContext.Close();
+            { //216849635
+                string json = Request.Form["model"];
+                IFormFile file = Request.Form.Files[0];
+                Customers customer = JsonSerializer.Deserialize<Customers>(json);
+                dBContext.Open();
+                var customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
+                foreach (var Icustomer in customers)
+                {
+                    if (Icustomer.Id == customer.Id) return false;
+                }
+                string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "../wwwroot/Images/Customers/");
+                string filePath = uploadFolder + customer.Id + "." + Path.GetFileName(file.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyToAsync(fileStream);
+                };
+                // Save customer to database
+                bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
+                dBContext.Close();
                 return flag;
             }
             catch (Exception ex)
             {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
                 return false;
             }
-            finally
-            {
-                this.dBContext.Close();
-            }
+            return false;
         }
 
         [HttpPost]

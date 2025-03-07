@@ -12,8 +12,8 @@ namespace WSRestaurant
             " VALUES (@CustomerId, @CustomerUserName, @CustomerHouse,@CityId, @StreetId, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-            this.dbContext.AddParameter("@CityId", model.city.Id.ToString());
-            this.dbContext.AddParameter("@StreetId", model.street.Id.ToString());
+            this.dbContext.AddParameter("@CityId", model.cityId.ToString());
+            this.dbContext.AddParameter("@StreetId", model.streetId.ToString());
             this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
@@ -62,8 +62,8 @@ namespace WSRestaurant
                        ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId == @CustomerId";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-            this.dbContext.AddParameter("@CityId", model.city.Id);
-            this.dbContext.AddParameter("@StreetId", model.street.Id);
+            this.dbContext.AddParameter("@CityId", model.cityId.ToString());
+            this.dbContext.AddParameter("@StreetId", model.streetId.ToString());
             this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);

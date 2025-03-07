@@ -1,8 +1,75 @@
-﻿
+﻿@using LiolamResteurent
+@model registerViewModel
 @{
     ViewData["Title"] = "ShowSignUpForm";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
-<h1>ShowSignUpForm</h1>
+@section Styles
+{ 
+    <link href="~/css/Customer/signUp.css" rel="stylesheet" />
+}
+@section Js
+{
+    <script src="~/javaScript/Customer/SignUp.js"></script>
+}
 
+@if (ViewBag.Error == true)
+{
+    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+}
+
+@if (Model == null)
+{
+    <h4 class="error">someting went wrong. try to otenticate you details and try again (the system do not alowed customers with the same Id or User Name)</h4>
+}
+else
+{
+    <form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp">
+        <label>User Id</label>
+        <input class="textinputId" type="text" id="userId" name="Id" placeholder="Enter your Id" /><br>
+        <lable class="error" id="idError"></lable>
+        <label>User Name</label>
+        <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" /><br>
+        <lable class="error" id="userNameError"></lable>
+        <label>Password</label>
+        <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password" /><br>
+        <lable class="error" id="passwordError"></lable>
+        <label>Email</label>
+        <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" /><br>
+        <lable class="error" id="emailError"></lable>
+        <label>Phone</label>
+        <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" /><br>
+        <lable class="error" id="phoneError"></lable>
+
+        <label class="cityText">City</label>
+        <select id = "cities" class="cities" name="CityId">
+            @foreach (Cities city in Model.Cities)
+            {
+                <option value="@city.Id">@city.CityName</option>
+            }
+        </select>
+        <lable class="error" id="cityError"></lable>
+
+        <label class="streetText"><br />Street</label>
+        <select id="streets" class="streets" name="StreetId">
+            @foreach (Streets street in Model.Streets)
+            {
+                <option value="@street.Id">@street.StreetName</option>
+            }
+        </select>
+
+        <lable class="error" id="streetError"></lable>
+
+        <label><br />House Number</label>
+        <input class="textinputHouseNumber" type="text" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" /><br>
+        <lable class="error" id="houseNumberError"></lable>
+
+        <label>Image</label>
+        <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*"/><br>
+        <lable class="error" id="ImageError"></lable>
+
+        <button type="button" class="submit" onclick="checkForm()">Submit</button>
+        <button type="reset" class="clear">Clear</button>
+    </form>
+}

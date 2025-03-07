@@ -144,15 +144,12 @@ namespace WSRestaurant.Controllers
         //add city function 
         //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
             {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
-
-                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
@@ -174,15 +171,12 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
             {
-                Cities city = unitOfWorkReposetory.cityRerposetoryObject.getById(CityId);
-                Streets street = unitOfWorkReposetory.streetReposetoryObject.getById(streetId);
-
-                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, city, street, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);

@@ -7,7 +7,11 @@
 
 @section Styles 
 {
-<link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+    <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+}
+@section Js
+{
+    <script src="~/javaScript/Guest/MenuAjax.js"></script>
 }
 
 <div class="menu-container">
@@ -18,10 +22,10 @@
     else
     {
 
-        <div class="dishes">
+        <div class="dishes" id="dishes">
             @foreach (Dishes dish in Model.Dishes)
             {
-                <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+                <a href="http://localhost:7287/guest/GetDish?dishId=@dish.Id">
                     <div class="dish">
                         <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                         <p class="dish-name">@dish.DishName</p>
@@ -35,9 +39,9 @@
                 <ul>
                     @foreach (var chef in Model.Chefs)
                     {
-                        <a class="link" href="http://localhost:7287/Guest/GetMenu?chefId=@chef.Id">
+                        <span class="link" data-chefId="@chef.Id">
                             <li>@chef.ChefFirstName @chef.ChefLastName</li>
-                        </a>
+                        </span>
                     }
                 </ul>
             </div>
@@ -47,27 +51,17 @@
                 <ul>
                     @foreach (var type in Model.Types)
                     {
-                        <a class="link" href="http://localhost:7287/Guest/GetMenu?typeId=@type.Id">
+                        <span class="link" data-typeId="@type.Id">
                             <li>@type.TypeName</li>
-                        </a>
+                        </span>
                     }
                 </ul>
             </div>
         </div>
-
-        <div class="pagination">
+        <div class="pagination" id="pagination">
             @for (int i = 1; i <= Model.totalPages; i++)
             {
-                string link = "http://localhost:7287/Guest/GetMenu?pageNumber=" + @i;
-                @if(Model.ChefId != -1)
-                {
-                    link += "&chefId=" + @Model.ChefId;
-                }
-                if(Model.TypeId != -1)
-                {
-                    link += "&typeId=" + @Model.TypeId;
-                }
-                <a href="@link" class="page-number @(i == Model.PageNumber ? "active" : "")">@i</a>
+                <span data-pageNumber="@i" class="link page-number @(i == Model.PageNumber ? "active" : "")">@i</span>
             }
         </div>
     }

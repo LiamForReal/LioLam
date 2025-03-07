@@ -1,0 +1,20 @@
+﻿@using LiolamResteurent
+@model Menu
+
+<div class="dishes" id="dishes">
+        @foreach (Dishes dish in Model.Dishes)
+        {
+            <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+                <div class="dish">
+                    <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
+                    <p class="dish-name">@dish.DishName</p>
+                </div>
+            </a>
+        }
+</div>
+<div class="pagination" id="pagination">
+    @for (int i = 1; i <= Model.totalPages; i++)
+    {
+        <span data-pageNumber="@i" class="link page-number @(i == Model.PageNumber ? "active" : "")">@i</span>
+    }
+</div>

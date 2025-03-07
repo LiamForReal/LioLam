@@ -61,6 +61,72 @@ namespace WSRestaurant
         }
 
         [HttpGet]
+        public Menu GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishPerPage = 12)
+        {
+            int newAmount;
+            try
+            {
+                Menu menu = new Menu();
+                this.dBContext.Open();
+                if (chefId != null && typeId != null)
+                {
+                    //add bought sorts
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
+                    List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
+                    menu.Dishes = menu.Dishes.Except(dishesByType).ToList();
+                }
+                else if (chefId != null)
+                {
+                    menu.ChefId = int.Parse(chefId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
+                }
+                else if (typeId != null)
+                {
+                    menu.TypeId = int.Parse(typeId);
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
+                }
+                else
+                {
+                    menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
+                }
+                int PageAmount = menu.Dishes.Count() / dishPerPage;
+                if (menu.Dishes.Count % dishPerPage != 0)
+                {
+                    PageAmount++;
+                }
+
+                if (PageAmount < (pageNumber - 1))
+                {
+                    throw new Exception("you dont have anough dishes to fill this page");
+                }
+                if (menu.Dishes.Count() < dishPerPage * pageNumber)
+                {
+                    newAmount = menu.Dishes.Count() % dishPerPage;
+                    menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * dishPerPage, newAmount);
+                }
+                else menu.Dishes = menu.Dishes.GetRange((pageNumber - 1) * dishPerPage, dishPerPage);
+
+                menu.totalPages = PageAmount;
+                menu.Chefs = null;
+                menu.Types = null;
+                menu.PageNumber = pageNumber;
+                this.dBContext.Close();
+
+                return menu;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
         public Menu GetSortedMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int amountPerPage = 12)
         {
             Menu menu = new Menu();
@@ -92,7 +158,7 @@ namespace WSRestaurant
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.getAll();
                 }
                 int PageAmount = menu.Dishes.Count() / amountPerPage;
-                if (menu.Dishes.Count % 12 != 0)
+                if (menu.Dishes.Count % amountPerPage != 0)
                 {
                     PageAmount++;
                 }

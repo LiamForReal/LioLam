@@ -19,6 +19,7 @@ namespace WSRestaurant
                 DishImage = "http://localhost:5125/Images/Dishes/" + Convert.ToString(src["DishImage"]),
                 chefs = null, 
                 types = null,
+                
                 // orders = null,
             };
             return dish;
