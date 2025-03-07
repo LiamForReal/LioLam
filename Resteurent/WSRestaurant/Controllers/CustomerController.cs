@@ -22,31 +22,23 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public async Task<string> LogIn()
+        public Customers LogIn(Customers customer)
         {
-            string json = Request.Form["model"];
-            Customers otenticationDetails = JsonSerializer.Deserialize<Customers>(json);
-            List<Customers> customers;
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                
-                foreach (Customers customer in customers)
+                Customers Check = unitOfWorkReposetory.customerRerposetoryObject.getByUserNameAndPass(customer.CustomerUserName, customer.CustomerPassword);
+                if (Check.Id != "" && Check.Id != null)
                 {
-                    if (customer.CustomerUserName == otenticationDetails.CustomerUserName && customer.CustomerPassword == otenticationDetails.CustomerPassword)
-                    {
-                        return customer.Id;
-                    }
-                       
-                } // get street and city names from ids!
-                return "";
+                    return Check;
+                }
+                return null;
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
-                return "";
+                return null;
             }
             finally
             {

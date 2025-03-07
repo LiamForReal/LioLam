@@ -38,7 +38,7 @@
 
                             $("#dishes").html(dishesData); //dishes container id 
                             $("#pagination").html(paginationData);
-                        }, 3000); //only to simulate real time getting
+                        }, 1000); //only to simulate real time getting
                     },
                     complete: function () {
                         // your code here;

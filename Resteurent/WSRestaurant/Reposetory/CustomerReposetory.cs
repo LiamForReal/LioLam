@@ -56,6 +56,17 @@ namespace WSRestaurant
                 return this.modelFactory.createCustomerObject.CreateModel(dataReader);
             }
         }
+        public Customers getByUserNameAndPass(string userName, string password)
+        {
+            string sql = "SELECT FROM Customers WHERE CustomerUserName = @CustomerUserName AND CustomerPassword = @CustomerPassword";
+            this.dbContext.AddParameter("@CustomerUserName", userName);
+            this.dbContext.AddParameter("@CustomerPassword", password);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createCustomerObject.CreateModel(dataReader);
+            }
+        }
         public bool update(Customers model)
         {
             string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone," +

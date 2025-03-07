@@ -7,11 +7,11 @@
 
 @section Styles
 { 
-    <link href="~/css/Customer/signUp.css" rel="stylesheet" />
+    <link href="~/css/customer/signUp.css" rel="stylesheet" />
 }
 @section Js
 {
-    <script src="~/javaScript/Customer/SignUp.js"></script>
+    <script src="~/javascript/customer/SignUp.js"></script>
 }
 
 @if (ViewBag.Error == true)
@@ -66,7 +66,7 @@ else
         <lable class="error" id="houseNumberError"></lable>
 
         <label>Image</label>
-        <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*"/><br>
+        <input class="image" type="file" id="Image" name="Image" placeholder="Upload your Image" accept="Image/*"/><br>
         <lable class="error" id="ImageError"></lable>
 
         <button type="button" class="submit" onclick="checkForm()">Submit</button>

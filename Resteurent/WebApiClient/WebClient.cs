@@ -49,6 +49,11 @@ namespace WebApiClient
             else this.uriBuilder.Query += "&";
             this.uriBuilder.Query += $"{name}={value}";
         }
+
+        public string buildURI()
+        {
+            return $"{uriBuilder.Scheme}://{uriBuilder.Host}:{uriBuilder.Port}/{uriBuilder.Path}";
+        }
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
@@ -66,9 +71,10 @@ namespace WebApiClient
             }
         }
 
-        public async Task<string> Post(T model)
+        public async Task<T> Post(T model)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString()); 
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             this.request.Content = objectContent;
             using (HttpClient client = new HttpClient())
@@ -76,11 +82,11 @@ namespace WebApiClient
                 this.response = await client.SendAsync(this.request);
                 if (this.response.IsSuccessStatusCode == true)
                 {
-                    return await this.response.Content.ReadAsAsync<string>();
+                    return await this.response.Content.ReadAsAsync<T>();
                 }
                
             }
-            return "";
+            throw new Exception("model do not recved");
         }
 
         public async Task<bool> Post(T model, Stream file)

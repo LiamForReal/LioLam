@@ -10,20 +10,20 @@ namespace RestaurantWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> LogIn(string userName, string password)
         {
+            Console.WriteLine($"user {userName}, pass: {password}");
+            WebClient<Customers> client = new WebClient<Customers>();
+            client.Scheme = "http";
+            client.Port = 5125;
+            client.Host = "localhost";
+            client.Path = "api/customer/LogIn";
 
-            WebClient<Customers> client = new WebClient<Customers>
-            {
-                Scheme = "http",
-                Port = 5125,
-                Host = "localhost",
-                Path = "api/Customer/LogIn"
-            };
+            Console.WriteLine(client.buildURI());
             Customers customer = new Customers();
             customer.CustomerUserName = userName;
             customer.CustomerPassword = password;
             try
             {
-                string customerCheck = await client.Post(customer);
+                Customers customerCheck = await client.Post(customer);
                 if (customerCheck == null)
                 {
                     //return someting 
@@ -31,10 +31,12 @@ namespace RestaurantWebApp.Controllers
                     return View("ShowLogInForm");
                 }
                 ViewBag.Error = false;
-                HttpContext.Session.SetString("Id", customerCheck);//session is the thread the server allocate to client to handle in my project it is a stateless space
-                                                                   //the id property is added to the setion
-                                                                   //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-                return RedirectToAction("GetDefaultScreen", "Guest");
+                HttpContext.Session.SetString("Id", customer.Id);//session is the thread the server allocate to client to handle in my project it is a stateless space
+                                                                 //the id property is added to the setion
+                                                                 //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+                HttpContext.Session.SetString("UserName", customer.CustomerUserName);
+                HttpContext.Session.SetString("UserImage", customer.CustomerImage);
+                return RedirectToAction("GetDefaultScreen", "guest");
             }
             catch (Exception ex)
             {
@@ -60,9 +62,9 @@ namespace RestaurantWebApp.Controllers
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Customer/SignUp"
+                Path = "api/customer/SignUp"
             };
-
+            
 
             // Read image stream
           
@@ -94,7 +96,7 @@ namespace RestaurantWebApp.Controllers
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/Customer/ShowSignUp";
+            client.Path = "api/customer/ShowSignUp";
             registerViewModel = await client.Get();
             return View(registerViewModel);
         }
