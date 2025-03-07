@@ -15,4 +15,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LiolamResteurent\LiolamResteurent.csproj" />
+    <ProjectReference Include="..\WebApiClient\WebApiClient.csproj" />
+  </ItemGroup>
+
 </Project>
