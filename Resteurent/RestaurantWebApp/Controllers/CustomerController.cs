@@ -31,7 +31,7 @@ namespace RestaurantWebApp.Controllers
                     return View("ShowLogInForm");
                 }
                 ViewBag.Error = false;
-                TempData["Id"] = customerId;
+                TempData["Id"] = customerId; //actual edit tmp data
                 HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
                                                                    //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
@@ -75,9 +75,9 @@ namespace RestaurantWebApp.Controllers
                     ViewBag.Error = true;
                     return View("ShowSignUpForm");
             }
-      
 
 
+            TempData["Id"] = customers.Id; //actual edit tmp data
             // Store session info for logged-in user
             HttpContext.Session.SetString("Id", customers.Id);
 

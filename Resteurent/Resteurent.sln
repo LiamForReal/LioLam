@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebApp", "Restaur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiolamResteurent", "LiolamResteurent\LiolamResteurent.csproj", "{07BA82CF-9696-4FAF-AD16-DC1BB5505CB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWPF", "RestaurentWPF\RestaurantWPF.csproj", "{8EB15487-9CA5-1D53-EB58-8D7FCD3C0C13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{07BA82CF-9696-4FAF-AD16-DC1BB5505CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07BA82CF-9696-4FAF-AD16-DC1BB5505CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07BA82CF-9696-4FAF-AD16-DC1BB5505CB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB15487-9CA5-1D53-EB58-8D7FCD3C0C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB15487-9CA5-1D53-EB58-8D7FCD3C0C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB15487-9CA5-1D53-EB58-8D7FCD3C0C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB15487-9CA5-1D53-EB58-8D7FCD3C0C13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
