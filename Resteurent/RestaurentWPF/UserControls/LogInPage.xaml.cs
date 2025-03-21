@@ -41,7 +41,8 @@ namespace RestaurantWPF.UserControls
             this.userName.Content = "";
             this.password.Content = "";
         }
-        private async Task submit_Click(object sender, RoutedEventArgs e)
+
+        private async void submit_Click(object sender, RoutedEventArgs e)
         {
             WebClient<Customers> client = new WebClient<Customers>();
             client.Scheme = "http";
@@ -49,26 +50,26 @@ namespace RestaurantWPF.UserControls
             client.Host = "localhost";
             client.Path = "api/customer/LogIn";
 
-            Console.WriteLine(client.buildURI());
+            //Console.WriteLine(client.buildURI());
             Customers customer = new Customers();
             customer.CustomerUserName = this.userName.ToString();
             customer.CustomerPassword = this.password.ToString();
-            try
-            {
-                Customers customerCheck = await client.Post(customer);
-                if (customerCheck != null/* && check if admin in bulian */ )
-                {
-                    //return someting 
-                    //handeling 
-                    return; 
-                }
-     
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
-            }
+            //try
+            //{
+            //    Customers customerCheck = await client.Post(customer);
+            //    if (customerCheck != null/* && check if admin in bulian */ )
+            //    {
+            //        //return someting 
+            //        //handeling 
+            //        return; 
+            //    }
 
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
+            //}
         }
+
     }
 }

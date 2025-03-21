@@ -7,8 +7,6 @@
              mc:Ignorable="d" 
              Width="1100" Height="750" Background="#FF22243D">
     <Canvas>
-        <Label Content="Label"/>
-        <Label Content="Welcome To LioLam&#xD;&#xA;       Restaurant &#xD;&#xA;" Canvas.Left="282" Canvas.Top="275" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" Height="200" FontSize="50" Background="Transparent"/>
-
+        <Image Height="750" Source="/Images/restaurant_open_screen.jpg" Stretch="Fill" Width="1100" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Canvas>
 </UserControl>

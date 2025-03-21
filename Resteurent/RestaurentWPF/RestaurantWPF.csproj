@@ -9,10 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Images\Icon.png">
+    <None Remove="Images\restaurant_open_screen.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Icon.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\restaurant_open_screen.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

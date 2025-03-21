@@ -1,5 +1,4 @@
-﻿using RestaurantWPF.UserControls;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +11,7 @@ using System.Windows.Shapes;
 using RestaurantWPF.UserControls;
 namespace RestaurentWPF;
 
+
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
@@ -19,8 +19,9 @@ public partial class MainWindow : Window
 {
     static bool isLogin;
 
-    LogInPage login;
-    startPage startPage;
+    static LogInPage loginPage;
+    static startPage startPage;
+    static DishesPage dishesPage;
     public MainWindow()
     {
         InitializeComponent();
@@ -31,11 +32,11 @@ public partial class MainWindow : Window
 
     private void Index()
     {
-        if(this.startPage == null)
+        if(startPage == null)
         {
-            this.startPage = new startPage();
+            startPage = new startPage();
         }
-        this.data.DataContext = this.startPage;
+        this.data.Child = startPage;
     }
     private void setStartWindows()
     {
@@ -46,9 +47,8 @@ public partial class MainWindow : Window
     private void LogInButton_Click(object sender, RoutedEventArgs e)
     {
         if (!isLogin)
-            login = new LogInPage();
-        this.data.DataContext = login;
-       
+            loginPage = new LogInPage();
+        
         Button button = (Button)(sender);
         if (isLogin)
         {
@@ -57,7 +57,16 @@ public partial class MainWindow : Window
         else
         {
             button.Content = "Log In";
+            this.data.Child = loginPage;
+            isLogin = true;
         }
         setStartWindows();
+    }
+
+    private void DishesButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (dishesPage == null)
+            dishesPage = new DishesPage();
+        this.data.Child = dishesPage;
     }
 }
