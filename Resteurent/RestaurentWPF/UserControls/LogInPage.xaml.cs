@@ -38,8 +38,8 @@ namespace RestaurantWPF.UserControls
 
         private void clear_Click(object sender, RoutedEventArgs e)
         {
-            this.userName.Content = "";
-            this.password.Content = "";
+            this.userNameInput.Text = "";
+            this.passwordInput.Text = "";
         }
 
         private async void submit_Click(object sender, RoutedEventArgs e)
@@ -48,28 +48,31 @@ namespace RestaurantWPF.UserControls
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";
-            client.Path = "api/customer/LogIn";
+            client.Path = "api/manager/IsAdmin";
 
             //Console.WriteLine(client.buildURI());
             Customers customer = new Customers();
             customer.CustomerUserName = this.userName.ToString();
             customer.CustomerPassword = this.password.ToString();
-            //try
-            //{
-            //    Customers customerCheck = await client.Post(customer);
-            //    if (customerCheck != null/* && check if admin in bulian */ )
-            //    {
-            //        //return someting 
-            //        //handeling 
-            //        return; 
-            //    }
+            this.errorLable.Visibility = Visibility.Hidden;
+            try
+            {
+                string adminId = await client.Post(customer);
+                if (adminId == "")
+                {
+                    this.errorLable.Visibility = Visibility.Visible;
+                    return;
+                }
+                Console.WriteLine("admin is in!");
+                customer.Id = adminId;
+                //show main window
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
-            //}
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
+            }
         }
-
     }
 }

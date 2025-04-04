@@ -13,6 +13,7 @@ namespace WSRestaurant
             Customers customer = new Customers()
             {
                 Id = Convert.ToString(src["CustomerId"]),
+                IsOwner = Convert.ToBoolean(src["IsOwner"]), 
                 CustomerUserName = Convert.ToString(src["CustomerUserName"]),
                 CustomerPassword = Convert.ToString(src["CustomerPassword"]),
                 CustomerImage = "http://localhost:5125/Images/Customers/" + Convert.ToString(src["CustomerImage"]),

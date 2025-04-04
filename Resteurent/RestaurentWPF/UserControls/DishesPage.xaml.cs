@@ -23,13 +23,13 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class DishesPage : UserControl
     {
-        static List<Dishes> dishes;
+        private List<Dishes> dishes;
         static dishDetailsPage dishDetailsPage;
         public DishesPage()
         {
             InitializeComponent();
             GetAllDishes();
-            this.listView.ItemsSource = dishes;
+            this.listView.ItemsSource = this.dishes;
         }
 
         private async Task GetAllDishes()
@@ -39,7 +39,7 @@ namespace RestaurantWPF.UserControls
             client.Port = 5125;
             client.Host = "localhost";
             client.Path = "api/Manager/GetDishes";
-            dishes = await client.Get();
+            this.dishes = await client.Get();
         }
 
         private void inspectDish_Click(object sender, RoutedEventArgs e)

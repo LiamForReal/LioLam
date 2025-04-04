@@ -10,7 +10,7 @@ namespace WSRestaurant
         {
             string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.cityId},{model.streetId}, '{model.CustomerPhone}',
-                                    '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}' )";
+                                    '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
 
             //string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
             //                VALUES (@CustomerId, @CustomerUserName, @CustomerHouse,@CityId, @StreetId, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
@@ -92,6 +92,28 @@ namespace WSRestaurant
                 return "";
             }
             catch(Exception e)
+            {
+                return "";
+            }
+        }
+
+        public string CheckIfAdmin(string userName, string password)
+        {
+            string sql = @"SELECT Customers.CustomerId, Customers.CustomerUserName, Customers.CustomerPassword
+                            FROM Customers
+                            WHERE Customers.CustomerUserName=@CustomerUserName AND
+                            Customers.CustomerPassword=@CustomerPassword AND Customers.IsOwner = true";
+
+            this.dbContext.AddParameter("@CustomerUserName", userName);
+            this.dbContext.AddParameter("@CustomerPassword", password);
+            try
+            {
+                var response = this.dbContext.ReadValue(sql);
+                if (response != null)
+                    return response.ToString();
+                return "";
+            }
+            catch (Exception e)
             {
                 return "";
             }

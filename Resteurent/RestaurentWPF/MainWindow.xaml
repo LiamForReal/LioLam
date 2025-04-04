@@ -8,7 +8,7 @@
         WindowState="Maximized"
         Title="Master Page" Height="750" Width="1300" ResizeMode="NoResize">
     <Canvas Height="750" Width="1300" VerticalAlignment="Top">
-        <Border BorderThickness="3" BorderBrush="Gold">
+        <Border BorderThickness="5" BorderBrush="Gold">
             <Canvas
             Width="200"
             Height="750"
@@ -37,7 +37,7 @@
             </Canvas>
         </Border>
 
-        <Border  x:Name="data" Canvas.Left="200" BorderThickness="3" BorderBrush="Gold">
+        <Border  x:Name="data" Canvas.Left="200" BorderThickness="5" BorderBrush="Gold">
             <Canvas Background="#FF22243D" Height="750" Width="1100" HorizontalAlignment="Left" Canvas.Left="200" VerticalAlignment="Center"></Canvas>
         </Border>
         

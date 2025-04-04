@@ -21,6 +21,27 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
+        public async Task<string> IsAdmin(string userName, string password)
+        {
+            try
+            {
+                this.dBContext.Open();//add cities and streets and house number 
+                string customerId = unitOfWorkReposetory.customerRerposetoryObject.CheckIfAdmin(userName, password);
+                return customerId;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return "";
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
         public List<Dishes> GetDishes()
         {
             List<Dishes> dishes;
@@ -149,7 +170,7 @@ namespace WSRestaurant.Controllers
             bool flag = false;
             try
             {
-                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(CustomerId, false, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
@@ -176,7 +197,7 @@ namespace WSRestaurant.Controllers
             bool flag = false;
             try
             {
-                Customers customer = new Customers(CustomerId, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(CustomerId, false, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 this.dBContext.Open();
                 List<Cities> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);

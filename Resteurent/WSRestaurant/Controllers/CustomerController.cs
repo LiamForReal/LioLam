@@ -75,7 +75,7 @@ namespace WSRestaurant.Controllers
             try
             {    
                 this.dBContext.Open();
-                Customers customer = new Customers(Id, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                Customers customer = new Customers(Id, false, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 return flag;
             }
