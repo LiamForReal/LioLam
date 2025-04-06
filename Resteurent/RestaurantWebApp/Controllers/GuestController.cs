@@ -10,6 +10,7 @@ namespace ResteurantWebApp.Controllers
         [HttpGet]
         public IActionResult GetDefaultScreen()
         {
+            TempData["Id"] = null;
             return View();
         }
 

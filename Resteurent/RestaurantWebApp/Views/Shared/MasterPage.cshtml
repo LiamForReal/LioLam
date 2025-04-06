@@ -29,16 +29,18 @@
 <div class="header">
     <i class="fas fa-utensils headerIcon"></i>
     <p class="headerTitle">LioLam</p>
-    <a href="http://localhost:7287/" class="firstHeaderMenu" onclk="HomePage()">Home</a>
+    
     @if (TempData["Id"] == null)
     {
+        <a href="http://localhost:7287/Guest/GetDefaultScreen" class="firstHeaderMenu" onclk="HomePage()">Home</a>
         <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
         <a class="headerMenu" href="http://localhost:7287/Customer/ShowLogInForm">LogIn</a>
         <a class="headerMenu" href="http://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
     }
     @if (TempData["Id"] != null)
     {
-        <a class="headerMenu">LogOut</a>
+        <a href="http://localhost:7287/Customer/GetDefaultScreen" class="firstHeaderMenu" onclk="HomePage()">Home</a>
+        <a href="http://localhost:7287/Guest/GetDefaultScreen" class="headerMenu">LogOut</a>
         <a class="headerMenu">Reservations</a>
         <a class="headerMenu">Orders</a>
         //<p class="WelcomeMsg">Welcome back! Enjoy your dining experience.</p>

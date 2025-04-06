@@ -32,10 +32,11 @@ namespace RestaurantWebApp.Controllers
                 }
                 ViewBag.Error = false;
                 TempData["Id"] = customerId; //actual edit tmp data
+
                 HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
                                                                    //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-                return RedirectToAction("GetDefaultScreen", "Guest");
+                return RedirectToAction("GetDefaultScreen", "Customer");
             }
             catch (Exception ex)
             {

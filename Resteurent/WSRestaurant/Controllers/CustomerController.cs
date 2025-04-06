@@ -24,7 +24,30 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public async Task<string> LogIn(string userName, string password)
+        public string GetWelcomeDetails(string id)
+        {
+            try
+            {
+                this.dBContext.Open();//add cities and streets and house number 
+                Customers customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+                string name = customer.CustomerUserName;
+                customer = null;
+                return name;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return "";
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public string LogIn(string userName, string password)
         {
            
             try
