@@ -24,7 +24,7 @@ namespace RestaurantWebApp.Controllers
             try
             {
                 string customerId = await client.Get();
-                if (customerId == null)
+                if (customerId == "")
                 {
                     //return someting 
                     ViewBag.Error = true;
@@ -45,6 +45,27 @@ namespace RestaurantWebApp.Controllers
                 return View("ShowLogInForm");
             }
 
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetDefaultScreen()
+        {
+            WebClient<welcomeDetails> client = new WebClient<welcomeDetails>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/GetWelcomeDetails"
+            };
+
+            if(TempData["Id"] != null)
+            {
+                client.AddParameter("id", TempData["Id"].ToString());
+                welcomeDetails welcomeDetails = await client.Get();
+                return View("GetDefaultScreen", welcomeDetails);
+            }
+            return View("GetDefaultScreen");
         }
 
         [HttpGet]
@@ -83,7 +104,7 @@ namespace RestaurantWebApp.Controllers
             HttpContext.Session.SetString("Id", customers.Id);
 
             // Redirect to a successful page
-            return RedirectToAction("GetDefaultScreen", "Guest"); // Change "Dashboard" to your actual target page
+            return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
         }
 
 

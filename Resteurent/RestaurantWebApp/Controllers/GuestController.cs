@@ -15,7 +15,7 @@ namespace ResteurantWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishesPerPage = 12)
+        public async Task<IActionResult> GetMenu(string? chefId = null, string? typeId = null, int pageNumber = 1, int dishesPerPage = 12)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace ResteurantWebApp.Controllers
                         client.AddParameter("typeId", typeId);
                 }
 
-                Menu menu = client.Get().Result;
+                Menu menu = await client.Get();
                 return View(menu);
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace ResteurantWebApp.Controllers
             client.Host = "localhost";
             client.Path = "api/guest/GetSingleDish";
             client.AddParameter("id", dishId);
-            Dishes dish = client.Get().Result;
+            Dishes dish = await client.Get();
             return View(dish);
         }
 

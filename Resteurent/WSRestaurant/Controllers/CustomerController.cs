@@ -24,21 +24,24 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public string GetWelcomeDetails(string id)
+        public welcomeDetails GetWelcomeDetails(string id)
         {
             try
             {
+                //Console.WriteLine($"the id is: {id}");
+                welcomeDetails wD = new welcomeDetails(); 
                 this.dBContext.Open();//add cities and streets and house number 
                 Customers customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
-                string name = customer.CustomerUserName;
+                wD.name = customer.CustomerUserName;
+                wD.image = customer.CustomerImage;
                 customer = null;
-                return name;
+                return wD;
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
-                return "";
+                return null;
             }
             finally
             {

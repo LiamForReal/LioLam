@@ -52,8 +52,10 @@ namespace WSRestaurant
 
         public Customers getById(string id)
         {
-            string sql = "SELECT FROM Customers WHERE CustomerId = @CustomerId";
+            string sql = "SELECT * FROM Customers WHERE CustomerId = @CustomerId";
             this.dbContext.AddParameter("@CustomerId", id);
+
+            //Console.WriteLine($"sql is: {sql}, id is: {id}");
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 dataReader.Read();

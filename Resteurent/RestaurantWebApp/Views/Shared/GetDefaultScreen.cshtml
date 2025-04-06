@@ -1,0 +1,46 @@
+﻿@using LiolamResteurent
+@model welcomeDetails
+@{
+    ViewData["Title"] = "GetDefaultScreen";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@if(Model == null)
+{
+    <p class="bodyTitle">LioLam Restaurant<br />Fresh & Tasty</p>
+    <p class="bodyDescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae<br />tincidunt neque. Fusce sodales accumsan interdum. Phasellus velit enim, maximus</p>
+
+    <img src="~/images/Icon.png" alt="restaurantIcon" class="bodyImg">
+    <div class="bodyExamples">
+        <i class="fas fa-fish bodyIcon"></i>
+        <p class="bodyExamplesTitle">Quality Ingredients</p>
+        <p class="bodyExampleDescription">Lorem ipsum dolor sit amet<br />consectetur adipiscing elit.</p>
+    </div>
+    <div class="bodyExamples">
+        <i class="fas fa-leaf bodyIcon"></i>
+        <p class="bodyExamplesTitle">Fresh And Tasty Food</p>
+        <p class="bodyExampleDescription">Lorem ipsum dolor sit amet<br />consectetur adipiscing elit.</p>
+    </div>
+    <div class="bodyExamples">
+        <i class="fas fa-carrot bodyIcon"></i>
+        <p class="bodyExamplesTitle">Working Master Chefs</p>
+        <p class="bodyExampleDescription">Lorem ipsum dolor sit amet<br />consectetur adipiscing elit.</p>
+    </div>
+}
+else 
+{
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <img class="welcome-img" src="@Model.image" alt="Profile Picture" />
+            <h1 class="welcome-message">Welcome back, @Model.name! 🍽️</h1>
+            <p class="welcome-subtext">Get ready for something tasty — your next meal starts here.</p>
+
+            <div class="decorative-icons">
+                <i class="fas fa-utensils"></i>
+                <i class="fas fa-mug-hot"></i>
+                <i class="fas fa-ice-cream"></i>
+                <i class="fas fa-cookie-bite"></i>
+            </div>
+        </div>
+    </div>
+}
