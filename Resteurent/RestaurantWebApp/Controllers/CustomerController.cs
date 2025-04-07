@@ -3,6 +3,8 @@ using LiolamResteurent;
 using WebApiClient;
 using NuGet.Protocol;
 using System.Runtime.CompilerServices;
+using NuGet.Packaging.Signing;
+
 namespace RestaurantWebApp.Controllers
 {
     public class CustomerController : Controller
@@ -94,8 +96,8 @@ namespace RestaurantWebApp.Controllers
 
             if (!result)
             {
-                    ViewBag.Error = true;
-                    return View("ShowSignUpForm");
+                ViewBag.Error = true;
+                return RedirectToAction("ShowSignUpForm", "Customer");
             }
 
 
@@ -107,19 +109,89 @@ namespace RestaurantWebApp.Controllers
             return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditAccount(Customers customers, IFormFile Image)
+        {
+            Console.WriteLine($"customer id is {customers.Id}");
+            WebClient<Customers> client = new WebClient<Customers>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/UpdateExistingUser"
+            };
+            customers.CustomerImage = Image.FileName;
+
+            // Read image stream
+
+            // Send the request with customer data and image
+            bool result = await client.Post(customers, Image.OpenReadStream());
+
+            if (!result)
+            {
+                ViewBag.Error = true;
+                return RedirectToAction("ShowEditSignUpForm", "Customer");
+            }
+            // Redirect to a successful page
+            return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
+        }
 
         [HttpGet]
         public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
-            WebClient<registerViewModel> client = new WebClient<registerViewModel>();
-            registerViewModel registerViewModel = new registerViewModel();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Customer/ShowSignUp";
-            registerViewModel = await client.Get();
-            return View(registerViewModel);
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/ShowSignUp"
+            };
+            registerViewModel registerViewModel = await client.Get();
+
+            Account account = new Account()
+            {
+                Customer = null,
+                registerView = registerViewModel
+            };
+
+            return View(account);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditSignUpForm()
+        {
+            
+            //city and strits lists from ws
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/ShowSignUp"
+            };
+            registerViewModel registerViewModel = await client.Get();
+
+            WebClient<Customers> client2 = new WebClient<Customers>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/GetCustomerById"
+            };
+
+            Console.WriteLine("this is tmp data: " + TempData["Id"]); //tmp data is null some how
+            client2.AddParameter("id", TempData["Id"].ToString()); //check it later!!!
+            Customers customer = await client2.Get();
+
+            Account account = new Account()
+            {
+                Customer = customer, 
+                registerView = registerViewModel
+            };
+
+            return View("ShowSignUpForm", account);
+        }
+
     }
 }

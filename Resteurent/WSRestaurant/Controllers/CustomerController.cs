@@ -24,6 +24,28 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
+
+        public Customers GetCustomerById(string id)
+        {
+            try
+            {
+                this.dBContext.Open();//add cities and streets and house number 
+                Customers customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
         public welcomeDetails GetWelcomeDetails(string id)
         {
             try
@@ -95,14 +117,40 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateExistingUser(string Id, string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage, IFormFile pickture) //user details
+        public async Task<bool> UpdateExistingUser() //user details
         {
+            string json = Request.Form["model"];
+            IFormFile file = Request.Form.Files[0];
+            Customers customer = JsonSerializer.Deserialize<Customers>(json);
+            customer.CustomerImage = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
             bool flag = false;
             try
             {    
                 this.dBContext.Open();
-                Customers customer = new Customers(Id, false, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
-                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+                dBContext.BeginTransaction();
+                if (customer != unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id))
+                    flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+                else flag = true;
+
+                if (flag)
+                {
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Customers\");
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+
+                    // Delete old image if it already exists
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    // Save new image
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                    }
+                }
+
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
@@ -136,7 +184,7 @@ namespace WSRestaurant.Controllers
                     string filePath =$@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
-                        file.CopyToAsync(fileStream);
+                        await file.CopyToAsync(fileStream);
                     };
                 }
 

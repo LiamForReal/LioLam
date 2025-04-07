@@ -9,7 +9,7 @@ namespace LiolamResteurent
     public class Orders : Models
     {
         public DateTime OrderDate { get; set; }
-        public Customers Customer { get; set; }
+        public Customers Customer { get; set; } //To change maybe
         public List<Dishes> dishes { get; set; }
         public Orders() { }
         public Orders(DateTime orderDate)

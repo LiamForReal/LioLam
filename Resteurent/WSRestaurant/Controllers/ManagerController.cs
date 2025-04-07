@@ -165,7 +165,7 @@ namespace WSRestaurant.Controllers
         //add city function 
         //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, int CityId, int StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
@@ -192,7 +192,7 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, int CityId, int streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
         {
             bool flag = false;
             try
