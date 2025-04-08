@@ -1,9 +1,8 @@
 body {
-    font-family: David;
     width: 100%;
     color: white;
     height: auto;
-    margin:auto;
+    margin: auto;
     font-size: 20px;
 }
 
@@ -35,7 +34,6 @@ body {
     color: white;
     background-color: #1a1a2e;
     text-decoration: none;
-
     display: inline-block;
 }
 
@@ -88,7 +86,6 @@ body {
     text-align: left;
 }
 
-
 .bodyImg {
     width: 35%;
     height: auto;
@@ -97,30 +94,99 @@ body {
     margin-top: -23%;
 }
 
-.bodyExamples {
-    margin-top: 18%;
-    margin-left: 5%;
-    width: 13%;
-    margin-bottom: 8%;
-    display: inline-block;
+.restaurantMainImg {
+    display: block;
+    margin: 40px auto 20px auto;
+    width: 200px;
+    height: auto;
 }
 
-.bodyIcon {
-    color: gold;
-    border: 2px solid #1a1a2e;
-    padding: 1.2% 1.2% 1.2% 1.2%;
+.restaurantTitle {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
 }
 
-.bodyExamplesTitle {
-    font-size: 20px;
-    margin-left: 2%;
+.restaurantTagline {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    color: #ddd;
 }
 
-.bodyExampleDescription {
-    font-size: 16px;
-    margin-left: 2%;
-    margin-top: 1%;
-    margin-bottom: 0;
+.restaurantFeatures {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+    padding: 0 5%;
+}
+
+.featureChunk {
+    text-align: center;
+    width: 30%;
+    color: white;
+}
+
+    .featureChunk h3 {
+        color: gold;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .featureChunk p {
+        font-size: 16px;
+    }
+
+
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* leave space if header exists */
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, #2b2d4e, #1c1d36);
+    padding: 50px 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    animation: fadeIn 1s ease;
+}
+
+.welcome-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff55;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.welcome-subtext {
+    font-size: 15px;
+    color: #dcdcdc;
+    margin-bottom: 25px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .footer {
@@ -138,6 +204,16 @@ body {
     font-size: 14px;
     margin-bottom: 0;
     display: inline-block;
+}
+
+.decorative-icons {
+    font-size: 24px;
+    color: #f7c873;
+    display: flex;
+    margin-top: -20px;
+    justify-content: center;
+    gap: 20px;
+    margin-left: 17%;
 }
 
 .footerphone {

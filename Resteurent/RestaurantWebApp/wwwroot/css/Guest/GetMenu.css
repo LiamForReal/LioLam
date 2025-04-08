@@ -1,13 +1,12 @@
 ﻿body {
     background-color: #22243d;
     color: #e4e6f0;
-    font-family: Arial, sans-serif;
     width: 100%;
     margin: 0;
     padding: 0;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
@@ -55,7 +54,7 @@ a{
     margin-top: 20px;
     font-weight: bold;
     color: #e4e6f0;
-    font-size:16px;
+    font-size: 16px;
 }
 
 .side-panel {
@@ -184,10 +183,10 @@ button {
 .link {
     text-decoration: none;
 }
-.loader
-{
-   place-content:center;
-   position:absolute;
-   width:500px;
-   height:500px;
+
+.loader {
+    place-content: center;
+    position: absolute;
+    width: 500px;
+    height: 500px;
 }

@@ -20,8 +20,8 @@ namespace WSRestaurant
                 CustomerHouse = Convert.ToInt32(src["CustomerHouse"]),
                 CustomerPhone = Convert.ToString(src["CustomerPhone"]),
                 CustomerMail = Convert.ToString(src["CustomerMail"]),
-                cityId = -1,
-                streetId = -1,
+                cityId = "",
+                streetId = "",
                 //CurrentReservation = null,
                 //orders = null
             };

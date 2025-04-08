@@ -57,7 +57,7 @@ namespace RestaurantWPF.UserControls
             this.errorLable.Visibility = Visibility.Hidden;
             try
             {
-                string adminId = await client.Post(customer);
+                string adminId = await client.PostId(customer);
                 if (adminId == "")
                 {
                     this.errorLable.Visibility = Visibility.Visible;

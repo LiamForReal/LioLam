@@ -1,0 +1,42 @@
+﻿@using LiolamResteurent
+@model welcomeDetails
+@{
+    ViewData["Title"] = "GetDefaultScreen";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@if(Model == null)
+{
+    
+    <img src="~/images/Icon.png" alt="restaurantIcon" class="restaurantMainImg" />
+
+    
+    <p class="restaurantTitle">LioLam Dining</p>
+    <p class="restaurantTagline">Get ready for something tasty — your next meal starts here.</p>
+
+    
+    <div class="restaurantFeatures">
+        <div class="featureChunk">
+            <h3>Elegant Atmosphere</h3>
+            <p>A perfect blend of style and comfort — dine in luxury every visit.</p>
+        </div>
+        <div class="featureChunk">
+            <h3>Award-Winning Menu</h3>
+            <p>Savor dishes crafted by master chefs with fresh, quality ingredients.</p>
+        </div>
+        <div class="featureChunk">
+            <h3>Delivery & Dine-In</h3>
+            <p>Your cravings delivered or served — experience LioLam your way.</p>
+        </div>
+    </div>
+}
+else 
+{
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <img class="welcome-img" src="@Model.image" alt="Profile Picture" />
+            <h1 class="welcome-message">Welcome back, @Model.name! 🍽️</h1>
+            <p class="welcome-subtext">Get ready for something tasty — your next meal starts here.</p>
+        </div>
+    </div>
+}
