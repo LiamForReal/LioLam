@@ -34,7 +34,6 @@ body {
     color: white;
     background-color: #1a1a2e;
     text-decoration: none;
-
     display: inline-block;
 }
 
@@ -87,7 +86,6 @@ body {
     text-align: left;
 }
 
-
 .bodyImg {
     width: 35%;
     height: auto;
@@ -96,56 +94,50 @@ body {
     margin-top: -23%;
 }
 
-.bodyExamples {
-    margin-top: 18%;
-    margin-left: 5%;
-    width: 13%;
-    margin-bottom: 8%;
-    display: inline-block;
-}
-
-.bodyIcon {
-    color: gold;
-    border: 2px solid #1a1a2e;
-    padding: 1.2% 1.2% 1.2% 1.2%;
-}
-
-.bodyExamplesTitle {
-    font-size: 20px;
-    margin-left: 2%;
-}
-
-.bodyExampleDescription {
-    font-size: 16px;
-    margin-left: 2%;
-    margin-top: 1%;
-    margin-bottom: 0;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
+.restaurantMainImg {
     display: block;
-    width: 100%;
-    height: 50px;
-    background-color: #1a1a2e;
+    margin: 40px auto 20px auto;
+    width: 200px;
+    height: auto;
+}
+
+.restaurantTitle {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.restaurantTagline {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    color: #ddd;
+}
+
+.restaurantFeatures {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+    padding: 0 5%;
+}
+
+.featureChunk {
+    text-align: center;
+    width: 30%;
     color: white;
 }
 
-.footerBles {
-    margin-left: 2%;
-    font-size: 14px;
-    margin-bottom: 0;
-    display: inline-block;
-}
+    .featureChunk h3 {
+        color: gold;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
 
-.footerphone {
-    font-size: 14px;
-    margin-bottom: 0;
-    display: inline-block;
-    float: right;
-    margin-right: 2%;
-}
+    .featureChunk p {
+        font-size: 16px;
+    }
+
 
 .welcome-container {
     display: flex;
@@ -185,14 +177,6 @@ body {
     margin-bottom: 25px;
 }
 
-.decorative-icons {
-    font-size: 24px;
-    color: #f7c873;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -203,4 +187,39 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 50px;
+    background-color: #1a1a2e;
+    color: white;
+}
+
+.footerBles {
+    margin-left: 2%;
+    font-size: 14px;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.decorative-icons {
+    font-size: 24px;
+    color: #f7c873;
+    display: flex;
+    margin-top: -20px;
+    justify-content: center;
+    gap: 20px;
+    margin-left: 17%;
+}
+
+.footerphone {
+    font-size: 14px;
+    margin-bottom: 0;
+    display: inline-block;
+    float: right;
+    margin-right: 2%;
 }

@@ -38,6 +38,7 @@ namespace RestaurantWebApp.Controllers
                 HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
                                                                    //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
+                
                 return RedirectToAction("GetDefaultScreen", "Customer");
             }
             catch (Exception ex)
@@ -63,7 +64,7 @@ namespace RestaurantWebApp.Controllers
 
             if(TempData["Id"] != null)
             {
-                client.AddParameter("id", TempData["Id"].ToString());
+                client.AddParameter("id", HttpContext.Session.GetString("Id"));
                 welcomeDetails welcomeDetails = await client.Get();
                 return View("GetDefaultScreen", welcomeDetails);
             }
@@ -120,12 +121,20 @@ namespace RestaurantWebApp.Controllers
                 Host = "localhost",
                 Path = "api/Customer/UpdateExistingUser"
             };
-            customers.CustomerImage = Image.FileName;
 
             // Read image stream
-
+            bool result;
             // Send the request with customer data and image
-            bool result = await client.Post(customers, Image.OpenReadStream());
+            if (Image == null || Image.Length == 0)
+            {
+                result = await client.Post(customers);
+            }
+            else
+            {
+                customers.CustomerImage = Image.FileName;
+                result = await client.Post(customers, Image.OpenReadStream());
+            }
+           
 
             if (!result)
             {
@@ -181,7 +190,7 @@ namespace RestaurantWebApp.Controllers
             };
 
             Console.WriteLine("this is tmp data: " + TempData["Id"]); //tmp data is null some how
-            client2.AddParameter("id", TempData["Id"].ToString()); //check it later!!!
+            client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
             Customers customer = await client2.Get();
 
             Account account = new Account()

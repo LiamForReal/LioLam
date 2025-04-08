@@ -119,11 +119,11 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public async Task<bool> UpdateExistingUser() //user details
         {
+            bool flag = false;
+            //bool isImageChanged = Request.Form.Files.Count > 0;
             string json = Request.Form["model"];
-            IFormFile file = Request.Form.Files[0];
             Customers customer = JsonSerializer.Deserialize<Customers>(json);
             customer.CustomerImage = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
-            bool flag = false;
             try
             {    
                 this.dBContext.Open();
@@ -132,24 +132,28 @@ namespace WSRestaurant.Controllers
                     flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 else flag = true;
 
-                if (flag)
+                if (flag /*&& isImageChanged*/)
                 {
-                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Customers\");
-                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+                    IFormFile file = Request.Form.Files[0];
 
-                    // Delete old image if it already exists
-                    if (System.IO.File.Exists(filePath))
+                    if (file != null && file.Length > 0)
                     {
-                        System.IO.File.Delete(filePath);
-                    }
+                        string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Customers\");
+                        string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
 
-                    // Save new image
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                        // Delete old image if it already exists
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+
+                        // Save new image
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                        }
                     }
                 }
-
                 this.dBContext.Commit();
                 return flag;
             }

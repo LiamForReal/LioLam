@@ -159,7 +159,6 @@ namespace WSRestaurant
         public bool executeSql(string sql)
         {
             this.command.CommandText = sql;
-            Console.WriteLine(this.command.CommandText);
             bool flag = this.command.ExecuteNonQuery() > 0;
             clearCollection();
             return flag;

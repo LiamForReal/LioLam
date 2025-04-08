@@ -11,18 +11,6 @@ namespace WSRestaurant
             string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.cityId},{model.streetId}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
-
-            //string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
-            //                VALUES (@CustomerId, @CustomerUserName, @CustomerHouse,@CityId, @StreetId, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
-            //this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
-            //this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-            //this.dbContext.AddParameter("@CityId", model.cityId.ToString());
-            //this.dbContext.AddParameter("@StreetId", model.streetId.ToString());
-            //this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
-            //this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
-            //this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
-            //this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-            //this.dbContext.AddParameter("@CustomerId", model.Id);
             return this.dbContext.Insert(sql);
             
         }
@@ -64,8 +52,8 @@ namespace WSRestaurant
         }
         public bool update(Customers model)
         {
-            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone," +
-                       ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId == @CustomerId";
+            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone" +
+                       ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
             this.dbContext.AddParameter("@CityId", model.cityId.ToString());

@@ -37,7 +37,7 @@
         <a class="headerMenu" href="http://localhost:7287/Customer/ShowLogInForm">LogIn</a>
         <a class="headerMenu" href="http://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
     }
-    @if (TempData["Id"] != null)
+    else
     {
         <a href="http://localhost:7287/Customer/GetDefaultScreen" class="firstHeaderMenu" style="margin-left: 15%;" onclk="HomePage()">Home</a>
         <a href="http://localhost:7287/Guest/GetDefaultScreen" class="headerMenu">LogOut</a>
@@ -52,4 +52,11 @@
 <div class="footer">
     <p class="footerBles">We hope you enjoy your future meals with us!</p>
     <p class="footerphone">Contact us at 7777 for inquiries!</p>
+
+    <div class="decorative-icons">
+        <i class="fas fa-utensils"></i>
+        <i class="fas fa-mug-hot"></i>
+        <i class="fas fa-ice-cream"></i>
+        <i class="fas fa-cookie-bite"></i>
+    </div>
 </div>
