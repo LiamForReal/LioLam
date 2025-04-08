@@ -8,7 +8,7 @@ namespace LiolamResteurent
 {
     public class Reservations : Models
     {
-        public Customers Customer { get; set; }//To change may
+        public string CustomerId { get; set; }//To change may
         public DateTime ReserveDate { get; set; }
         public int AmountOfPeople { get; set; }
         public string ReserveHour { get; set; }
@@ -16,7 +16,7 @@ namespace LiolamResteurent
         public Reservations() { }
         public Reservations(DateTime reserveDate, int amountOfPeople)
         {
-            Customer = null;
+            CustomerId = "";
             ReserveDate = reserveDate;
             AmountOfPeople = amountOfPeople;
             ReserveHour = reserveDate.ToString("HH:mm");

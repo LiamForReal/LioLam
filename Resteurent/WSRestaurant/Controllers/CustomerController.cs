@@ -120,7 +120,7 @@ namespace WSRestaurant.Controllers
         public async Task<bool> UpdateExistingUser() //user details
         {
             bool flag = false;
-            //bool isImageChanged = Request.Form.Files.Count > 0;
+            bool isImageChanged = Request.Form.Files.Count > 0;
             string json = Request.Form["model"];
             Customers customer = JsonSerializer.Deserialize<Customers>(json);
             customer.CustomerImage = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
@@ -128,32 +128,43 @@ namespace WSRestaurant.Controllers
             {    
                 this.dBContext.Open();
                 dBContext.BeginTransaction();
-                if (customer != unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id))
-                    flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
-                else flag = true;
-
-                if (flag /*&& isImageChanged*/)
+                if(!customer.CustomerImage.Contains("."))
+                {
+                    string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
+                    customer.CustomerImage = $"{customer.Id}{Path.GetExtension(savedImage)}";
+                }
+                Console.WriteLine($"customer Image is {customer.CustomerImage}");
+                if (isImageChanged)
                 {
                     IFormFile file = Request.Form.Files[0];
 
-                    if (file != null && file.Length > 0)
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Customers\");
+
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
+                    string fileNameWithoutExt = customer.Id; // or customer.CustomerImage if it's just the name
+
+                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
+
+                    foreach (var ext in possibleExtensions)
                     {
-                        string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Customers\");
-                        string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
-
-                        // Delete old image if it already exists
-                        if (System.IO.File.Exists(filePath))
+                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
+                        if (System.IO.File.Exists(fullPath))
                         {
-                            System.IO.File.Delete(filePath);
-                        }
-
-                        // Save new image
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                            System.IO.File.Delete(fullPath);
                         }
                     }
+
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+                    Console.WriteLine($"file path is: {filePath}");
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                    }
                 }
+
+           
+                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+
                 this.dBContext.Commit();
                 return flag;
             }
@@ -214,11 +225,11 @@ namespace WSRestaurant.Controllers
         {
             bool flag = false;
             Reservations reservation = new Reservations(reserveDate, amountOfPeople);
+            reservation.CustomerId = CustomerId;
             List<Reservations> reservations;
             try
             {
                 this.dBContext.Open();
-                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
                 reservations = unitOfWorkReposetory.reservationRerposetoryObject.GetByCustomer(CustomerId);
                 foreach (Reservations reservationObject in reservations)
                 {
@@ -281,11 +292,11 @@ namespace WSRestaurant.Controllers
         public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
         {
             Orders order = new Orders(date);
+            order.CustomerId = CustomerId;
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                order.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
                 flag = unitOfWorkReposetory.orderRerposetoryObject.create(order);
                 this.dBContext.Close();
                 return flag;

@@ -8,11 +8,10 @@ namespace WSRestaurant
         public CustomerRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Customers model)
         {
-            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
+            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, isOwner) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.cityId},{model.streetId}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
             return this.dbContext.Insert(sql);
-            
         }
 
         public bool delete(string id)

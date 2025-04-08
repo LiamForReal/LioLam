@@ -62,10 +62,11 @@ namespace RestaurantWebApp.Controllers
                 Path = "api/Customer/GetWelcomeDetails"
             };
 
-            if(TempData["Id"] != null)
+            if(HttpContext.Session.GetString("Id") != null)
             {
                 client.AddParameter("id", HttpContext.Session.GetString("Id"));
                 welcomeDetails welcomeDetails = await client.Get();
+                TempData["Id"] = HttpContext.Session.GetString("Id");
                 return View("GetDefaultScreen", welcomeDetails);
             }
             return View("GetDefaultScreen");
@@ -189,7 +190,6 @@ namespace RestaurantWebApp.Controllers
                 Path = "api/Customer/GetCustomerById"
             };
 
-            Console.WriteLine("this is tmp data: " + TempData["Id"]); //tmp data is null some how
             client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
             Customers customer = await client2.Get();
 

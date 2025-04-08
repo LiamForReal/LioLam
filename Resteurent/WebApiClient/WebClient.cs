@@ -89,8 +89,10 @@ namespace WebApiClient
         {
             this.request.Method = HttpMethod.Post;
             this.request.RequestUri = new Uri(this.uriBuilder.ToString());
+            MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
-            this.request.Content = objectContent;
+            multipartFormDataContent.Add(objectContent, "model");
+            this.request.Content = multipartFormDataContent;
             using (HttpClient client = new HttpClient())
             {
                 this.response = await client.SendAsync(this.request);

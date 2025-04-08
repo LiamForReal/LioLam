@@ -418,7 +418,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
+                reservation.CustomerId = CustomerId;
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.create(reservation);
                 this.dBContext.Close();
                 return flag;
@@ -444,7 +444,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
-                reservation.Customer = unitOfWorkReposetory.customerRerposetoryObject.getById(CustomerId);
+                reservation.CustomerId = CustomerId;
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.update(reservation);
                 this.dBContext.Close();
                 return flag;

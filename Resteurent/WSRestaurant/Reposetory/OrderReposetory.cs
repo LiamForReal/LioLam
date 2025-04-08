@@ -12,7 +12,7 @@ namespace WSRestaurant
             List<int> counts = new List<int>();
             List<Dishes> dishes = new List<Dishes>();
             string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
-            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
+            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
             bool ok = this.dbContext.Insert(sql);
             foreach(Dishes dish in model.dishes)
@@ -98,7 +98,7 @@ namespace WSRestaurant
             List<int> counts = new List<int>();
             List<Dishes> dishes = new List<Dishes>();
             string sql = $@"UPDATE Orders SET CustomerId = @CustomerId, OrderDate = @OrderDate WHERE OrderId == @OrderId";
-            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
+            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
             bool ok = this.dbContext.Update(sql);
             foreach (Dishes dish in model.dishes)

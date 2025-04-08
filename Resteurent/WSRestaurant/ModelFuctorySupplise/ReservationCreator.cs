@@ -13,7 +13,7 @@ namespace WSRestaurant
             Reservations reservation = new Reservations()
             {
                 Id = Convert.ToString(src["ReserveId"]),
-                Customer = null,
+                CustomerId = "",
                 ReserveDate = Convert.ToDateTime(src["ReserveDate"]),
                 AmountOfPeople = Convert.ToInt32(src["AmountOfPeople"]),
                 ReserveHour = Convert.ToString(src["ReserveHour"])
