@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Types : Models
+    public class Category : Model
     {
         public string TypeName { get; set; }
-
-        public Types() { }
-        public Types(string typeName)
+        public Category(string typeName)
         {
             TypeName = typeName;
+        }
+
+        public Category()
+        {
         }
     }
 }

@@ -3,14 +3,14 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class DishCreator : IModelCreator<Dishes>
+    public class DishCreator : IModelCreator<Dish>
     {
         /// <summary>
         /// Creates a Dish model from an IDataReader source.
         /// </summary>
-        public Dishes CreateModel(IDataReader src)
+        public Dish CreateModel(IDataReader src)
         {
-            Dishes dish = new Dishes()
+            Dish dish = new Dish()
             {
                 Id = Convert.ToString(src["DishId"]),
                 DishDescription = Convert.ToString(src["DishDescription"]),

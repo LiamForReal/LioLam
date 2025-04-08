@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Cities : Models
+    public class City : Model
     {
         public string CityName { get; set; }
-        public Cities() { }
-        public Cities(string cityName)
+        public City() { }
+        public City(string cityName)
         {
             this.CityName = cityName;
         }

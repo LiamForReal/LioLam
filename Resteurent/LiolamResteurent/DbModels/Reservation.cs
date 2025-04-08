@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Reservations : Models
+    public class Reservation : Model
     {
-        public Customers Customer { get; set; }
+        public string CustomerId { get; set; }//To change may
         public DateTime ReserveDate { get; set; }
         public int AmountOfPeople { get; set; }
         public string ReserveHour { get; set; }
 
-        public Reservations() { }
-        public Reservations(DateTime reserveDate, int amountOfPeople)
+        public Reservation(DateTime reserveDate, int amountOfPeople)
         {
-            Customer = null;
+            CustomerId = "";
             ReserveDate = reserveDate;
             AmountOfPeople = amountOfPeople;
             ReserveHour = reserveDate.ToString("HH:mm");
+        }
+
+        public Reservation()
+        {
         }
     }
 }

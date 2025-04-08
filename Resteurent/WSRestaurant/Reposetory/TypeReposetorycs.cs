@@ -5,11 +5,11 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class TypeReposetory : Reposetory, IReposetory<Types>
+    public class TypeReposetory : Reposetory, IReposetory<Category>
     {
 
         public TypeReposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Types model)
+        public bool create(Category model)
         {
             string sql = $@"INSERT INTO Types (TypeName) VALUES (@TypeName)";
             this.dbContext.AddParameter("@TypeName", model.TypeName);
@@ -29,9 +29,9 @@ namespace WSRestaurant
             else throw new Exception("get false");
         }
 
-        public List<Types> getAll()
+        public List<Category> getAll()
         {
-            List<Types> list = new List<Types>();
+            List<Category> list = new List<Category>();
             string sql = "SELECT * FROM Types";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -44,7 +44,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Types getById(string id)
+        public Category getById(string id)
         {
             string sql = "SELECT FROM Types WHERE TypeId = @TypeId";
             this.dbContext.AddParameter("@TypeId", id);
@@ -54,7 +54,7 @@ namespace WSRestaurant
                 return this.modelFactory.createTypeObject.CreateModel(dataReader);
             }
         }
-        public bool update(Types model)
+        public bool update(Category model)
         {
             string sql = $@"UPDATE Types SET TypeName = @TypeName WHERE TypeId == @TypeId;";
             this.dbContext.AddParameter("@TypeName", model.TypeName);
@@ -62,9 +62,9 @@ namespace WSRestaurant
             return this.dbContext.Update(sql);
         }
         
-        public List<Types> getByDish(string dishId)
+        public List<Category> getByDish(string dishId)
         {
-            List<Types> list = new List<Types>();
+            List<Category> list = new List<Category>();
             string sql = "SELECT Types.TypeId, Types.TypeName" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
                 " WHERE DishType.DishId=@DishId;";

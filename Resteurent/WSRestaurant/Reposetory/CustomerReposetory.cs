@@ -3,28 +3,15 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class CustomerRerposetory : Reposetory, IReposetory<Customers>
+    public class CustomerRerposetory : Reposetory, IReposetory<Customer>
     {
         public CustomerRerposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Customers model)
+        public bool create(Customer model)
         {
-            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
+            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, isOwner) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.cityId},{model.streetId}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
-
-            //string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage) 
-            //                VALUES (@CustomerId, @CustomerUserName, @CustomerHouse,@CityId, @StreetId, @CustomerPhone, @CustomerMail, @CustomerPassword, @CustomerImage )";
-            //this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
-            //this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-            //this.dbContext.AddParameter("@CityId", model.cityId.ToString());
-            //this.dbContext.AddParameter("@StreetId", model.streetId.ToString());
-            //this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
-            //this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
-            //this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
-            //this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-            //this.dbContext.AddParameter("@CustomerId", model.Id);
             return this.dbContext.Insert(sql);
-            
         }
 
         public bool delete(string id)
@@ -35,9 +22,9 @@ namespace WSRestaurant
             
         }
 
-        public List<Customers> getAll()
+        public List<Customer> getAll()
         {
-            List<Customers> list = new List<Customers>();
+            List<Customer> list = new List<Customer>();
             string sql = "SELECT * FROM Customers";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -50,20 +37,22 @@ namespace WSRestaurant
             return list;
         }
 
-        public Customers getById(string id)
+        public Customer getById(string id)
         {
-            string sql = "SELECT FROM Customers WHERE CustomerId = @CustomerId";
+            string sql = "SELECT * FROM Customers WHERE CustomerId = @CustomerId";
             this.dbContext.AddParameter("@CustomerId", id);
+
+            //Console.WriteLine($"sql is: {sql}, id is: {id}");
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 dataReader.Read();
                 return this.modelFactory.createCustomerObject.CreateModel(dataReader);
             }
         }
-        public bool update(Customers model)
+        public bool update(Customer model)
         {
-            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone," +
-                       ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId == @CustomerId";
+            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone" +
+                       ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
             this.dbContext.AddParameter("@CityId", model.cityId.ToString());

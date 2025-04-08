@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class manageOrders
+    public class welcomeDetails
     {
-        public List<Order> Orders { get; set; }
-        public List<Reservation> Reservations { get; set; }
+        public string name { get; set; }
+        public string image { get; set; }
     }
 }

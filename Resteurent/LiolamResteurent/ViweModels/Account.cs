@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class manageOrders
+    public class Account
     {
-        public List<Order> Orders { get; set; }
-        public List<Reservation> Reservations { get; set; }
+        public Customer Customer { get; set; }
+
+        public registerViewModel registerView { get; set; }
+
     }
 }

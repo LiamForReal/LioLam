@@ -23,7 +23,7 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class dishDetailsPage : Page
     {
-        static Dishes dish;
+        static Dish dish;
         public dishDetailsPage(string dishId)
         {
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace RestaurantWPF.UserControls
 
         private async Task getDishById(string id)
         {
-            WebClient<Dishes> client = new WebClient<Dishes>();
+            WebClient<Dish> client = new WebClient<Dish>();
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";

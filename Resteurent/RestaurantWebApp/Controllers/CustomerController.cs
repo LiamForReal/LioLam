@@ -3,6 +3,8 @@ using LiolamResteurent;
 using WebApiClient;
 using NuGet.Protocol;
 using System.Runtime.CompilerServices;
+using NuGet.Packaging.Signing;
+
 namespace RestaurantWebApp.Controllers
 {
     public class CustomerController : Controller
@@ -24,7 +26,7 @@ namespace RestaurantWebApp.Controllers
             try
             {
                 string customerId = await client.Get();
-                if (customerId == null)
+                if (customerId == "")
                 {
                     //return someting 
                     ViewBag.Error = true;
@@ -32,10 +34,12 @@ namespace RestaurantWebApp.Controllers
                 }
                 ViewBag.Error = false;
                 TempData["Id"] = customerId; //actual edit tmp data
+
                 HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
                                                                    //ViewBag.Id = HttpContext.Session.GetString(customerCheck);
-                return RedirectToAction("GetDefaultScreen", "Guest");
+                
+                return RedirectToAction("GetDefaultScreen", "Customer");
             }
             catch (Exception ex)
             {
@@ -46,6 +50,28 @@ namespace RestaurantWebApp.Controllers
 
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetDefaultScreen()
+        {
+            WebClient<welcomeDetails> client = new WebClient<welcomeDetails>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/GetWelcomeDetails"
+            };
+
+            if(HttpContext.Session.GetString("Id") != null)
+            {
+                client.AddParameter("id", HttpContext.Session.GetString("Id"));
+                welcomeDetails welcomeDetails = await client.Get();
+                TempData["Id"] = HttpContext.Session.GetString("Id");
+                return View("GetDefaultScreen", welcomeDetails);
+            }
+            return View("GetDefaultScreen");
+        }
+
         [HttpGet]
         public IActionResult ShowLogInForm()
         {
@@ -53,10 +79,10 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(Customers customers, IFormFile Image)
+        public async Task<IActionResult> SignUp(Customer customers, IFormFile Image)
         {
             Console.WriteLine($"customer id is {customers.Id}" );
-            WebClient<Customers> client = new WebClient<Customers>
+            WebClient<Customer> client = new WebClient<Customer>
             {
                 Scheme = "http",
                 Port = 5125,
@@ -72,8 +98,8 @@ namespace RestaurantWebApp.Controllers
 
             if (!result)
             {
-                    ViewBag.Error = true;
-                    return View("ShowSignUpForm");
+                ViewBag.Error = true;
+                return RedirectToAction("ShowSignUpForm", "Customer");
             }
 
 
@@ -82,22 +108,99 @@ namespace RestaurantWebApp.Controllers
             HttpContext.Session.SetString("Id", customers.Id);
 
             // Redirect to a successful page
-            return RedirectToAction("GetDefaultScreen", "Guest"); // Change "Dashboard" to your actual target page
+            return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditAccount(Customer customers, IFormFile Image)
+        {
+            Console.WriteLine($"customer id is {customers.Id}");
+            WebClient<Customer> client = new WebClient<Customer>
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/UpdateExistingUser"
+            };
+
+            // Read image stream
+            bool result;
+            // Send the request with customer data and image
+            if (Image == null || Image.Length == 0)
+            {
+                result = await client.Post(customers);
+            }
+            else
+            {
+                customers.CustomerImage = Image.FileName;
+                result = await client.Post(customers, Image.OpenReadStream());
+            }
+           
+
+            if (!result)
+            {
+                ViewBag.Error = true;
+                return RedirectToAction("ShowEditSignUpForm", "Customer");
+            }
+            // Redirect to a successful page
+            return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
+        }
 
         [HttpGet]
         public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
-            WebClient<registerViewModel> client = new WebClient<registerViewModel>();
-            registerViewModel registerViewModel = new registerViewModel();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Customer/ShowSignUp";
-            registerViewModel = await client.Get();
-            return View(registerViewModel);
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/ShowSignUp"
+            };
+            registerViewModel registerViewModel = await client.Get();
+
+            Account account = new Account()
+            {
+                Customer = null,
+                registerView = registerViewModel
+            };
+
+            return View(account);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowEditSignUpForm()
+        {
+            
+            //city and strits lists from ws
+            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/ShowSignUp"
+            };
+            registerViewModel registerViewModel = await client.Get();
+
+            WebClient<Customer> client2 = new WebClient<Customer>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/GetCustomerById"
+            };
+
+            client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
+            Customer customer = await client2.Get();
+
+            Account account = new Account()
+            {
+                Customer = customer, 
+                registerView = registerViewModel
+            };
+
+            return View("ShowSignUpForm", account);
+        }
+
     }
 }

@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Orders : Models
+    public class Order : Model
     {
         public DateTime OrderDate { get; set; }
-        public Customers Customer { get; set; }
-        public List<Dishes> dishes { get; set; }
-        public Orders() { }
-        public Orders(DateTime orderDate)
+        public string CustomerId { get; set; } //To change maybe
+        public List<Dish> dishes { get; set; }
+        public Order(DateTime orderDate)
         {
             OrderDate = orderDate;
-            Customer = null;
+            CustomerId = "";
             this.dishes = null;
+        }
+
+        public Order()
+        {
         }
     }
 }
