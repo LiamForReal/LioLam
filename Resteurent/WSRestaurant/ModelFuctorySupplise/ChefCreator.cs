@@ -3,15 +3,15 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class ChefCreator : IModelCreator<Chefs>
+    public class ChefCreator : IModelCreator<Chef>
     {
         /// <summary>
         /// Creates a Chef model from an IDataReader source.
         /// </summary>
-        public Chefs CreateModel(IDataReader src)
+        public Chef CreateModel(IDataReader src)
         {
             
-            Chefs chef = new Chefs()
+            Chef chef = new Chef()
             {
                 Id = Convert.ToString(src["ChefId"]),
                 ChefFirstName = Convert.ToString(src["ChefFirstName"]),

@@ -79,10 +79,10 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp(Customers customers, IFormFile Image)
+        public async Task<IActionResult> SignUp(Customer customers, IFormFile Image)
         {
             Console.WriteLine($"customer id is {customers.Id}" );
-            WebClient<Customers> client = new WebClient<Customers>
+            WebClient<Customer> client = new WebClient<Customer>
             {
                 Scheme = "http",
                 Port = 5125,
@@ -112,10 +112,10 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAccount(Customers customers, IFormFile Image)
+        public async Task<IActionResult> EditAccount(Customer customers, IFormFile Image)
         {
             Console.WriteLine($"customer id is {customers.Id}");
-            WebClient<Customers> client = new WebClient<Customers>
+            WebClient<Customer> client = new WebClient<Customer>
             {
                 Scheme = "http",
                 Port = 5125,
@@ -182,7 +182,7 @@ namespace RestaurantWebApp.Controllers
             };
             registerViewModel registerViewModel = await client.Get();
 
-            WebClient<Customers> client2 = new WebClient<Customers>()
+            WebClient<Customer> client2 = new WebClient<Customer>()
             {
                 Scheme = "http",
                 Port = 5125,
@@ -191,7 +191,7 @@ namespace RestaurantWebApp.Controllers
             };
 
             client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
-            Customers customer = await client2.Get();
+            Customer customer = await client2.Get();
 
             Account account = new Account()
             {

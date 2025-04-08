@@ -3,10 +3,10 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class ReservationRerposetory : Reposetory, IReposetory<Reservations>
+    public class ReservationRerposetory : Reposetory, IReposetory<Reservation>
     {
         public ReservationRerposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Reservations model)
+        public bool create(Reservation model)
         {
             string sql = $@"INSERT INTO Reservations (CustomerId, ReserveDate, AmountOfPeople, ReserveHour) VALUSE (@CustomerId, @ReserveDate, @AmountOfPeople, @ReserveHour)";
             this.dbContext.AddParameter("@CustomerId", model.CustomerId);
@@ -32,9 +32,9 @@ namespace WSRestaurant
 
         }
 
-        public List<Reservations> getAll()
+        public List<Reservation> getAll()
         {
-            List<Reservations> list = new List<Reservations>();
+            List<Reservation> list = new List<Reservation>();
             string sql = "SELECT * FROM Reservations";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -46,7 +46,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Reservations getById(string id)
+        public Reservation getById(string id)
         {
             string sql = "SELECT FROM Reservations WHERE ReservationId = @ReservationId";
             this.dbContext.AddParameter("@ReservationId", id);
@@ -57,7 +57,7 @@ namespace WSRestaurant
             }
             return null;
         }
-        public bool update(Reservations model)
+        public bool update(Reservation model)
         {
             string sql = $@"UPDATE Reservations SET CustomerId = @CustomerId, ReserveDate = @ReserveDate, AmountOfPeople = @AmountOfPeople, ReserveHour = @ReserveHour WHERE ReserveId = @ReserveId";
             this.dbContext.AddParameter("@CustomerId", model.CustomerId);
@@ -68,9 +68,9 @@ namespace WSRestaurant
             return this.dbContext.Update(sql);
         }
 
-        public List<Reservations> GetByCustomer(string customerId)
+        public List<Reservation> GetByCustomer(string customerId)
         {
-            List<Reservations> list = new List<Reservations>();
+            List<Reservation> list = new List<Reservation>();
             string sql = "SELECT Reservations.ReserveId, Reservations.CustomerId, Reservations.ReserveDate, Reservations.ReserveHour, Reservations.PeopleAmount" +
                 " FROM Reservations INNER JOIN Customers  ON Customers.CustomerId = Reservations.CustomerId" +
                 " WHERE Customers.CustomerId = @CustomerId;";
@@ -86,9 +86,9 @@ namespace WSRestaurant
             return list;
         }
 
-        public Reservations GetByDate(DateTime Date, List<Reservations> reservations)
+        public Reservation GetByDate(DateTime Date, List<Reservation> reservations)
         {
-            foreach(Reservations reservation in reservations)
+            foreach(Reservation reservation in reservations)
             {
                 if(reservation.ReserveDate == Date)
                     return reservation;

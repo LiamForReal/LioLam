@@ -5,11 +5,11 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class StreetReposetory : Reposetory, IReposetory<Streets>
+    public class StreetReposetory : Reposetory, IReposetory<Street>
     {
 
         public StreetReposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Streets model)
+        public bool create(Street model)
         {
             string sql = $@"INSERT INTO Streets (StreetName) VALUES (@StreetName)";
             this.dbContext.AddParameter("@StreetName", model.StreetName);
@@ -23,9 +23,9 @@ namespace WSRestaurant
             return this.dbContext.Delete(sql);
         }
 
-        public List<Streets> getAll()
+        public List<Street> getAll()
         {
-            List<Streets> list = new List<Streets>();
+            List<Street> list = new List<Street>();
             string sql = "SELECT * FROM Streets";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -38,7 +38,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Streets getById(string id)
+        public Street getById(string id)
         {
             string sql = "SELECT FROM Streets WHERE StreetId = @StreetId";
             this.dbContext.AddParameter("@StreetId", id);
@@ -48,7 +48,7 @@ namespace WSRestaurant
                 return this.modelFactory.createStreetObject.CreateModel(dataReader);
             }
         }
-        public bool update(Streets model)
+        public bool update(Street model)
         {
             string sql = $@"UPDATE Streets SET StreetName = @StreetName WHERE StreetId == @StreetId;";
             this.dbContext.AddParameter("@StreetName", model.StreetName);
@@ -56,7 +56,7 @@ namespace WSRestaurant
             return this.dbContext.Update(sql);
         }
 
-        public Streets getByCustomer(string customerId)
+        public Street getByCustomer(string customerId)
         {
             string sql = "SELECT Streets.StreetId, Streets.StreetName" +
                 " FROM Streets INNER JOIN Customers ON Streets.StreetId = Customers.StreetId" +
