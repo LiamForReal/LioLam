@@ -9,6 +9,6 @@ namespace LiolamResteurent
     public class dateReservation
     {
         public DateTime ReserveDate { get; set; }
-        public List<Reservations> DayReservations { get; set; }
+        public List<Reservation> DayReservations { get; set; }
     }
 }

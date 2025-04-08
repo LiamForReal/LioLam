@@ -3,14 +3,14 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class TypeCreator : IModelCreator<Types>
+    public class TypeCreator : IModelCreator<Category>
     {
         /// <summary>
         /// Creates a Type model from an IDataReader source.
         /// </summary>
-        public Types CreateModel(IDataReader src)
+        public Category CreateModel(IDataReader src)
         {
-            Types type = new Types()
+            Category type = new Category()
             {
                 Id = Convert.ToString(src["TypeId"]), 
                 TypeName = Convert.ToString(src["TypeName"]), 

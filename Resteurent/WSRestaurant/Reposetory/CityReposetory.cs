@@ -3,10 +3,10 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class CityRerposetory : Reposetory, IReposetory<Cities>
+    public class CityRerposetory : Reposetory, IReposetory<City>
     {
         public CityRerposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Cities model)
+        public bool create(City model)
         {
             
             string sql = $@"INSERT INTO Cities (CityName) VALUES (@CityName)";
@@ -22,9 +22,9 @@ namespace WSRestaurant
              return this.dbContext.Delete(sql);
         }
 
-        public List<Cities> getAll()
+        public List<City> getAll()
         {
-            List<Cities> list = new List<Cities>();
+            List<City> list = new List<City>();
             string sql = "SELECT * FROM Cities";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -36,7 +36,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Cities getById(string id)
+        public City getById(string id)
         {
             string sql = "SELECT FROM Cities WHERE CityId = @CityId";
             this.dbContext.AddParameter("@CityId", id);
@@ -46,7 +46,7 @@ namespace WSRestaurant
                 return this.modelFactory.createCityObject.CreateModel(dataReader);
             }
         }
-        public bool update(Cities model) 
+        public bool update(City model) 
         {
             string sql = $@"UPDATE Cities SET CityName = @CityName WHERE CityId == @CityId;";
             this.dbContext.AddParameter("@CityName", model.CityName);
@@ -54,7 +54,7 @@ namespace WSRestaurant
              return this.dbContext.Update(sql);
             
         }
-        public Cities getByCustomer(string customerId)
+        public City getByCustomer(string customerId)
         {
             string sql = "SELECT Cities.CityId, Cities.CityName" +
                 " FROM Cities INNER JOIN Customers ON Cities.CityId = Customers.CityId " +

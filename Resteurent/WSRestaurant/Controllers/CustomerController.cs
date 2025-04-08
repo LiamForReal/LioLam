@@ -25,12 +25,12 @@ namespace WSRestaurant.Controllers
 
         [HttpGet]
 
-        public Customers GetCustomerById(string id)
+        public Customer GetCustomerById(string id)
         {
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                Customers customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
                 return customer;
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace WSRestaurant.Controllers
                 //Console.WriteLine($"the id is: {id}");
                 welcomeDetails wD = new welcomeDetails(); 
                 this.dBContext.Open();//add cities and streets and house number 
-                Customers customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
                 wD.name = customer.CustomerUserName;
                 wD.image = customer.CustomerImage;
                 customer = null;
@@ -122,7 +122,7 @@ namespace WSRestaurant.Controllers
             bool flag = false;
             bool isImageChanged = Request.Form.Files.Count > 0;
             string json = Request.Form["model"];
-            Customers customer = JsonSerializer.Deserialize<Customers>(json);
+            Customer customer = JsonSerializer.Deserialize<Customer>(json);
             customer.CustomerImage = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
             try
             {    
@@ -185,7 +185,7 @@ namespace WSRestaurant.Controllers
         {
             string json = Request.Form["model"];
             IFormFile file = Request.Form.Files[0];
-            Customers customer = JsonSerializer.Deserialize<Customers>(json);
+            Customer customer = JsonSerializer.Deserialize<Customer>(json);
             customer.CustomerImage=$"{customer.Id}{ Path.GetExtension(customer.CustomerImage)}";
             try
             { //216849635
@@ -224,14 +224,14 @@ namespace WSRestaurant.Controllers
         public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople, string CustomerId)
         {
             bool flag = false;
-            Reservations reservation = new Reservations(reserveDate, amountOfPeople);
+            Reservation reservation = new Reservation(reserveDate, amountOfPeople);
             reservation.CustomerId = CustomerId;
-            List<Reservations> reservations;
+            List<Reservation> reservations;
             try
             {
                 this.dBContext.Open();
                 reservations = unitOfWorkReposetory.reservationRerposetoryObject.GetByCustomer(CustomerId);
-                foreach (Reservations reservationObject in reservations)
+                foreach (Reservation reservationObject in reservations)
                 {
                     if (reservationObject.ReserveDate >= DateTime.Now.Date)
                     {
@@ -258,15 +258,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public Reservations GetLastReservation(string customerId)
+        public Reservation GetLastReservation(string customerId)
         {
-            List<Reservations> reservations;
+            List<Reservation> reservations;
             DateTime dateTime = DateTime.Now;
             try
             {
                 this.dBContext.Open();
                 reservations = unitOfWorkReposetory.reservationRerposetoryObject.GetByCustomer(customerId);
-                foreach (Reservations reservationObject in reservations)
+                foreach (Reservation reservationObject in reservations)
                 {
 
                     if (reservationObject.ReserveDate > dateTime)
@@ -291,7 +291,7 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
         {
-            Orders order = new Orders(date);
+            Order order = new Order(date);
             order.CustomerId = CustomerId;
             bool flag = false;
             try

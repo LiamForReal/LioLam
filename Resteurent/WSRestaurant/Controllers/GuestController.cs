@@ -72,7 +72,7 @@ namespace WSRestaurant
                 {
                     //add bought sorts
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
-                    List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
+                    List<Dish> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
                     menu.Dishes = menu.Dishes.Except(dishesByType).ToList();
                 }
                 else if (chefId != null)
@@ -140,7 +140,7 @@ namespace WSRestaurant
                 {
                     //add bought sorts
                     menu.Dishes = unitOfWorkReposetory.dishRerposetoryObject.GetByChef(chefId);
-                    List<Dishes> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
+                    List<Dish> dishesByType = unitOfWorkReposetory.dishRerposetoryObject.GetByType(typeId);
                     menu.Dishes = menu.Dishes.Except(dishesByType).ToList();
                 }
                 else if(chefId != null)
@@ -194,9 +194,9 @@ namespace WSRestaurant
         }
 
         [HttpGet]
-        public Dishes GetSingleDish(string id)
+        public Dish GetSingleDish(string id)
         {
-            Dishes dish;
+            Dish dish;
             try
             {
                 this.dBContext.Open();
