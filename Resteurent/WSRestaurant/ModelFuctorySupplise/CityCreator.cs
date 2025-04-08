@@ -3,14 +3,14 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class CityCreator : IModelCreator<Cities>
+    public class CityCreator : IModelCreator<City>
     {
         /// <summary>
         /// Creates a City model from an IDataReader source.
         /// </summary>
-        public Cities CreateModel(IDataReader src)
+        public City CreateModel(IDataReader src)
         {
-            Cities city = new Cities()
+            City city = new City()
             {
                 Id = Convert.ToString(src["CityId"]),
                 CityName = Convert.ToString(src["CityName"])

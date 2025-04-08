@@ -23,7 +23,7 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class DishesPage : UserControl
     {
-        private List<Dishes> dishes;
+        private List<Dish> dishes;
         static dishDetailsPage dishDetailsPage;
         public DishesPage()
         {
@@ -34,7 +34,7 @@ namespace RestaurantWPF.UserControls
 
         private async Task GetAllDishes()
         {
-            WebClient<List<Dishes>> client = new WebClient<List<Dishes>>();
+            WebClient<List<Dish>> client = new WebClient<List<Dish>>();
             client.Scheme = "http";
             client.Port = 5125;
             client.Host = "localhost";

@@ -23,8 +23,8 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class LogInPage : UserControl
     {
-        Customers customer;
-        public Customers getCustomer
+        Customer customer;
+        public Customer getCustomer
         {
             get
             {
@@ -44,14 +44,17 @@ namespace RestaurantWPF.UserControls
 
         private async void submit_Click(object sender, RoutedEventArgs e)
         {
-            WebClient<Customers> client = new WebClient<Customers>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/manager/IsAdmin";
+            WebClient<Customer> client = new WebClient<Customer>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/manager/IsAdmin"
+            };
+           
 
             //Console.WriteLine(client.buildURI());
-            Customers customer = new Customers();
+            Customer customer = new Customer();
             customer.CustomerUserName = this.userName.ToString();
             customer.CustomerPassword = this.password.ToString();
             this.errorLable.Visibility = Visibility.Hidden;

@@ -47,7 +47,7 @@ else
 
             <label class="cityText">City</label>
             <select id = "cities" class="cities" name="CityId">
-                @foreach (Cities city in Model.registerView.Cities)
+                @foreach (City city in Model.registerView.Cities)
                 {
                     <option value="@city.Id">@city.CityName</option>
                 }
@@ -56,7 +56,7 @@ else
 
             <label class="streetText"><br />Street</label>
             <select id="streets" class="streets" name="StreetId">
-                @foreach (Streets street in Model.registerView.Streets)
+                @foreach (Street street in Model.registerView.Streets)
                 {
                     <option value="@street.Id">@street.StreetName</option>
                 }
@@ -97,7 +97,7 @@ else
 
             <label class="cityText">City</label>
             <select id="cities" class="cities" name="CityId">
-                @foreach (Cities city in Model.registerView.Cities)
+                @foreach (City city in Model.registerView.Cities)
                 {
                     @if (Model.Customer.cityId == @city.Id)
                     {
@@ -113,7 +113,7 @@ else
 
             <label class="streetText"><br />Street</label>
             <select id="streets" class="streets" name="StreetId">
-                @foreach (Streets street in Model.registerView.Streets)
+                @foreach (Street street in Model.registerView.Streets)
                 {
                     @if(Model.Customer.streetId == street.Id)
                     {

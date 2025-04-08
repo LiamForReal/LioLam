@@ -8,7 +8,7 @@ namespace LiolamResteurent
 {
     public class Account
     {
-        public Customers Customer { get; set; }
+        public Customer Customer { get; set; }
 
         public registerViewModel registerView { get; set; }
 
