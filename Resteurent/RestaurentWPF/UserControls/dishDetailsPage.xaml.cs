@@ -21,14 +21,13 @@ namespace RestaurantWPF.UserControls
     /// <summary>
     /// Interaction logic for dishDetailsPage.xaml
     /// </summary>
-    public partial class dishDetailsPage : Page
+    public partial class dishDetailsPage : Window
     {
         static Dish dish;
         public dishDetailsPage(string dishId)
         {
             InitializeComponent();
             getDishById(dishId);
-            this.DataContext = dish;
         }
 
         private async Task getDishById(string id)
@@ -40,6 +39,13 @@ namespace RestaurantWPF.UserControls
             client.Path = "api/Guest/GetSingleDish";
             client.AddParameter("id", id);
             dish = await client.Get();
+            string types = "";
+            foreach (Category type in dish.types)
+                types += type.TypeName + ", ";
+            types = types.Substring(0, types.Length - 2);
+            this.typesLable.Content = types;
+            this.DataContext = dish;
+            this.priceLable.Content += "₪";
         }
     }
 }

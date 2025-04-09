@@ -29,7 +29,6 @@ namespace RestaurantWPF.UserControls
         {
             InitializeComponent();
             GetAllDishes();
-            this.listView.ItemsSource = this.dishes;
         }
 
         private async Task GetAllDishes()
@@ -40,6 +39,7 @@ namespace RestaurantWPF.UserControls
             client.Host = "localhost";
             client.Path = "api/Manager/GetDishes";
             this.dishes = await client.Get();
+            this.listView.ItemsSource = this.dishes;
         }
 
         private void inspectDish_Click(object sender, RoutedEventArgs e)
@@ -48,6 +48,17 @@ namespace RestaurantWPF.UserControls
             string dishId = inspactButton.Tag.ToString();
             if (dishDetailsPage == null)
                 dishDetailsPage = new dishDetailsPage(dishId);
+            dishDetailsPage.Show();
+        }
+
+        private void updateDish_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteDish_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
