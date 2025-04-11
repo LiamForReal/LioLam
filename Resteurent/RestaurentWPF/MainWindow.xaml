@@ -1,0 +1,45 @@
+﻿<Window x:Class="RestaurentWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurentWPF"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="Master Page" Height="750" Width="1300" ResizeMode="NoResize">
+    <Canvas Height="750" Width="1300" VerticalAlignment="Top">
+        <Border BorderThickness="5" BorderBrush="Gold">
+            <Canvas
+            Width="200"
+            Height="750"
+            x:Name="headers"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Background="#1a1a2e" RenderTransformOrigin="0.5,0.5">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="0.13"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.998"/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+
+                <Button Content="Log In" x:Name="LogInButton" Canvas.Left="40" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="185" Click="LogInButton_Click"/>
+                <StackPanel Canvas.Left="40" x:Name="buttons" Canvas.Top="294" HorizontalAlignment="Center" VerticalAlignment="Top" Height="441" >
+                    <Button Content="Dishes" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="94" HorizontalAlignment="Center" Margin="0,0,0,20" x:Name="DishesButton" Click="DishesButton_Click"/>
+                    <Button Content="Chefs"  Canvas.Left="80" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Margin="0,0,0,20"/>
+                    <Button Content="Types" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                    <Button Content="Customers" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="312" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                    <Button Content="Orders" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="384" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                </StackPanel>
+                <Image Height="200"  Width="200" x:Name="LioLamIcon" Source="/Images/Icon.png" Stretch="Fill" Canvas.Top="-15" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Canvas>
+        </Border>
+
+        <Border  x:Name="data" Canvas.Left="200" BorderThickness="5" BorderBrush="Gold">
+            <Canvas Background="#FF22243D" Height="750" Width="1100" HorizontalAlignment="Left" Canvas.Left="200" VerticalAlignment="Center"></Canvas>
+        </Border>
+        
+    </Canvas>
+</Window>

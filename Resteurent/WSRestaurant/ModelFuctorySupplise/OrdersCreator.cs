@@ -3,18 +3,18 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class OrdersCreator : IModelCreator<Orders>
+    public class OrdersCreator : IModelCreator<Order>
     {
         /// <summary>
         /// Creates a Order model from an IDataReader source.
         /// </summary>
-        public Orders CreateModel(IDataReader src)
+        public Order CreateModel(IDataReader src)
         {
-            Orders order = new Orders()
+            Order order = new Order()
             {
                 Id = Convert.ToString(src["OrderId"]),
                 OrderDate = Convert.ToDateTime(src["OrderDate"]), 
-                Customer = null,
+                CustomerId = "",
                 dishes = null
             };
             return order;

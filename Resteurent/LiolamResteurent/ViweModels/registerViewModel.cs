@@ -8,7 +8,7 @@ namespace LiolamResteurent
 {
    public class registerViewModel
     {
-        public List<Cities> Cities { get; set; }
-        public List<Streets> Streets { get; set; }
+        public List<City> Cities { get; set; }
+        public List<Street> Streets { get; set; }
     }
 }

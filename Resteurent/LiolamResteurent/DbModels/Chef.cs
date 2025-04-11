@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Chefs : Models
+    public class Chef : Model
     {
         public string ChefFirstName { get; set; }
         public string ChefLastName { get; set; }
         public string ChefImage { get; set; }
-
-        public Chefs() { }
-        public Chefs(string chefFirstName, string chefLastName, string chefImage)
+        public Chef(string chefFirstName, string chefLastName, string chefImage)
         {
             ChefFirstName = chefFirstName;
             ChefLastName = chefLastName;
             ChefImage = chefImage;
+        }
+
+        public Chef()
+        {
         }
     }
 }

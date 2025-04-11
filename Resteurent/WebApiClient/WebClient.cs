@@ -52,10 +52,11 @@ namespace WebApiClient
         public async Task<T> Get()
         {
             this.request.Method = HttpMethod.Get;
-            this.request.RequestUri = this.uriBuilder.Uri;
+           
             HttpClient client = new HttpClient();
             using (client)
             {
+                this.request.RequestUri = new Uri(this.uriBuilder.ToString());
                 this.response = await client.SendAsync(this.request);
                 if (this.response.IsSuccessStatusCode == true)
                 {
@@ -66,9 +67,10 @@ namespace WebApiClient
             }
         }
 
-        public async Task<string> Post(T model)
+        public async Task<string> PostId(T model)
         {
             this.request.Method = HttpMethod.Post;
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             this.request.Content = objectContent;
             using (HttpClient client = new HttpClient())
@@ -83,6 +85,26 @@ namespace WebApiClient
             return "";
         }
 
+        public async Task<bool> Post(T model)
+        {
+            this.request.Method = HttpMethod.Post;
+            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
+            MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
+            ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
+            multipartFormDataContent.Add(objectContent, "model");
+            this.request.Content = multipartFormDataContent;
+            using (HttpClient client = new HttpClient())
+            {
+                this.response = await client.SendAsync(this.request);
+                if (this.response.IsSuccessStatusCode == true)
+                {
+                    return await this.response.Content.ReadAsAsync<bool>();
+                }
+
+            }
+            return false;
+        }
+
         public async Task<bool> Post(T model, Stream file)
         {
             this.request.Method = HttpMethod.Post;
@@ -91,7 +113,7 @@ namespace WebApiClient
             ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
             StreamContent streamContent = new StreamContent(file);
             multipartFormDataContent.Add(objectContent, "model");
-            multipartFormDataContent.Add(streamContent, "file");
+            multipartFormDataContent.Add(streamContent, "file", "file");
             this.request.Content = multipartFormDataContent;
             using (HttpClient client = new HttpClient())
             {

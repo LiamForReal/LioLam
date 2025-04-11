@@ -5,11 +5,11 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class ChefReposetory : Reposetory, IReposetory<Chefs>
+    public class ChefReposetory : Reposetory, IReposetory<Chef>
     {
 
         public ChefReposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Chefs model)
+        public bool create(Chef model)
         {
             string sql = $@"INSERT INTO Chefs (ChefFirstName, ChefLastName, ChefImage) VALUES (@ChefFirstName, @ChefLastName, @ChefImage)";
             this.dbContext.AddParameter("@ChefFirstName", model.ChefFirstName);
@@ -32,9 +32,9 @@ namespace WSRestaurant
             else throw new Exception("return false");
         }
 
-        public List<Chefs> getAll()
+        public List<Chef> getAll()
         {
-            List<Chefs> list = new List<Chefs>();
+            List<Chef> list = new List<Chef>();
             string sql = "SELECT * FROM Chefs";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -47,7 +47,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Chefs getById(string id)
+        public Chef getById(string id)
         {
             string sql = "SELECT FROM Chefs WHERE ChefId = @ChefId";
             this.dbContext.AddParameter("@ChefId", id);
@@ -57,7 +57,7 @@ namespace WSRestaurant
                 return this.modelFactory.CreateChefObject.CreateModel(dataReader);
             }
         }
-        public bool update(Chefs model)
+        public bool update(Chef model)
         {
             string sql = $@"UPDATE Chefs SET ChefFirstName = @ChefFirstName, ChefLastName = @ChefLastName, ChefImage = @ChefImage WHERE ChefId == @ChefId;";
             this.dbContext.AddParameter("@ChefFirstName", model.ChefFirstName);
@@ -67,9 +67,9 @@ namespace WSRestaurant
             return this.dbContext.Update(sql);
             
         }
-        public List<Chefs> GetByDish(string dishId)
+        public List<Chef> GetByDish(string dishId)
         {
-            List<Chefs> list = new List<Chefs>();
+            List<Chef> list = new List<Chef>();
             string sql = "SELECT Chefs.ChefId, Chefs.ChefFirstName, Chefs.ChefLastName, Chefs.ChefPicture" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
                 " WHERE DishChef.DishId=@DishId;";

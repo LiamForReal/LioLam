@@ -3,14 +3,14 @@ using System.Data;
 
 namespace WSRestaurant
 {
-    public class StreetCreator : IModelCreator<Streets>
+    public class StreetCreator : IModelCreator<Street>
     {
         /// <summary>
         /// Creates a Street model from an IDataReader source.
         /// </summary>
-        public Streets CreateModel(IDataReader src)
+        public Street CreateModel(IDataReader src)
         {
-            Streets street = new Streets()
+            Street street = new Street()
             {
                 Id = Convert.ToString(src["StreetId"]),
                 StreetName = Convert.ToString(src["StreetName"])

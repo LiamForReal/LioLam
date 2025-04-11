@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Models
+    public class Model
     {
         public string? Id { get; set; }
      

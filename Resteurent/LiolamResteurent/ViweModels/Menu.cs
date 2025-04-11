@@ -8,9 +8,9 @@ namespace LiolamResteurent
 {
     public class Menu
     {
-        public List<Dishes> Dishes { get; set; }
-        public List<Types> Types { get; set; }
-        public List<Chefs> Chefs { get; set; }
+        public List<Dish> Dishes { get; set; }
+        public List<Category> Types { get; set; }
+        public List<Chef> Chefs { get; set; }
 
         public int totalPages { get; set; }
         public int PageNumber { get; set; }

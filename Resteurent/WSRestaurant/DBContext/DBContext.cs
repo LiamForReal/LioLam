@@ -25,7 +25,7 @@ namespace WSRestaurant
         private DBContext()
         {
             this.connection = new OleDbConnection();
-            this.connection.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Directory.GetCurrentDirectory() + "\\App_Data\\ResteurantDB.accdb";
+            this.connection.ConnectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Directory.GetCurrentDirectory()}\App_Data\ResteurantDB.accdb";
             this.command = new OleDbCommand();
             this.command = this.connection.CreateCommand();
         }
@@ -57,6 +57,21 @@ namespace WSRestaurant
         public void Commit()
         {
             this.transaction.Commit();
+        }
+
+        public void BeginTransaction()
+        {
+            this.transaction = this.connection.BeginTransaction();
+            this.command.Transaction = this.transaction;
+        }
+
+
+        /// <summary>
+        /// Rolls back the current transaction.
+        /// </summary>
+        public void Rollback()
+        {
+            this.transaction.Rollback();
         }
 
         /// <summary>
@@ -107,13 +122,6 @@ namespace WSRestaurant
             return obj;
         }
 
-        /// <summary>
-        /// Rolls back the current transaction.
-        /// </summary>
-        public void Rollback()
-        {
-            this.transaction.Rollback();
-        }
 
         /// <summary>
         /// Executes a SQL update command.
@@ -139,7 +147,7 @@ namespace WSRestaurant
         /// <summary>
         /// only clears all the parameters in the parameters list
         /// </summary>
-        private void clearCollection()
+        public void clearCollection()
         {
             this.command.Parameters.Clear();
         }
@@ -148,13 +156,18 @@ namespace WSRestaurant
         /// </summary>
         /// <param name="sql">SQL command to execute.</param>
         /// <returns>True if rows were affected, false otherwise.</returns>
-        private bool executeSql(string sql)
+        public bool executeSql(string sql)
         {
             this.command.CommandText = sql;
-            Console.WriteLine(this.command.CommandText);
             bool flag = this.command.ExecuteNonQuery() > 0;
             clearCollection();
             return flag;
         }
+
+       
+       
+
+
+
     }
 }

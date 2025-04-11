@@ -8,7 +8,7 @@ namespace LiolamResteurent
 {
     public class manageOrders
     {
-        public List<Orders> Orders { get; set; }
-        public List<Reservations> Reservations { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<Reservation> Reservations { get; set; }
     }
 }

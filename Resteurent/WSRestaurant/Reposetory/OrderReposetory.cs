@@ -4,18 +4,18 @@ using System.Diagnostics.Metrics;
 using LiolamResteurent;
 namespace WSRestaurant
 {
-    public class OrderRerposetory : Reposetory, IReposetory<Orders>
+    public class OrderRerposetory : Reposetory, IReposetory<Order>
     {
         public OrderRerposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Orders model)
+        public bool create(Order model)
         {
             List<int> counts = new List<int>();
-            List<Dishes> dishes = new List<Dishes>();
+            List<Dish> dishes = new List<Dish>();
             string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
-            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
+            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
             bool ok = this.dbContext.Insert(sql);
-            foreach(Dishes dish in model.dishes)
+            foreach(Dish dish in model.dishes)
             {
                 if (dishes.IndexOf(dish) == -1)
                 {
@@ -26,7 +26,7 @@ namespace WSRestaurant
             if (ok)
             {
                 int i = 0;
-                foreach (Dishes dish in dishes)//TO fix
+                foreach (Dish dish in dishes)//TO fix
                 {
                     sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
                     this.dbContext.AddParameter("@DishId", dish.Id);
@@ -57,9 +57,9 @@ namespace WSRestaurant
             else throw new Exception("return false");
         }
 
-        public List<Orders> getAll()
+        public List<Order> getAll()
         {
-            List<Orders> list = new List<Orders>();
+            List<Order> list = new List<Order>();
             string sql = "SELECT * FROM Orders";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -72,7 +72,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Orders getById(string id)
+        public Order getById(string id)
         {
             string sql = "SELECT FROM Orders WHERE OrderId = @OrderId";
             this.dbContext.AddParameter("@OrderId", id);
@@ -83,7 +83,7 @@ namespace WSRestaurant
             }
         }
 
-        public Orders getByCustomer(string customerId)
+        public Order getByCustomer(string customerId)
         {
             string sql = "SELECT FROM Orders WHERE CustomerId = @CustomerId";
             this.dbContext.AddParameter("@CustomerId", customerId);
@@ -93,15 +93,15 @@ namespace WSRestaurant
                 return this.modelFactory.createOrderObject.CreateModel(dataReader);
             }
         }
-        public bool update(Orders model) //not in use
+        public bool update(Order model) //not in use
         {
             List<int> counts = new List<int>();
-            List<Dishes> dishes = new List<Dishes>();
+            List<Dish> dishes = new List<Dish>();
             string sql = $@"UPDATE Orders SET CustomerId = @CustomerId, OrderDate = @OrderDate WHERE OrderId == @OrderId";
-            this.dbContext.AddParameter("@CustomerId", model.Customer.Id);
+            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
             bool ok = this.dbContext.Update(sql);
-            foreach (Dishes dish in model.dishes)
+            foreach (Dish dish in model.dishes)
             {
                 if (dishes.IndexOf(dish) == -1)
                 {
@@ -112,7 +112,7 @@ namespace WSRestaurant
             if (ok)
             {
                 int i = 0;
-                foreach (Dishes dish in dishes)//TO fix
+                foreach (Dish dish in dishes)//TO fix
                 {
                     sql = $@"UPDATE DishOrder OrderId = @OrderId, Price = @Price, Quantity = @Quantity WHERE (SELECT OrderId FROM DishOrder WHERE ORDER BY DishId LIMIT 1) = @DishId";
                     this.dbContext.AddParameter("@DishId", dish.Id);
@@ -129,7 +129,7 @@ namespace WSRestaurant
 
         public bool deleteByCustomer(string customerId)
         {
-            Orders order = this.getByCustomer(customerId);
+            Order order = this.getByCustomer(customerId);
             string sql = $@"DELETE FROM Orders WHERE CustomerId=@CustomerId";
             this.dbContext.AddParameter("@CustomerId", customerId);
             if (this.dbContext.Delete(sql))

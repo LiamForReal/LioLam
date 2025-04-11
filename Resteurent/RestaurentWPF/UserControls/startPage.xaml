@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="RestaurantWPF.UserControls.startPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RestaurantWPF.UserControls"
+             mc:Ignorable="d" 
+             Width="1100" Height="750" Background="#FF22243D">
+    <Canvas>
+        <Image Height="750" Source="/Images/restaurant_open_screen.jpg" Stretch="Fill" Width="1100" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+    </Canvas>
+</UserControl>

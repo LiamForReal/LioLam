@@ -5,10 +5,10 @@ using LiolamResteurent;
 
 namespace WSRestaurant
 {
-    public class DishRerposetory : Reposetory, IReposetory<Dishes>
+    public class DishRerposetory : Reposetory, IReposetory<Dish>
     {
         public DishRerposetory(DBContext dbContext) : base(dbContext) { }
-        public bool create(Dishes model)
+        public bool create(Dish model)
         {
             string sql = $@"INSERT INTO Dishes (DishDescription, DishName, DishPrice, DishImage) VALUES (@DishDescription, @DishName, @DishPrice, @DishImage)";
             this.dbContext.AddParameter("@DishDescription", model.DishName);
@@ -20,7 +20,7 @@ namespace WSRestaurant
             {
                 throw new Exception("return false");
             }
-            foreach(Types type in model.types)
+            foreach(Category type in model.types)
             {
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
@@ -31,7 +31,7 @@ namespace WSRestaurant
                 }
             }
 
-            foreach (Chefs chef in model.chefs)
+            foreach (Chef chef in model.chefs)
             {
                 sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
@@ -67,9 +67,9 @@ namespace WSRestaurant
             
         }
 
-        public List<Dishes> getAll()
+        public List<Dish> getAll()
         {
-            List<Dishes> list = new List<Dishes>();
+            List<Dish> list = new List<Dish>();
             string sql = "SELECT * FROM Dishes";
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -82,7 +82,7 @@ namespace WSRestaurant
             return list;
         }
 
-        public Dishes getById(string id)
+        public Dish getById(string id)
         {
             string sql = "SELECT * FROM Dishes WHERE DishId = @DishId";
             this.dbContext.AddParameter("@DishId", id);
@@ -92,7 +92,7 @@ namespace WSRestaurant
                 return this.modelFactory.createDishObject.CreateModel(dataReader);
             }
         }
-        public bool update(Dishes model)
+        public bool update(Dish model)
         {
             string sql = $@"UPDATE Dishes SET DishDescription = @DishDescription, DishName = @DishName, DishPrice = @DishPrice, DishImage = @DishImage WHERE DishId = @DishId";
             this.dbContext.AddParameter("@DishName", model.DishName);
@@ -109,7 +109,7 @@ namespace WSRestaurant
             if (!this.dbContext.Insert(sql))
                 throw new Exception("return false seconed");
 
-            foreach (Types type in model.types)
+            foreach (Category type in model.types)
             {
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
@@ -125,7 +125,7 @@ namespace WSRestaurant
             if (!this.dbContext.Insert(sql))
                 throw new Exception("return false seconed");
 
-            foreach (Chefs chef in model.chefs)
+            foreach (Chef chef in model.chefs)
             {
                 sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
@@ -138,9 +138,9 @@ namespace WSRestaurant
             return ok;
         }
 
-        public List<Dishes> GetByOrder(string OrderId)
+        public List<Dish> GetByOrder(string OrderId)
         {
-            List<Dishes> list = new List<Dishes>();
+            List<Dish> list = new List<Dish>();
             string sql = "SELECT Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage, Dishes.DishId, Orders.OrderId" +
                 " FROM Orders INNER JOIN (Dishes INNER JOIN DishOrder ON Dishes.DishId = DishOrder.DishId) ON Orders.OrderId = DishOrder.OrderId" +
                 " WHERE Orders.OrderId=@OrderId;";
@@ -156,9 +156,9 @@ namespace WSRestaurant
             return list;
         }
 
-        public List<Dishes> GetByChef(string chefId)
+        public List<Dish> GetByChef(string chefId)
         {
-            List<Dishes> list = new List<Dishes>();
+            List<Dish> list = new List<Dish>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
                 " WHERE chefs.ChefId=@ChefId;";
@@ -173,9 +173,9 @@ namespace WSRestaurant
             }
             return list;
         }
-        public List<Dishes> GetByType(string typefId)
+        public List<Dish> GetByType(string typefId)
         {
-            List<Dishes> list = new List<Dishes>();
+            List<Dish> list = new List<Dish>();
             string sql = "SELECT Dishes.DishId, Dishes.DishName, Dishes.DishDescription, Dishes.DishPrice, Dishes.DishImage" +
                 " FROM Types INNER JOIN (Dishes INNER JOIN DishType ON Dishes.DishId = DishType.DishId) ON Types.TypeId = DishType.TypeId" +
                 " WHERE Types.TypeId=@TypeId;";
