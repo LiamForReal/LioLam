@@ -15,10 +15,10 @@
         <Label Content="Price: " FontSize="18" Canvas.Left="55" Canvas.Top="162" Width="92" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label x:Name="priceLable" Content="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="162" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40"/>
         <Label Content="Description: " FontSize="18" Canvas.Left="55" Canvas.Top="217" RenderTransformOrigin="-0.01,1.25" Height="34" Width="115" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Label Content="{Binding  DishDescription}" FontSize="18" Canvas.Left="175" Canvas.Top="217" RenderTransformOrigin="-0.01,1.25" Height="91" Width="258" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="399" RenderTransformOrigin="-0.01,1.25" Height="34" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="{Binding  DishDescription}" FontSize="18" Canvas.Left="175" Canvas.Top="217" RenderTransformOrigin="-0.01,1.25" Height="91" Width="297" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="384" RenderTransformOrigin="-0.01,1.25" Height="34" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-        <ListView x:Name="listView" Background="#4A90E2" Height="118" Width="398" HorizontalAlignment="Left" Canvas.Left="152" VerticalAlignment="Top" ItemsSource="{Binding chefs}" Canvas.Top="399">
+        <ListView x:Name="listView" Background="#4A90E2" Height="150" Width="398" HorizontalAlignment="Center" Canvas.Left="150" VerticalAlignment="Top" ItemsSource="{Binding chefs}" Canvas.Top="384">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Width="150">
@@ -31,6 +31,6 @@
         </ListView>
         <Label Content="Types:" FontSize="18" Canvas.Left="55" Canvas.Top="339" RenderTransformOrigin="-0.01,1.25" HorizontalAlignment="Center" Height="36" VerticalAlignment="Top" Width="64"/>
         <Label x:Name="typesLable" Content="tmp,tmp2" FontSize="18" Canvas.Left="150" Canvas.Top="339" Width="252" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40"/>
-        <Image Source="{Binding DishImage}" Height="200" Canvas.Left="470" Canvas.Top="129" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.501,0.524"/>
+        <Image Source="{Binding DishImage}" Height="274" Canvas.Left="486" Canvas.Top="109" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.501,0.524"/>
     </Canvas>
 </Window>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace WSRestaurant.Controllers
 {
@@ -20,20 +21,24 @@ namespace WSRestaurant.Controllers
             this.unitOfWorkReposetory = new UnitOfWorkReposetory(this.dBContext);
         }
 
-        [HttpGet]
-        public string IsAdmin(string userName, string password)
+        [HttpPost]
+        public async Task<bool> IsAdmin()
         {
+            string json = Request.Form["model"];
+            Customer customer = JsonSerializer.Deserialize<Customer>(json);
+            Console.WriteLine(customer.CustomerUserName + " " + customer.CustomerPassword);
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                string customerId = unitOfWorkReposetory.customerRerposetoryObject.CheckIfAdmin(userName, password);
-                return customerId;
+                string customerId = unitOfWorkReposetory.customerRerposetoryObject.
+                    CheckIfAdmin(customer.CustomerUserName, customer.CustomerPassword);
+                return customerId != "";
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
-                return "";
+                return false;
             }
             finally
             {

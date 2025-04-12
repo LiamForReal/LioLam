@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,14 +24,9 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class LogInPage : UserControl
     {
-        Customer customer;
-        public Customer getCustomer
-        {
-            get
-            {
-                return this.customer;
-            }
-        }
+
+        public event EventHandler LoginSuccessful;
+
         public LogInPage()
         {
             InitializeComponent();
@@ -42,39 +38,55 @@ namespace RestaurantWPF.UserControls
             this.passwordInput.Text = "";
         }
 
-        private async void submit_Click(object sender, RoutedEventArgs e)
+        private void submit_Click(object sender, RoutedEventArgs e)
+        {
+          
+            this.statusLable.Visibility = Visibility.Hidden;
+
+            if (this.userNameInput.Text == "" || this.passwordInput.Text == "")
+            {
+                this.statusLable.Content = "user name or password cannot be empty!";
+                this.statusLable.Foreground = new SolidColorBrush(Colors.Red);
+                this.statusLable.Visibility = Visibility.Visible;
+                return;
+            }
+            //Console.WriteLine(client.buildURI());
+            LogIn();
+        }
+
+        private async Task LogIn()
         {
             WebClient<Customer> client = new WebClient<Customer>()
             {
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/manager/IsAdmin"
+                Path = "api/Manager/IsAdmin"
             };
-           
 
-            //Console.WriteLine(client.buildURI());
             Customer customer = new Customer();
-            customer.CustomerUserName = this.userName.ToString();
-            customer.CustomerPassword = this.password.ToString();
-            this.errorLable.Visibility = Visibility.Hidden;
+            customer.CustomerUserName = this.userNameInput.Text;
+            customer.CustomerPassword = this.passwordInput.Text;
+
             try
             {
-                string adminId = await client.PostId(customer);
-                if (adminId == "")
+                bool result = await client.Post(customer);
+                if (!result)
                 {
-                    this.errorLable.Visibility = Visibility.Visible;
+                    this.statusLable.Content = "wrong customer details!";
+                    this.statusLable.Visibility = Visibility.Visible;
                     return;
                 }
-                Console.WriteLine("admin is in!");
-                customer.Id = adminId;
+                LoginSuccessful?.Invoke(this, EventArgs.Empty);
+                this.userNameInput.Text = "";
+                this.passwordInput.Text = "";
                 //show main window
-
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine("data base is open and the code cannot access it: " + ex.Message);
+                this.statusLable.Content = "an expected error!";
+                this.statusLable.Visibility = Visibility.Visible;
             }
         }
     }

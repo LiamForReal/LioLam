@@ -14,7 +14,7 @@
         <TextBox Canvas.Left="581" x:Name="passwordInput" TextWrapping="Wrap"  Canvas.Top="384" Width="199" Height="50" RenderTransformOrigin="0.577,-0.284" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Content="clear" x:Name="clear" Canvas.Left="392" Canvas.Top="533" Height="50" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="clear_Click"/>
         <Button Content="Submit" x:Name="submit" Canvas.Left="600" Canvas.Top="533" Height="50" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.967,0.516" Click="submit_Click"/>
-        <Label Canvas.Left="395" Content="error lable"  Canvas.Top="462" Width="305" Height="43" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" x:Name="errorLable" Visibility="Hidden" Foreground="Red" FontSize="20"/>
+        <Label Canvas.Left="360"  Content="error lable"  Canvas.Top="462" Width="400" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" x:Name="statusLable" Visibility="Hidden" Foreground="Red" FontSize="20"/>
 
     </Canvas>
 </UserControl>

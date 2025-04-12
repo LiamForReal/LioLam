@@ -88,16 +88,16 @@ namespace WSRestaurant
 
         public string CheckIfAdmin(string userName, string password)
         {
-            string sql = @"SELECT Customers.CustomerId, Customers.CustomerUserName, Customers.CustomerPassword
-                            FROM Customers
+            string sql = @"SELECT Customers.CustomerId FROM Customers
                             WHERE Customers.CustomerUserName=@CustomerUserName AND
-                            Customers.CustomerPassword=@CustomerPassword AND Customers.IsOwner = true";
+                            Customers.CustomerPassword=@CustomerPassword AND Customers.IsOwner = true;";
 
             this.dbContext.AddParameter("@CustomerUserName", userName);
             this.dbContext.AddParameter("@CustomerPassword", password);
             try
             {
                 var response = this.dbContext.ReadValue(sql);
+                Console.WriteLine(response);
                 if (response != null)
                     return response.ToString();
                 return "";

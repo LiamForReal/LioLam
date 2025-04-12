@@ -26,7 +26,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         isLogin = false;
-        setStartWindows();
+        this.buttons.Visibility = Visibility.Hidden;
         Index();
     }
 
@@ -38,29 +38,25 @@ public partial class MainWindow : Window
         }
         this.data.Child = startPage;
     }
-    private void setStartWindows()
-    {
-        if (isLogin) this.buttons.Visibility = Visibility.Visible;
-        else this.buttons.Visibility = Visibility.Hidden;
-    }
 
     private void LogInButton_Click(object sender, RoutedEventArgs e)
     {
         if (!isLogin)
             loginPage = new LogInPage();
-        
+
         Button button = (Button)(sender);
-        if (isLogin)
-        {
-            button.Content = "Log out";
-        }
-        else
-        {
-            button.Content = "Log In";
-            this.data.Child = loginPage;
-            isLogin = true;
-        }
-        setStartWindows();
+        button.Content = "Log In";
+        this.data.Child = loginPage;
+        isLogin = false;
+        this.buttons.Visibility = Visibility.Hidden;
+        loginPage.LoginSuccessful += OnLoginSuccessful;
+    }
+
+    private void OnLoginSuccessful(object sender, EventArgs e)
+    {
+        this.LogInButton.Content = "Log out";
+        isLogin = true;
+        this.buttons.Visibility = Visibility.Visible;
     }
 
     private void DishesButton_Click(object sender, RoutedEventArgs e)

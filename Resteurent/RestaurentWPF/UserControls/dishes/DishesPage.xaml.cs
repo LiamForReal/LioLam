@@ -46,8 +46,7 @@ namespace RestaurantWPF.UserControls
         {
             Button inspactButton = sender as Button;
             string dishId = inspactButton.Tag.ToString();
-            if (dishDetailsPage == null)
-                dishDetailsPage = new dishDetailsPage(dishId);
+            dishDetailsPage = new dishDetailsPage(dishId);
             dishDetailsPage.Show();
         }
 
