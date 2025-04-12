@@ -30,6 +30,8 @@ namespace RestaurantWPF.UserControls
         public LogInPage()
         {
             InitializeComponent();
+            this.userNameInput.Text = "tmp1";//for debuge
+            this.passwordInput.Text = "tmp1";
         }
 
         private void clear_Click(object sender, RoutedEventArgs e)

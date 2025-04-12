@@ -7,19 +7,31 @@
              mc:Ignorable="d" 
              Width="1100" Height="750" Background="#FF22243D">
     <Canvas>
-        <ListView x:Name="listView" Background="#5DADEC" Height="550" Width="900" d:ItemsSource="{d:SampleData ItemCount=8}" HorizontalAlignment="Left" Canvas.Left="100" VerticalAlignment="Center" Canvas.Top="36">
+        <TextBlock Text="Dishes" Canvas.Left="100" Canvas.Top="10" FontSize="30" Foreground="White" FontWeight="Bold" />
+
+        <ListView x:Name="listView" Background="#5DADEC" Height="550" Width="900" Canvas.Left="100" Canvas.Top="50"
+                  BorderBrush="White" BorderThickness="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="900">
-                        <Image x:Name="dishImage" Margin="20,10,10,10" Source="{Binding DishImage}" Width="60" Height="auto"></Image>
-                        <Label x:Name="BookName" Margin="20,10,10,10" FontSize="25" Content="{Binding DishName}"></Label>
-                        <Button x:Name="inspectDish" Tag="{Binding Id}" FrameworkElement.HorizontalAlignment="Right" Margin="350,10,0,10" Content="Inspact" FontSize="16" Height="50" Width="60" Click="inspectDish_Click"></Button>
-                        <Button x:Name="updateDish" Tag="{Binding Id}" FrameworkElement.HorizontalAlignment="Right" Margin="30,10,0,10" Content="Update" FontSize="16" Height="50" Width="60" Click="updateDish_Click"></Button>
-                        <Button x:Name="deleteDish" Tag="{Binding Id}" FrameworkElement.HorizontalAlignment="Right" Margin="30,10,0,10" Content="Delete" FontSize="16" Height="50" Width="60" Click="deleteDish_Click"></Button>
-                    </StackPanel>
+                    <Border Background="#E6F2FF" CornerRadius="10" Margin="5" Padding="10">
+                        <StackPanel Orientation="Horizontal" Width="860">
+                            <Image x:Name="dishImage" Source="{Binding DishImage}" Width="60" Height="60" Margin="10"/>
+                            <Label x:Name="BookName" Content="{Binding DishName}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0"/>
+
+                            <Button x:Name="inspectDish" Content="Inspect" Tag="{Binding Id}" Width="70" Height="40" Margin="50,0,0,0"
+                                    Click="inspectDish_Click"/>
+                            <Button x:Name="updateDish" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0"
+                                    Click="updateDish_Click"/>
+                            <Button x:Name="deleteDish" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0"
+                                    Click="deleteDish_Click"/>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Add new dish" Canvas.Left="450" Canvas.Top="619" Height="50" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Button Content="Add new dish" Canvas.Left="450" Canvas.Top="619" Height="50" Width="200"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
     </Canvas>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using LiolamResteurent;
+using RestaurantWindowsPF.UserControls.dishes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace RestaurantWPF.UserControls
     public partial class DishesPage : UserControl
     {
         private List<Dish> dishes;
-        static dishDetailsPage dishDetailsPage;
+        static inspactDish inspactDishPage;
+        static updateDish updateDishPage;
         public DishesPage()
         {
             InitializeComponent();
@@ -46,13 +48,16 @@ namespace RestaurantWPF.UserControls
         {
             Button inspactButton = sender as Button;
             string dishId = inspactButton.Tag.ToString();
-            dishDetailsPage = new dishDetailsPage(dishId);
-            dishDetailsPage.Show();
+            inspactDishPage = new inspactDish(dishId);
+            inspactDishPage.ShowDialog();
         }
 
         private void updateDish_Click(object sender, RoutedEventArgs e)
         {
-
+            Button updateButton = sender as Button;
+            string dishId = updateButton.Tag.ToString();
+            updateDishPage = new updateDish(dishId);
+            updateDishPage.ShowDialog();
         }
 
         private void deleteDish_Click(object sender, RoutedEventArgs e)

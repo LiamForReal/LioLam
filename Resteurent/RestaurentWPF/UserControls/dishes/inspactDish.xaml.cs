@@ -19,17 +19,16 @@ using WebApiClient;
 namespace RestaurantWPF.UserControls
 {
     /// <summary>
-    /// Interaction logic for dishDetailsPage.xaml
+    /// Interaction logic for inspactDishPage.xaml
     /// </summary>
-    public partial class dishDetailsPage : Window
+    public partial class inspactDish : Window
     {
         static Dish dish;
-        public dishDetailsPage(string dishId)
+        public inspactDish(string dishId)
         {
             InitializeComponent();
             getDishById(dishId);
         }
-
         private async Task getDishById(string id)
         {
             WebClient<Dish> client = new WebClient<Dish>();
@@ -39,13 +38,14 @@ namespace RestaurantWPF.UserControls
             client.Path = "api/Guest/GetSingleDish";
             client.AddParameter("id", id);
             dish = await client.Get();
+
             string types = "";
             foreach (Category type in dish.types)
                 types += type.TypeName + ", ";
             types = types.Substring(0, types.Length - 2);
             this.typesLable.Content = types;
             this.DataContext = dish;
-            this.priceLable.Content += "₪";
+            this.priceLable.Content = $"{dish.DishPrice}₪";
         }
     }
 }
