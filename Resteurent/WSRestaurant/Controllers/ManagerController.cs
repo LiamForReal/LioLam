@@ -70,10 +70,10 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-
-        public bool AddNewDish(string dishName, string dishDescription, string DishImage, int dishPrice)
+        public bool AddNewDish()
         {
-            Dish dish = new Dish(dishName, dishPrice, DishImage, dishDescription);
+            string json = Request.Form["model"];
+            Dish dish = JsonSerializer.Deserialize<Dish>(json);
             bool flag = false;
             try
             {
@@ -97,10 +97,10 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateDish(string dishId, string dishName, string dishDescription, string DishImage, int dishPrice)
+        public bool UpdateDish()
         {
-            Dish dish = new Dish(dishName, dishPrice, DishImage, dishDescription);
-            dish.Id = dishId;
+            string json = Request.Form["model"];
+            Dish dish = JsonSerializer.Deserialize<Dish>(json);
             bool flag = false;
             try
             {
@@ -122,8 +122,10 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool DeleteDish(string dishId)
+        public bool DeleteDish()
         {
+            string json = Request.Form["model"];
+            string dishId = JsonSerializer.Deserialize<string>(json);
             bool flag = false;
             try
             {
@@ -170,12 +172,13 @@ namespace WSRestaurant.Controllers
         //add city function 
         //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string StreetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool AddNewCustomer()
         {
             bool flag = false;
             try
             {
-                Customer customer = new Customer(CustomerId, false, CustomerUserName, CustomerHouse, CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                string json = Request.Form["model"];
+                Customer customer = JsonSerializer.Deserialize<Customer>(json);
                 this.dBContext.Open();
                 List<City> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
@@ -197,12 +200,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCustomer(string CustomerId, string CustomerUserName, int CustomerHouse, string CityId, string streetId, string CustomerPhone, string CustomerMail, string CustomerPassword, string CustomerImage)
+        public bool UpdateCustomer()
         {
             bool flag = false;
             try
             {
-                Customer customer = new Customer(CustomerId, false, CustomerUserName, CustomerHouse, CityId, streetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage);
+                string json = Request.Form["model"];
+                Customer customer = JsonSerializer.Deserialize<Customer>(json);
                 this.dBContext.Open();
                 List<City> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
@@ -224,11 +228,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool DeleteCustomer(string customerId)
+        public bool DeleteCustomer()
         {
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                string customerId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 if (unitOfWorkReposetory.orderRerposetoryObject.deleteByCustomer(customerId) &&
                     unitOfWorkReposetory.reservationRerposetoryObject.deleteByCustomer(customerId))
@@ -275,12 +281,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewChef(string chefFirstName, string chefLastName, string chefImage)
+        public bool AddNewChef()
         {
-            Chef chef = new Chef(chefFirstName, chefLastName, chefImage);
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Chef chef = JsonSerializer.Deserialize<Chef>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.chefRepositoryObject.create(chef);
                 this.dBContext.Close();
@@ -299,13 +306,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateChef(string chefId, string chefFirstName, string chefLastName, string chefImage)
+        public bool UpdateChef()
         {
-            Chef chef = new Chef(chefFirstName, chefLastName, chefImage);
-            chef.Id = chefId;
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Chef chef = JsonSerializer.Deserialize<Chef>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.chefRepositoryObject.update(chef);
                 this.dBContext.Close();
@@ -324,11 +331,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool DeleteChef(string chefId)
+        public bool DeleteChef()
         {
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                string chefId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.chefRepositoryObject.delete(chefId);
                 this.dBContext.Close();
@@ -370,11 +379,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool DeleteOrder(string orderId)
+        public bool DeleteOrder()
         {
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                string orderId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.orderRerposetoryObject.delete(orderId);
                 this.dBContext.Close();
@@ -416,14 +427,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewReservation(string CustomerId, DateTime reserveDate, int amountOfPeople)
+        public bool AddNewReservation()
         {
-            Reservation reservation = new Reservation(reserveDate, amountOfPeople);
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Reservation reservation = JsonSerializer.Deserialize<Reservation>(json);
                 this.dBContext.Open();
-                reservation.CustomerId = CustomerId;
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.create(reservation);
                 this.dBContext.Close();
                 return flag;
@@ -441,15 +452,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateReservation(string CustomerId, string reservationId, DateTime reserveDate, int amountOfPeople)
+        public bool UpdateReservation()
         {
-            Reservation reservation = new Reservation(reserveDate, amountOfPeople);
-            reservation.Id = reservationId;
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Reservation reservation = JsonSerializer.Deserialize<Reservation>(json);
                 this.dBContext.Open();
-                reservation.CustomerId = CustomerId;
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.update(reservation);
                 this.dBContext.Close();
                 return flag;
@@ -467,11 +477,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool DeleteReservation(string reservationId)
+        public bool DeleteReservation()
         {
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                string reservationId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.reservationRerposetoryObject.delete(reservationId);
                 this.dBContext.Close();
@@ -513,12 +525,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool AddNewType(string typeName)
+        public bool AddNewType()
         {
-            Category type = new Category(typeName);
+            
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Category type = JsonSerializer.Deserialize<Category>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.typeReposetoryObject.create(type);
                 this.dBContext.Close();
@@ -537,13 +551,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateType(string typeId, string typeName)
+        public bool UpdateType()
         {
-            Category type = new Category(typeName);
-            type.Id = typeId;
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                Category type = JsonSerializer.Deserialize<Category>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.typeReposetoryObject.update(type);
                 this.dBContext.Close();
@@ -562,11 +576,13 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool Deletetype(string typeId)
+        public bool Deletetype()
         {
             bool flag = false;
             try
             {
+                string json = Request.Form["model"];
+                string typeId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 Console.WriteLine($"{typeId} deleted type");
                 flag = unitOfWorkReposetory.typeReposetoryObject.delete(typeId);

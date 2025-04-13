@@ -1,5 +1,8 @@
-﻿using System;
+﻿using LiolamResteurent;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
+using WebApiClient;
 
 namespace RestaurantWindowsPF.UserControls.dishes
 {
@@ -19,15 +24,88 @@ namespace RestaurantWindowsPF.UserControls.dishes
     /// </summary>
     public partial class updateDish : Window
     {
+        private FileInfo readerPictureFile { get; set; }
         public updateDish(string DishId)
         {
             InitializeComponent();
-            setDishById(DishId);
+            setScreenByDishId(DishId);
         }
 
-        private async Task setDishById(string id)
+        private async Task setScreenByDishId(string id)
         {
-            return;
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Guest/GetSingleDish"
+            };
+
+            client.AddParameter("id", id);
+            Dish dish = await client.Get();
+
+            string types = "";
+            foreach (Category type in dish.types)
+                types += type.TypeName + ", ";
+            types = types.Substring(0, types.Length - 2);
+            this.typesLable.Content = types;
+            this.DataContext = dish;
+
+            this.priceTextBox.Text = $"{dish.DishPrice}₪";
+        }
+
+        private void updateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Dish dish = new Dish()
+                {
+                    DishName = this.nameTextBox.Text,
+                    DishDescription = this.descriptionTextBox.Text,
+                    DishPrice = int.Parse(this.priceTextBox.Text),
+                    DishImage = "default"
+                };
+                updateDishDetails(dish);
+            }
+            catch(Exception ex)
+            {
+                this.priceTextBox.Text = "";
+            }
+            
+        }
+
+        private async Task updateDishDetails(Dish dish)
+        {
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/UpdateDish"
+            };
+
+            bool result = await client.Post(dish);
+            if(result == true)
+            {
+                //good behavior
+            }
+            else 
+            {
+                //bad behavior
+            }
+        }
+
+        private void picktureInput_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            // Specify the types of images which can be picked
+            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg;*.webp;*.jiff)|*.png;*.jpeg;*.jpg;*.webp;*.jiff";
+            if (ofd.ShowDialog() == true)
+            {
+                this.readerPictureFile = new FileInfo(ofd.FileName);
+                this.imgRenderer.Source = new BitmapImage(new Uri(this.readerPictureFile.FullName));
+            }
+
         }
     }
 }

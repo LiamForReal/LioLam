@@ -13,27 +13,27 @@
 
         <!-- Dish Name -->
         <Label Content="Name:" Canvas.Left="55" Canvas.Top="90" FontSize="18" Foreground="White"/>
-        <TextBox Background="#4A90E2" Text="{Binding DishName}" FontSize="18" Canvas.Left="150" Canvas.Top="90" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+        <TextBox x:Name="nameTextBox" Background="#4A90E2" Text="{Binding DishName}" FontSize="18" Canvas.Left="150" Canvas.Top="90" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
 
         <!-- Price -->
         <Label Content="Price:" FontSize="18" Canvas.Left="55" Canvas.Top="135" Foreground="White"/>
-        <TextBox x:Name="priceLable" Background="#4A90E2" Text="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
+        <TextBox x:Name="priceTextBox" Background="#4A90E2" Text="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
 
         <!-- Description -->
         <Label Content="Description:" FontSize="18" Canvas.Left="55" Canvas.Top="180" Foreground="White"/>
-        <TextBox Background="#4A90E2" Text="{Binding  DishDescription}" TextWrapping="Wrap" FontSize="16" Canvas.Left="175" Canvas.Top="180"
+        <TextBox x:Name="descriptionTextBox" Background="#4A90E2" Text="{Binding  DishDescription}" TextWrapping="Wrap" FontSize="16" Canvas.Left="175" Canvas.Top="180"
                Height="91" Width="297" Foreground="White"/>
 
         <!-- Types -->
         <Label Content="Types:" FontSize="18" Canvas.Left="55" Canvas.Top="300" Foreground="White"/>
-        <TextBox Background="#4A90E2" x:Name="typesLable" Text="tmp,tmp2" FontSize="18" Canvas.Left="150" Canvas.Top="300" Width="252"
-           Foreground="White"/>
+        <Label x:Name="typesLable" Content="tmp,tmp2" FontSize="18" Canvas.Left="150" Canvas.Top="300" Width="252"
+               Foreground="White"/>
 
         <!-- Chefs -->
         <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="350" Foreground="White"/>
-        <ListBox x:Name="listView" Background="#4A90E2" Canvas.Left="150" Canvas.Top="350" Width="398" Height="150"
-              ItemsSource="{Binding chefs}" BorderThickness="0">
-            <ListBox.ItemTemplate>
+        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="150" Canvas.Top="350" Width="398" Height="120"
+                  ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Width="150">
                         <Label Margin="10" FontSize="18" Content="{Binding ChefFirstName}"/>
@@ -41,10 +41,13 @@
                         <Image Margin="10" Source="{Binding ChefImage}" Width="60"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <!-- Dish Image -->
-        <Image Source="{Binding DishImage}" Height="231" Canvas.Left="508" Canvas.Top="81" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="picktureInput" Height="33" Width="93" Canvas.Left="504" Canvas.Top="103" HorizontalAlignment="Left" VerticalAlignment="Center" Content="EnterPickture"></Button>
+        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="231" Canvas.Left="504" Canvas.Top="161" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Update" x:Name="updateButton" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
+            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
     </Canvas>
 </Window>

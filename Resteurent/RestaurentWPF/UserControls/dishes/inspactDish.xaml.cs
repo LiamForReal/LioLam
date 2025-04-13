@@ -1,5 +1,6 @@
 ﻿using LiolamResteurent;
 using Microsoft.Build.Experimental;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +32,14 @@ namespace RestaurantWPF.UserControls
         }
         private async Task getDishById(string id)
         {
-            WebClient<Dish> client = new WebClient<Dish>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Guest/GetSingleDish";
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Guest/GetSingleDish"
+            };
+            
             client.AddParameter("id", id);
             dish = await client.Get();
 
@@ -45,6 +49,15 @@ namespace RestaurantWPF.UserControls
             types = types.Substring(0, types.Length - 2);
             this.typesLable.Content = types;
             this.DataContext = dish;
+            /*
+            string messageBoxText = dish.chefs[0].ChefImage;
+            string caption = "Word Processor";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            */
             this.priceLable.Content = $"{dish.DishPrice}₪";
         }
     }

@@ -31,7 +31,7 @@
 
         <!-- Chefs -->
         <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="350" Foreground="White"/>
-        <ListView x:Name="listView" Background="White" Canvas.Left="150" Canvas.Top="350" Width="398" Height="150"
+        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="150" Canvas.Top="350" Width="398" Height="150"
                   ItemsSource="{Binding chefs}" BorderThickness="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
