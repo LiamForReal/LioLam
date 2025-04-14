@@ -49,15 +49,7 @@ namespace RestaurantWPF.UserControls
             types = types.Substring(0, types.Length - 2);
             this.typesLable.Content = types;
             this.DataContext = dish;
-            /*
-            string messageBoxText = dish.chefs[0].ChefImage;
-            string caption = "Word Processor";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            MessageBoxResult result;
-
-            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-            */
+            
             this.priceLable.Content = $"{dish.DishPrice}₪";
         }
     }

@@ -97,16 +97,45 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateDish()
+        public async Task<bool> UpdateDish()
         {
             string json = Request.Form["model"];
+            bool isImageChanged = Request.Form.Files.Count > 0;
             Dish dish = JsonSerializer.Deserialize<Dish>(json);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.update(dish);
-                this.dBContext.Close();
+                if (isImageChanged)
+                {
+                    IFormFile file = Request.Form.Files[0];
+
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Dishes\");
+
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
+                    string fileNameWithoutExt = dish.Id; // or customer.CustomerImage if it's just the name
+
+                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
+
+                    foreach (var ext in possibleExtensions)
+                    {
+                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{dish.DishImage}";
+                    Console.WriteLine($"file path is: {filePath}");
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                    }
+                }
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)

@@ -17,14 +17,15 @@ using System.Windows.Shapes;
 using System.Xml;
 using WebApiClient;
 
-namespace RestaurantWindowsPF.UserControls.dishes
+namespace RestaurantWindowsPF.UserControls
 {
     /// <summary>
     /// Interaction logic for updateDish.xaml
     /// </summary>
     public partial class updateDish : Window
     {
-        private FileInfo readerPictureFile { get; set; }
+        private FileInfo readerPictureFile;
+        private string dBimage;
         public updateDish(string DishId)
         {
             InitializeComponent();
@@ -52,6 +53,8 @@ namespace RestaurantWindowsPF.UserControls.dishes
             this.DataContext = dish;
 
             this.priceTextBox.Text = $"{dish.DishPrice}₪";
+
+            dBimage = System.IO.Path.GetFileName(dish.DishImage);
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
@@ -62,19 +65,22 @@ namespace RestaurantWindowsPF.UserControls.dishes
                 {
                     DishName = this.nameTextBox.Text,
                     DishDescription = this.descriptionTextBox.Text,
-                    DishPrice = int.Parse(this.priceTextBox.Text),
-                    DishImage = "default"
+                    DishPrice = int.Parse(this.priceTextBox.Text)
                 };
+                if(this.readerPictureFile != null)
+                {
+                    Stream stream = this.readerPictureFile.OpenRead();
+                    updateDishDetails(dish, stream);
+                }
                 updateDishDetails(dish);
             }
             catch(Exception ex)
             {
                 this.priceTextBox.Text = "";
             }
-            
         }
 
-        private async Task updateDishDetails(Dish dish)
+        private async Task updateDishDetails(Dish dish, Stream img = null)
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
@@ -83,13 +89,16 @@ namespace RestaurantWindowsPF.UserControls.dishes
                 Host = "localhost",
                 Path = "api/Manager/UpdateDish"
             };
+            bool result;
+            if (img == null)
+                result = await client.Post(dish);
+            else result = await client.Post(dish, img);
 
-            bool result = await client.Post(dish);
-            if(result == true)
+            if (result == true)
             {
                 //good behavior
             }
-            else 
+            else
             {
                 //bad behavior
             }
@@ -102,10 +111,17 @@ namespace RestaurantWindowsPF.UserControls.dishes
             ofd.Filter = "Image files (*.png;*.jpeg;*.jpg;*.webp;*.jiff)|*.png;*.jpeg;*.jpg;*.webp;*.jiff";
             if (ofd.ShowDialog() == true)
             {
+                string selectedFilePath = ofd.FileName;
+                string selectedFileName = System.IO.Path.GetFileName(selectedFilePath);
+
+                if (string.Equals(dBimage, selectedFileName, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.readerPictureFile = null;
+                    return;
+                }
                 this.readerPictureFile = new FileInfo(ofd.FileName);
                 this.imgRenderer.Source = new BitmapImage(new Uri(this.readerPictureFile.FullName));
             }
-
         }
     }
 }

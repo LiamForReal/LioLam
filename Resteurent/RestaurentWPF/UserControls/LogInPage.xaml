@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              Width="1100" Height="750" Background="#FF22243D">
     <Canvas >
-        <Label Content="Log In" Canvas.Left="473" Canvas.Top="110" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="50" />
-        <Label Content="User Name:" x:Name="userName" Canvas.Left="335" Canvas.Top="253" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Height="68"/>
+        <Label Content="Log In" Foreground="Gold" Canvas.Left="473" Canvas.Top="110" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="50" />
+        <Label Content="User Name:" Foreground="Gold" x:Name="userName" Canvas.Left="335" Canvas.Top="253" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Height="68"/>
         <TextBox Canvas.Left="581" x:Name="userNameInput" TextWrapping="Wrap" Canvas.Top="270" Width="199" HorizontalAlignment="Center" VerticalAlignment="Center" Height="51" RenderTransformOrigin="0.577,-0.284" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <Label Content="Password:" x:Name="password"  Canvas.Left="335" Canvas.Top="375" FontSize="40" Height="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="Password:" Foreground="Gold" x:Name="password"  Canvas.Left="335" Canvas.Top="375" FontSize="40" Height="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <TextBox Canvas.Left="581" x:Name="passwordInput" TextWrapping="Wrap"  Canvas.Top="384" Width="199" Height="50" RenderTransformOrigin="0.577,-0.284" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button Content="clear" x:Name="clear" Canvas.Left="392" Canvas.Top="533" Height="50" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="clear_Click"/>
-        <Button Content="Submit" x:Name="submit" Canvas.Left="600" Canvas.Top="533" Height="50" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.967,0.516" Click="submit_Click"/>
+        <Button Content="clear" x:Name="clear" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="392" Canvas.Top="533" Height="50" Width="100" Click="clear_Click"/>
+        <Button Content="Submit" x:Name="submit" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="600" Canvas.Top="533" Height="50" Width="100" RenderTransformOrigin="0.967,0.516" Click="submit_Click"/>
         <Label Canvas.Left="360"  Content="error lable"  Canvas.Top="462" Width="400" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" x:Name="statusLable" Visibility="Hidden" Foreground="Red" FontSize="20"/>
 
     </Canvas>
