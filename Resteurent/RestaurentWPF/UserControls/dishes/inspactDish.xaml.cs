@@ -22,10 +22,10 @@ namespace RestaurantWPF.UserControls
     /// <summary>
     /// Interaction logic for inspactDishPage.xaml
     /// </summary>
-    public partial class inspactDish : Window
+    public partial class InspactDish : Window
     {
         static Dish dish;
-        public inspactDish(string dishId)
+        public InspactDish(string dishId)
         {
             InitializeComponent();
             getDishById(dishId);

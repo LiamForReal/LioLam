@@ -46,12 +46,12 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public welcomeDetails GetWelcomeDetails(string id)
+        public WelcomeDetails GetWelcomeDetails(string id)
         {
             try
             {
                 //Console.WriteLine($"the id is: {id}");
-                welcomeDetails wD = new welcomeDetails(); 
+                WelcomeDetails wD = new WelcomeDetails(); 
                 this.dBContext.Open();//add cities and streets and house number 
                 Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
                 wD.name = customer.CustomerUserName;
@@ -94,11 +94,11 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public registerViewModel ShowSignUp()
+        public RegisterViewModel ShowSignUp()
         {
             try
             {
-                registerViewModel registerViewModel = new registerViewModel();
+                RegisterViewModel registerViewModel = new RegisterViewModel();
                 this.dBContext.Open();
                 registerViewModel.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 registerViewModel.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-   public class registerViewModel
+   public class RegisterViewModel
     {
         public List<City> Cities { get; set; }
         public List<Street> Streets { get; set; }

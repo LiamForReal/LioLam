@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class welcomeDetails
+    public class WelcomeDetails
     {
         public string name { get; set; }
         public string image { get; set; }

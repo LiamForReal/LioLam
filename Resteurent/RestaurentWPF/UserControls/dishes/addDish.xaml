@@ -13,41 +13,50 @@
 
         <!-- Dish Name -->
         <Label Content="Name:" Canvas.Left="55" Canvas.Top="90" FontSize="18" Foreground="White"/>
-        <TextBox x:Name="nameTextBox" Background="#4A90E2" Text="{Binding DishName}" FontSize="18" Canvas.Left="150" Canvas.Top="90" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+        <TextBox x:Name="nameTextBox" Background="#4A90E2" FontSize="18" Canvas.Left="150" Canvas.Top="90" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
 
         <!-- Price -->
         <Label Content="Price:" FontSize="18" Canvas.Left="55" Canvas.Top="135" Foreground="White"/>
-        <TextBox x:Name="priceTextBox" Background="#4A90E2" Text="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
+        <TextBox x:Name="priceTextBox" Background="#4A90E2" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
 
         <!-- Description -->
         <Label Content="Description:" FontSize="18" Canvas.Left="55" Canvas.Top="180" Foreground="White"/>
-        <TextBox x:Name="descriptionTextBox" Background="#4A90E2" Text="{Binding  DishDescription}" TextWrapping="Wrap" FontSize="16" Canvas.Left="175" Canvas.Top="180"
+        <TextBox x:Name="descriptionTextBox" Background="#4A90E2" TextWrapping="Wrap" FontSize="16" Canvas.Left="175" Canvas.Top="180"
                    Height="91" Width="297" Foreground="White"/>
 
         <!-- Types -->
-        <Label Content="Types:" FontSize="18" Canvas.Left="55" Canvas.Top="300" Foreground="White"/>
-        <Label x:Name="typesLable" Content="tmp,tmp2" FontSize="18" Canvas.Left="150" Canvas.Top="300" Width="252"
-                   Foreground="White"/>
-
-        <!-- Chefs -->
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="350" Foreground="White"/>
-        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="150" Canvas.Top="350" Width="398" Height="120"
-                      ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <ListView.ItemTemplate>
+        <Label Content="Types:" FontSize="18" Canvas.Left="58" Canvas.Top="277" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.829,0.512"/>
+        <ListBox x:Name="types" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="28" Canvas.Top="318" Width="135" Height="120"
+              ItemsSource="{Binding types}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="150">
-                        <Label Margin="10" FontSize="18" Content="{Binding ChefFirstName}"/>
-                        <Label Margin="10" FontSize="18" Content="{Binding ChefLastName}"/>
-                        <Image Margin="10" Source="{Binding ChefImage}" Width="60"/>
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                        <Label Margin="10" FontSize="18" Content="{Binding TypeName}" Foreground="White"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!-- Chefs -->
+        <Label Content="Chefs:" FontSize="18" Canvas.Left="336" Canvas.Top="279" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.322,0.394"/>
+        <ListBox x:Name="chefs" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="197" Canvas.Top="318" Width="335" Height="120"
+                      ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefFirstName}" Foreground="White"/>
+                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefLastName}" Foreground="White"/>
+                        <Image Margin="40,0,0,10" Source="{Binding ChefImage}" Width="60"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <!-- Dish Image -->
-        <Button x:Name="picktureInput" Height="33" Width="93" Canvas.Left="430" Canvas.Top="74" HorizontalAlignment="Left" VerticalAlignment="Center" Content="EnterPickture"></Button>
-        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="231" Canvas.Left="536" Canvas.Top="90" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Content="Create" x:Name="createButton" Tag="{Binding Id}" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
-                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
+        <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="599" Canvas.Top="301" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Pickture" RenderTransformOrigin="0.317,0.895" Click="picktureInput_Click"></Button>
+        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Canvas.Left="566" Canvas.Top="67" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Create" x:Name="createButton" Tag="{Binding Id}" Canvas.Left="292" Canvas.Top="482" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
+                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click"/>
+        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="201" FontSize="18" Foreground="red" Canvas.Top="443" HorizontalAlignment="Left" VerticalAlignment="Top" Width="398" RenderTransformOrigin="0.549,0.6"/>
     </Canvas>
 </Window>

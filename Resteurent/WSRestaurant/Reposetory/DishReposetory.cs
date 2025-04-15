@@ -10,17 +10,19 @@ namespace WSRestaurant
         public DishRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Dish model)
         {
-            string sql = $@"INSERT INTO Dishes (DishDescription, DishName, DishPrice, DishImage) VALUES (@DishDescription, @DishName, @DishPrice, @DishImage)";
-            this.dbContext.AddParameter("@DishDescription", model.DishName);
+            string sql = $@"INSERT INTO Dishes (DishName, DishDescription ,DishPrice, DishImage) VALUES (@DishName, @DishDescription ,@DishPrice, @DishImage)";
+            this.dbContext.AddParameter("@DishDescription", model.DishDescription);
             this.dbContext.AddParameter("@DishName", model.DishName);
-            this.dbContext.AddParameter("@DishPrice", model.DishName);
-            this.dbContext.AddParameter("@DishImage", model.DishName);
+            this.dbContext.AddParameter("@DishPrice", model.DishPrice.ToString());
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
             bool ok = this.dbContext.Insert(sql);
-            if (ok)
+            if (!ok)
             {
                 throw new Exception("return false");
             }
-            foreach(Category type in model.types)
+            model.Id = GetLastId();
+            Console.WriteLine(model.Id);
+            foreach (Category type in model.types)
             {
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);

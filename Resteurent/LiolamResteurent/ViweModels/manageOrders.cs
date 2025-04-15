@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class manageOrders
+    public class ManageOrders
     {
         public List<Order> Orders { get; set; }
         public List<Reservation> Reservations { get; set; }

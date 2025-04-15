@@ -1,6 +1,7 @@
 ﻿using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -69,19 +70,56 @@ namespace WSRestaurant.Controllers
             }
         }
 
+        [HttpGet]
+        public AddDishView GetAddDishView()
+        {
+            try
+            {
+                this.dBContext.Open();
+                AddDishView addDishView = new AddDishView()
+                {
+                    types = this.unitOfWorkReposetory.typeReposetoryObject.getAll(),
+                    chefs = this.unitOfWorkReposetory.chefRepositoryObject.getAll()
+                };
+
+                return addDishView;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
         [HttpPost]
-        public bool AddNewDish()
+        public async Task<bool> AddNewDish()
         {
             string json = Request.Form["model"];
+            IFormFile file = Request.Form.Files[0];
             Dish dish = JsonSerializer.Deserialize<Dish>(json);
+            dish.DishImage = $"{dish.Id}{Path.GetExtension(dish.DishImage)}";
             bool flag = false;
             try
             {
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.create(dish);
+                if (flag)
+                {
+                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"\wwwroot\Images\Customers\");
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Dishes\{dish.DishImage}";
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    };
+                }
                 //dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish();
                 //connection with types chefs and orders
-                this.dBContext.Close();
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
@@ -120,7 +158,7 @@ namespace WSRestaurant.Controllers
 
                     string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Dishes\");
 
-                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Dishes");
                     string fileNameWithoutExt = dish.Id; // or customer.CustomerImage if it's just the name
 
                     string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
@@ -134,7 +172,7 @@ namespace WSRestaurant.Controllers
                         }
                     }
 
-                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{dish.DishImage}";
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Dishes\{dish.DishImage}";
                     Console.WriteLine($"file path is: {filePath}");
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
@@ -165,8 +203,9 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.delete(dishId);
-                this.dBContext.Close();
+                this.dBContext.Commit(); 
                 return flag;
             }
             catch (Exception ex)
@@ -374,7 +413,9 @@ namespace WSRestaurant.Controllers
                 string json = Request.Form["model"];
                 string chefId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.chefRepositoryObject.delete(chefId);
+                this.dBContext.Commit();
                 this.dBContext.Close();
                 return flag;
             }

@@ -54,7 +54,7 @@ namespace RestaurantWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDefaultScreen()
         {
-            WebClient<welcomeDetails> client = new WebClient<welcomeDetails>
+            WebClient<WelcomeDetails> client = new WebClient<WelcomeDetails>
             {
                 Scheme = "http",
                 Port = 5125,
@@ -65,7 +65,7 @@ namespace RestaurantWebApp.Controllers
             if(HttpContext.Session.GetString("Id") != null)
             {
                 client.AddParameter("id", HttpContext.Session.GetString("Id"));
-                welcomeDetails welcomeDetails = await client.Get();
+                WelcomeDetails welcomeDetails = await client.Get();
                 TempData["Id"] = HttpContext.Session.GetString("Id");
                 return View("GetDefaultScreen", welcomeDetails);
             }
@@ -150,14 +150,14 @@ namespace RestaurantWebApp.Controllers
         public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
-            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            WebClient<RegisterViewModel> client = new WebClient<RegisterViewModel>()
             {
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
             };
-            registerViewModel registerViewModel = await client.Get();
+            RegisterViewModel registerViewModel = await client.Get();
 
             Account account = new Account()
             {
@@ -173,14 +173,14 @@ namespace RestaurantWebApp.Controllers
         {
             
             //city and strits lists from ws
-            WebClient<registerViewModel> client = new WebClient<registerViewModel>()
+            WebClient<RegisterViewModel> client = new WebClient<RegisterViewModel>()
             {
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
             };
-            registerViewModel registerViewModel = await client.Get();
+            RegisterViewModel registerViewModel = await client.Get();
 
             WebClient<Customer> client2 = new WebClient<Customer>()
             {

@@ -23,11 +23,11 @@ namespace RestaurantWindowsPF.UserControls
     /// <summary>
     /// Interaction logic for updateDish.xaml
     /// </summary>
-    public partial class updateDish : Window
+    public partial class UpdateDish : Window
     {
         private FileInfo readerPictureFile;
         private Dish loadedDish;
-        public updateDish(string DishId)
+        public UpdateDish(string DishId)
         {
             InitializeComponent();
             this.errorLable.Content = "";
@@ -83,8 +83,18 @@ namespace RestaurantWindowsPF.UserControls
                     DishDescription = this.descriptionTextBox.Text,
                     DishPrice = int.Parse(price)
                 };
-                MessageBox.Show($"{dish.DishPrice} == {loadedDish.DishPrice}");
-                if(loadedDish == dish && this.readerPictureFile == null)
+
+                if (dish.DishName == "" || dish.DishDescription == "")
+                {
+                    errorLable.Content = "name or description cannot be empty";
+                    return;
+                }
+                else if (dish.DishPrice <= 0)
+                {
+                    errorLable.Content = "price cannot be negative or 0";
+                    return;
+                }
+                else if(loadedDish == dish && this.readerPictureFile == null)
                 {
                     this.Close();
                 }
@@ -130,7 +140,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             OpenFileDialog ofd = new OpenFileDialog();
             // Specify the types of images which can be picked
-            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg;*.webp;*.jiff)|*.png;*.jpeg;*.jpg;*.webp;*.jiff";
+            ofd.Filter = "Image files (*.png;*.jpeg;*.jpg;*.webp;*.jfif)|*.png;*.jpeg;*.jpg;*.webp;*.jiff";
             if (ofd.ShowDialog() == true)
             {
                 this.readerPictureFile = new FileInfo(ofd.FileName);
