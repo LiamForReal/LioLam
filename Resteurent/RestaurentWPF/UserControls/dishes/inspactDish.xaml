@@ -17,7 +17,7 @@
 
         <!-- Price -->
         <Label Content="Price:" FontSize="18" Canvas.Left="55" Canvas.Top="135" Foreground="White"/>
-        <Label x:Name="priceLable" Content="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White"/>
+        <Label x:Name="priceLable" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White"/>
 
         <!-- Description -->
         <Label Content="Description:" FontSize="18" Canvas.Left="55" Canvas.Top="180" Foreground="White"/>

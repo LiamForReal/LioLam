@@ -47,7 +47,7 @@
         <!-- Dish Image -->
         <Button x:Name="picktureInput" Height="33" Width="93" Canvas.Left="430" Canvas.Top="74" HorizontalAlignment="Left" VerticalAlignment="Center" Content="EnterPickture"></Button>
         <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="231" Canvas.Left="536" Canvas.Top="90" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Content="Create" x:Name="createButton" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
+        <Button Content="Create" x:Name="createButton" Tag="{Binding Id}" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
                 Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
     </Canvas>
 </Window>

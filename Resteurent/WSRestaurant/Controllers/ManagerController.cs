@@ -102,13 +102,19 @@ namespace WSRestaurant.Controllers
             string json = Request.Form["model"];
             bool isImageChanged = Request.Form.Files.Count > 0;
             Dish dish = JsonSerializer.Deserialize<Dish>(json);
+            dish.DishImage = $"{dish.Id}{Path.GetExtension(dish.DishImage)}";
             bool flag = false;
             try
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
+                if (!dish.DishImage.Contains("."))
+                {
+                    string savedImage = unitOfWorkReposetory.dishRerposetoryObject.getById(dish.Id).DishImage;
+                    dish.DishImage = $"{dish.Id}{Path.GetExtension(savedImage)}";
+                }
                 flag = unitOfWorkReposetory.dishRerposetoryObject.update(dish);
-                if (isImageChanged)
+                if (isImageChanged && flag)
                 {
                     IFormFile file = Request.Form.Files[0];
 

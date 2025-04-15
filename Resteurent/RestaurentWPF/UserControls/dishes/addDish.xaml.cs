@@ -33,7 +33,7 @@ namespace RestaurantWindowsPF.UserControls
                 DishName = this.nameTextBox.Text,
                 DishDescription = this.descriptionTextBox.Text,
                 DishPrice = int.Parse(this.priceTextBox.Text),
-                DishImage = "default"
+                //add dish image
             };
             addNewDish(dish);
         }

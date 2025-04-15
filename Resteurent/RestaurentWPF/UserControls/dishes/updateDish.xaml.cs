@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,10 +26,11 @@ namespace RestaurantWindowsPF.UserControls
     public partial class updateDish : Window
     {
         private FileInfo readerPictureFile;
-        private string dBimage;
+        private Dish loadedDish;
         public updateDish(string DishId)
         {
             InitializeComponent();
+            this.errorLable.Content = "";
             setScreenByDishId(DishId);
         }
 
@@ -44,7 +46,6 @@ namespace RestaurantWindowsPF.UserControls
 
             client.AddParameter("id", id);
             Dish dish = await client.Get();
-
             string types = "";
             foreach (Category type in dish.types)
                 types += type.TypeName + ", ";
@@ -54,33 +55,48 @@ namespace RestaurantWindowsPF.UserControls
 
             this.priceTextBox.Text = $"{dish.DishPrice}₪";
 
-            dBimage = System.IO.Path.GetFileName(dish.DishImage);
+            loadedDish = new Dish()
+            {
+                Id = dish.Id,
+                DishName = dish.DishName,
+                DishDescription = dish.DishDescription,
+                DishPrice = dish.DishPrice,
+            };
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                Button updateButton = sender as Button;
+                string dishId = updateButton.Tag.ToString();
+
+                string price  = this.priceTextBox.Text;
+
+                if (price.EndsWith("₪"))
+                    price = price.Substring(0, price.Length - 1); // Remove ₪
+
                 Dish dish = new Dish()
                 {
+                    Id = dishId,
                     DishName = this.nameTextBox.Text,
                     DishDescription = this.descriptionTextBox.Text,
-                    DishPrice = int.Parse(this.priceTextBox.Text)
+                    DishPrice = int.Parse(price)
                 };
-                if(this.readerPictureFile != null)
+                MessageBox.Show($"{dish.DishPrice} == {loadedDish.DishPrice}");
+                if(loadedDish == dish && this.readerPictureFile == null)
                 {
-                    Stream stream = this.readerPictureFile.OpenRead();
-                    updateDishDetails(dish, stream);
+                    this.Close();
                 }
-                updateDishDetails(dish);
+                else updateDishDetails(dish, this.readerPictureFile);
             }
             catch(Exception ex)
             {
-                this.priceTextBox.Text = "";
+                this.errorLable.Content = "price must be an integer";
             }
         }
 
-        private async Task updateDishDetails(Dish dish, Stream img = null)
+        private async Task updateDishDetails(Dish dish, FileInfo img = null)
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
@@ -92,15 +108,21 @@ namespace RestaurantWindowsPF.UserControls
             bool result;
             if (img == null)
                 result = await client.Post(dish);
-            else result = await client.Post(dish, img);
+            else
+            {
+                dish.DishImage = img.Name;
+                Stream imgStream = img.OpenRead();
+                result = await client.Post(dish, imgStream);
+            }
+                
 
             if (result == true)
             {
-                //good behavior
+                this.Close();
             }
             else
             {
-                //bad behavior
+                this.errorLable.Content = "update operation failed";
             }
         }
 
@@ -111,14 +133,6 @@ namespace RestaurantWindowsPF.UserControls
             ofd.Filter = "Image files (*.png;*.jpeg;*.jpg;*.webp;*.jiff)|*.png;*.jpeg;*.jpg;*.webp;*.jiff";
             if (ofd.ShowDialog() == true)
             {
-                string selectedFilePath = ofd.FileName;
-                string selectedFileName = System.IO.Path.GetFileName(selectedFilePath);
-
-                if (string.Equals(dBimage, selectedFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    this.readerPictureFile = null;
-                    return;
-                }
                 this.readerPictureFile = new FileInfo(ofd.FileName);
                 this.imgRenderer.Source = new BitmapImage(new Uri(this.readerPictureFile.FullName));
             }

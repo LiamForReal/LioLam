@@ -17,7 +17,7 @@
 
         <!-- Price -->
         <Label Content="Price:" FontSize="18" Canvas.Left="55" Canvas.Top="135" Foreground="White"/>
-        <TextBox x:Name="priceTextBox" Background="#4A90E2" Text="{Binding DishPrice}" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
+        <TextBox x:Name="priceTextBox" Background="#4A90E2" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
 
         <!-- Description -->
         <Label Content="Description:" FontSize="18" Canvas.Left="55" Canvas.Top="180" Foreground="White"/>
@@ -31,7 +31,7 @@
 
         <!-- Chefs -->
         <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="350" Foreground="White"/>
-        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="150" Canvas.Top="350" Width="398" Height="120"
+        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="152" Canvas.Top="350" Width="398" Height="90"
                   ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -47,7 +47,8 @@
         <!-- Dish Image -->
         <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="599" Canvas.Top="301" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Pickture" RenderTransformOrigin="0.317,0.895" Click="picktureInput_Click"></Button>
         <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Canvas.Left="525" Canvas.Top="90" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Update" x:Name="updateButton" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
+        <Button Content="Update" x:Name="updateButton" Tag="{Binding Id}" Canvas.Left="282" Canvas.Top="494" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"
             Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
+        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="175" FontSize="18" Foreground="red" Canvas.Top="455" HorizontalAlignment="Left" VerticalAlignment="Center" Width="398"/>
     </Canvas>
 </Window>

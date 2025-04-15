@@ -94,47 +94,18 @@ namespace WSRestaurant
         }
         public bool update(Dish model)
         {
-            string sql = $@"UPDATE Dishes SET DishDescription = @DishDescription, DishName = @DishName, DishPrice = @DishPrice, DishImage = @DishImage WHERE DishId = @DishId";
+
+            string sql = $@"UPDATE Dishes SET DishName = @DishName, DishDescription = @DishDescription, DishPrice = @DishPrice, DishImage = @DishImage WHERE DishId = @DishId;";
             this.dbContext.AddParameter("@DishName", model.DishName);
-            this.dbContext.AddParameter("@DishDescription", model.DishName);
-            this.dbContext.AddParameter("@DishPrice", model.DishName);
-            this.dbContext.AddParameter("@DishImage", model.DishName);
+            this.dbContext.AddParameter("@DishDescription", model.DishDescription);
+            this.dbContext.AddParameter("@DishPrice", model.DishPrice.ToString());
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
             this.dbContext.AddParameter("@DishId", model.Id);
+
+            Console.WriteLine(model.DishName + ", " + model.DishDescription);
             bool ok = this.dbContext.Update(sql);
-            if (ok)
+            if (!ok)
                 throw new Exception("return false");
-
-            sql = "DELETE FROM DishType WHERE DishId = @DishId";
-            this.dbContext.AddParameter("@DishId", model.Id);
-            if (!this.dbContext.Insert(sql))
-                throw new Exception("return false seconed");
-
-            foreach (Category type in model.types)
-            {
-                sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
-                this.dbContext.AddParameter("@DishId", model.Id);
-                this.dbContext.AddParameter("@TypeId", type.Id);
-                if (!this.dbContext.Insert(sql))
-                {
-                    throw new Exception("return false seconed");
-                }
-            }
-
-            sql = "DELETE FROM DishChef WHERE DishId = @DishId";
-            this.dbContext.AddParameter("@DishId", model.Id);
-            if (!this.dbContext.Insert(sql))
-                throw new Exception("return false seconed");
-
-            foreach (Chef chef in model.chefs)
-            {
-                sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
-                this.dbContext.AddParameter("@DishId", model.Id);
-                this.dbContext.AddParameter("@ChefId", chef.Id);
-                if (!this.dbContext.Insert(sql))
-                {
-                    throw new Exception("return false seconed");
-                }
-            }
             return ok;
         }
 
