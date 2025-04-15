@@ -108,6 +108,39 @@ namespace WSRestaurant
             bool ok = this.dbContext.Update(sql);
             if (!ok)
                 throw new Exception("return false");
+
+            sql = "DELETE FROM DishType WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
+            foreach (Category type in model.types)
+            {
+                sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@TypeId", type.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+
+            sql = "DELETE FROM DishChef WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if (!this.dbContext.Insert(sql))
+                throw new Exception("return false seconed");
+
+            foreach (Chef chef in model.chefs)
+            {
+                sql = $@"INSERT INTO DishChef (DishId, ChefId) VALUES(@DishId, @ChefId)";
+                this.dbContext.AddParameter("@DishId", model.Id);
+                this.dbContext.AddParameter("@ChefId", chef.Id);
+                if (!this.dbContext.Insert(sql))
+                {
+                    throw new Exception("return false seconed");
+                }
+            }
+
             return ok;
         }
 
