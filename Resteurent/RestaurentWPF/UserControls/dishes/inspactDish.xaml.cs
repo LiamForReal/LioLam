@@ -43,11 +43,6 @@ namespace RestaurantWPF.UserControls
             client.AddParameter("id", id);
             dish = await client.Get();
 
-            string types = "";
-            foreach (Category type in dish.types)
-                types += type.TypeName + ", ";
-            types = types.Substring(0, types.Length - 2);
-            this.typesLable.Content = types;
             this.DataContext = dish;
             
             this.priceLable.Content = $"{dish.DishPrice}₪";

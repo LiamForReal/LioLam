@@ -1,5 +1,6 @@
 ﻿using LiolamResteurent;
 using Microsoft.Win32;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,20 @@ namespace RestaurantWindowsPF.UserControls
             setScreenByDishId(DishId);
         }
 
+        private async Task<AddDishView> SetScreenByChefsAndTypes()
+        {
+            WebClient<AddDishView> client = new WebClient<AddDishView>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/GetAddDishView"
+            };
+
+            AddDishView addDishView = await client.Get();
+
+            return addDishView;
+        }
         private async Task setScreenByDishId(string id)
         {
             WebClient<Dish> client = new WebClient<Dish>()
@@ -46,12 +61,28 @@ namespace RestaurantWindowsPF.UserControls
 
             client.AddParameter("id", id);
             Dish dish = await client.Get();
-            string types = "";
-            foreach (Category type in dish.types)
-                types += type.TypeName + ", ";
-            types = types.Substring(0, types.Length - 2);
-            this.typesLable.Content = types;
+            AddDishView addDishView = await SetScreenByChefsAndTypes();
+            this.chefs.ItemsSource = addDishView.chefs;
+            this.types.ItemsSource = addDishView.types;
+
             this.DataContext = dish;
+
+            this.chefs.SelectedItems.Clear();
+            this.types.SelectedItems.Clear();
+
+            foreach (var chefInDish in dish.chefs)
+            {
+                var match = addDishView.chefs.FirstOrDefault(c => c.Id == chefInDish.Id);
+                if (match != null)
+                    this.chefs.SelectedItems.Add(match);
+            }
+
+            foreach (var typeInDish in dish.types)
+            {
+                var match = addDishView.types.FirstOrDefault(t => t.Id == typeInDish.Id);
+                if (match != null)
+                    this.types.SelectedItems.Add(match);
+            }
 
             this.priceTextBox.Text = $"{dish.DishPrice}₪";
 
@@ -61,6 +92,8 @@ namespace RestaurantWindowsPF.UserControls
                 DishName = dish.DishName,
                 DishDescription = dish.DishDescription,
                 DishPrice = dish.DishPrice,
+                types = dish.types, 
+                chefs = dish.chefs
             };
         }
 
@@ -81,7 +114,9 @@ namespace RestaurantWindowsPF.UserControls
                     Id = dishId,
                     DishName = this.nameTextBox.Text,
                     DishDescription = this.descriptionTextBox.Text,
-                    DishPrice = int.Parse(price)
+                    DishPrice = int.Parse(price),
+                    types = this.types.SelectedItems.Cast<Category>().ToList(),
+                    chefs = this.chefs.SelectedItems.Cast<Chef>().ToList()
                 };
 
                 if (dish.DishName == "" || dish.DishDescription == "")
@@ -94,7 +129,12 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "price cannot be negative or 0";
                     return;
                 }
-                else if(loadedDish == dish && this.readerPictureFile == null)
+                else if (dish.types.Count < 1 || dish.chefs.Count < 1)
+                {
+                    errorLable.Content = "every dish must contains at list one chef and type";
+                    return;
+                }
+                else if (loadedDish == dish && this.readerPictureFile == null)
                 {
                     this.Close();
                 }

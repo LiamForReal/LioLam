@@ -25,8 +25,8 @@
                    Height="91" Width="297" Foreground="White"/>
 
         <!-- Types -->
-        <Label Content="Types:" FontSize="18" Canvas.Left="58" Canvas.Top="277" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.829,0.512"/>
-        <ListBox x:Name="types" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="28" Canvas.Top="318" Width="135" Height="120"
+        <Label Content="Types:" FontSize="18" Canvas.Left="108" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.829,0.512"/>
+        <ListBox x:Name="types" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="55" Canvas.Top="318" Width="165" Height="120"
               ItemsSource="{Binding types}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -37,8 +37,8 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <!-- Chefs -->
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="336" Canvas.Top="279" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.322,0.394"/>
-        <ListBox x:Name="chefs" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="197" Canvas.Top="318" Width="335" Height="120"
+        <Label Content="Chefs:" FontSize="18" Canvas.Left="360" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.233,0.517"/>
+        <ListBox x:Name="chefs" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="246" Canvas.Top="318" Width="286" Height="120"
                       ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center">
 
             <ListBox.ItemTemplate>
@@ -54,7 +54,7 @@
 
         <!-- Dish Image -->
         <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="599" Canvas.Top="301" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Pickture" RenderTransformOrigin="0.317,0.895" Click="picktureInput_Click"></Button>
-        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Canvas.Left="566" Canvas.Top="67" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Canvas.Left="532" Canvas.Top="44" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button Content="Create" x:Name="createButton" Tag="{Binding Id}" Canvas.Left="292" Canvas.Top="482" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
                 Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click"/>
         <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="201" FontSize="18" Foreground="red" Canvas.Top="443" HorizontalAlignment="Left" VerticalAlignment="Top" Width="398" RenderTransformOrigin="0.549,0.6"/>

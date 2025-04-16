@@ -25,25 +25,33 @@
                Height="91" Width="297" Foreground="White"/>
 
         <!-- Types -->
-        <Label Content="Types:" FontSize="18" Canvas.Left="55" Canvas.Top="284" Foreground="White" RenderTransformOrigin="0.494,-0.225" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Label x:Name="typesLable" Content="tmp,tmp2" FontSize="18" Canvas.Left="175" Canvas.Top="284" Width="252"
-               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-        <!-- Chefs -->
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="55" Canvas.Top="334" Foreground="White" RenderTransformOrigin="0.512,0.168" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <ListView x:Name="listView" Background="#FF5DADEC" Canvas.Left="175" Canvas.Top="323" Width="348" Height="120"
-                  ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top">
-
-            <ListView.ItemTemplate>
+        <Label Content="Types:" FontSize="18" Canvas.Left="108" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.829,0.512"/>
+        <ListBox x:Name="types" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="55" Canvas.Top="318" Width="165" Height="120"
+                BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Width="auto" Height="50">
-                        <Label Margin="20,0,0,10" FontSize="18" Content="{Binding ChefFirstName}"/>
-                        <Label Margin="30,0,0,10" FontSize="18" Content="{Binding ChefLastName}"/>
-                        <Image Margin="80,0,0,10" Source="{Binding ChefImage}" Width="60"/>
+                        <Label Margin="10" FontSize="18" Content="{Binding TypeName}" Foreground="White"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!-- Chefs -->
+        <Label Content="Chefs:" FontSize="18" Canvas.Left="357" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.233,0.517"/>
+        <ListBox x:Name="chefs" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="246" Canvas.Top="318" Width="279" Height="120"
+                       BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefFirstName}" Foreground="White"/>
+                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefLastName}" Foreground="White"/>
+                        <Image Margin="40,0,0,10" Source="{Binding ChefImage}" Width="60"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
 
         <!-- Dish Image -->
         <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="599" Canvas.Top="301" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Pickture" RenderTransformOrigin="0.317,0.895" Click="picktureInput_Click"></Button>

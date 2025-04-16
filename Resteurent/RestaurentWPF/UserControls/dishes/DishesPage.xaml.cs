@@ -70,7 +70,7 @@ namespace RestaurantWPF.UserControls
             string messageBoxText = $"Confirm delete: '{dishName}'?";
             string caption = "Word Processor";
             MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.None;
+            MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;
 
             result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
