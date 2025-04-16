@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RestaurantWindowsPF.UserControls;
 using RestaurantWPF.UserControls;
 namespace RestaurentWPF;
 
@@ -22,6 +23,7 @@ public partial class MainWindow : Window
     static LogInPage loginPage;
     static startPage startPage;
     static DishesPage dishesPage;
+    static TypesPage typesPage;
     public MainWindow()
     {
         InitializeComponent();
@@ -64,5 +66,12 @@ public partial class MainWindow : Window
         if (dishesPage == null)
             dishesPage = new DishesPage();
         this.data.Child = dishesPage;
+    }
+
+    private void TypesButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (typesPage == null)
+            typesPage = new TypesPage();
+        this.data.Child = typesPage;
     }
 }

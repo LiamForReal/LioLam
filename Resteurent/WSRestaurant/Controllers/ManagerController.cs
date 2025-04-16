@@ -324,13 +324,15 @@ namespace WSRestaurant.Controllers
                 string json = Request.Form["model"];
                 string customerId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 if (unitOfWorkReposetory.orderRerposetoryObject.deleteByCustomer(customerId) &&
                     unitOfWorkReposetory.reservationRerposetoryObject.deleteByCustomer(customerId))
                 {
                     flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
                 }
                 else throw new Exception("return false");
-                this.dBContext.Close();
+
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
@@ -669,14 +671,15 @@ namespace WSRestaurant.Controllers
         public bool Deletetype()
         {
             bool flag = false;
+            string json = Request.Form["model"];
+            string typeId = JsonSerializer.Deserialize<string>(json);
             try
             {
-                string json = Request.Form["model"];
-                string typeId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 Console.WriteLine($"{typeId} deleted type");
                 flag = unitOfWorkReposetory.typeReposetoryObject.delete(typeId);
-                this.dBContext.Close();
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
