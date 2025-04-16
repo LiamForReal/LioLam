@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls.types"
+        xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
-        Title="UpdateType" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        ResizeMode="NoResize"
+        Title="UpdateType" Height="300" Width="400">
+    <Canvas Background="#4A90E2">
+        <Label Content="update type" Canvas.Left="126" Canvas.Top="27" FontSize="22" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.418,0.476"/>
+
+        <!-- Type Name -->
+        <Label Content="Name:" Canvas.Left="51" Canvas.Top="107" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Background="#4A90E2" Text="{Binding TypeName}" FontSize="18" Canvas.Left="150" Canvas.Top="116" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+
+        <Button Content="Update" x:Name="updateButton" Tag="{Binding Id}" Canvas.Left="118" Canvas.Top="198" Width="150" Height="51" HorizontalAlignment="Left" VerticalAlignment="Top"
+            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click" RenderTransformOrigin="0.638,0.506"/>
+        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="81" FontSize="16" Foreground="red" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="28"/>
+    </Canvas>
 </Window>

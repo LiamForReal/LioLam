@@ -627,7 +627,6 @@ namespace WSRestaurant.Controllers
                 Category type = JsonSerializer.Deserialize<Category>(json);
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.typeReposetoryObject.create(type);
-                this.dBContext.Close();
                 return flag;
             }
             catch (Exception ex)
@@ -642,6 +641,26 @@ namespace WSRestaurant.Controllers
             }
         }
 
+        [HttpGet]
+        public string GetTypeById(string id)
+        {
+            try
+            {
+                this.dBContext.Open();
+                Category type = unitOfWorkReposetory.typeReposetoryObject.getById(id);
+                return type.TypeName;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
         [HttpPost]
         public bool UpdateType()
         {

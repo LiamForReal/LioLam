@@ -16,14 +16,15 @@
                     <Border Background="#E6F2FF" CornerRadius="10" Margin="5" Padding="10">
                         <StackPanel Orientation="Horizontal" Width="860">
                             <Image x:Name="dishImage" Source="{Binding DishImage}" Width="60" Height="60" Margin="10"/>
-                            <Label x:Name="BookName" Content="{Binding DishName}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0"/>
+                            <Label x:Name="DishName" Content="{Binding DishName}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0"/>
 
-                            <Button x:Name="inspectDish" Content="Inspect" Tag="{Binding Id}" Width="70" Height="40" Margin="50,0,0,0"
-                                    Click="inspectDish_Click"/>
-                            <Button x:Name="updateDish" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0"
-                                    Click="updateDish_Click"/>
-                            <Button x:Name="deleteDish" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0"
-                                    Click="deleteDish_Click"/>
+                            <Button x:Name="inspectDish" Content="Inspect" Tag="{Binding Id}" Width="70" Height="40" Margin="50,0,0,0" Click="inspectDish_Click" 
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
+                            
+                            <Button x:Name="updateDish" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="updateDish_Click" 
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
+                            <Button x:Name="deleteDish" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="deleteDish_Click" 
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

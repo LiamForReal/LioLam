@@ -46,7 +46,7 @@ namespace WSRestaurant
 
         public Category getById(string id)
         {
-            string sql = "SELECT FROM Types WHERE TypeId = @TypeId";
+            string sql = "SELECT * FROM Types WHERE TypeId = @TypeId";
             this.dbContext.AddParameter("@TypeId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {

@@ -24,7 +24,6 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class DishesPage : UserControl
     {
-        private List<Dish> dishes;
         static InspactDish inspactDishPage;
         static UpdateDish updateDishPage;
         static addDish addDishPage;
@@ -36,13 +35,15 @@ namespace RestaurantWPF.UserControls
 
         private async Task GetAllDishes()
         {
-            WebClient<List<Dish>> client = new WebClient<List<Dish>>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/Manager/GetDishes";
-            this.dishes = await client.Get();
-            this.listView.ItemsSource = this.dishes;
+            WebClient<List<Dish>> client = new WebClient<List<Dish>>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/GetDishes"
+            };
+           
+            this.listView.ItemsSource = await client.Get();
         }
 
         private void inspectDish_Click(object sender, RoutedEventArgs e)
@@ -64,8 +65,8 @@ namespace RestaurantWPF.UserControls
 
         private async void deleteDish_Click(object sender, RoutedEventArgs e)
         {
-            Button updateButton = sender as Button;
-            string dishId = updateButton.Tag.ToString();
+            Button deleteButton = sender as Button;
+            string dishId = deleteButton.Tag.ToString();
             string dishName = await getDishNameById(dishId);
             string messageBoxText = $"Confirm delete: '{dishName}'?";
             string caption = "Word Processor";
