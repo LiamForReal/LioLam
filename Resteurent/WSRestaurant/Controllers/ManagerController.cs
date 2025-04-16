@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WSRestaurant.Controllers
 {
@@ -27,7 +28,6 @@ namespace WSRestaurant.Controllers
         {
             string json = Request.Form["model"];
             Customer customer = JsonSerializer.Deserialize<Customer>(json);
-            Console.WriteLine(customer.CustomerUserName + " " + customer.CustomerPassword);
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
@@ -101,7 +101,7 @@ namespace WSRestaurant.Controllers
             string json = Request.Form["model"];
             IFormFile file = Request.Form.Files[0];
             Dish dish = JsonSerializer.Deserialize<Dish>(json);
-            dish.DishImage = $"{dish.Id}{Path.GetExtension(dish.DishImage)}";
+            dish.DishImage = Path.GetExtension(dish.DishImage);
             bool flag = false;
             try
             {
@@ -204,7 +204,21 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
+                Dish dish = unitOfWorkReposetory.dishRerposetoryObject.getById(dishId);
+                string imgName = $"{dish.Id}{Path.GetExtension(dish.DishImage)}";
+                dish = null;
                 flag = unitOfWorkReposetory.dishRerposetoryObject.delete(dishId);
+                if(flag)
+                {
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Dishes");
+                    string fullPath = Path.Combine(basePath, imgName);
+                    Console.WriteLine(fullPath);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+                
                 this.dBContext.Commit(); 
                 return flag;
             }

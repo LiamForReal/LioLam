@@ -199,7 +199,6 @@ namespace WSRestaurant
                 dish = unitOfWorkReposetory.dishRerposetoryObject.getById(id);
                 dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
                 dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
-                Console.WriteLine(dish.DishName);
                 return dish;
             }
             catch (Exception ex)

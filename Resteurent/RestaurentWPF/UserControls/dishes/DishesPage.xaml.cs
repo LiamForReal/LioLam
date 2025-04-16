@@ -53,13 +53,13 @@ namespace RestaurantWPF.UserControls
             inspactDishPage.ShowDialog();
         }
 
-        private void updateDish_Click(object sender, RoutedEventArgs e)
+        private async void updateDish_Click(object sender, RoutedEventArgs e)
         {
             Button updateButton = sender as Button;
             string dishId = updateButton.Tag.ToString();
             updateDishPage = new UpdateDish(dishId);
             updateDishPage.ShowDialog();
-            GetAllDishes();
+            await GetAllDishes();
         }
 
         private async void deleteDish_Click(object sender, RoutedEventArgs e)
@@ -77,11 +77,10 @@ namespace RestaurantWPF.UserControls
 
             if (result == MessageBoxResult.Yes)
             {
-                deleteDish(dishId);
-                GetAllDishes();
+                await deleteDish(dishId);
+                await GetAllDishes();
             }
         }
-
         private async Task deleteDish(string dishId)
         {
             WebClient<string> client = new WebClient<string>()
@@ -113,11 +112,11 @@ namespace RestaurantWPF.UserControls
             Dish dish = await client.Get();
             return dish.DishName;
         }
-        private void addNewDish_Click(object sender, RoutedEventArgs e)
+        private async void addNewDish_Click(object sender, RoutedEventArgs e)
         {
             addDishPage = new addDish();
             addDishPage.ShowDialog(); 
-            GetAllDishes();
+            await GetAllDishes();
         }
     }
 }

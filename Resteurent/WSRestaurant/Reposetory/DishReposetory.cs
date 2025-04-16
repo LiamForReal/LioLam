@@ -20,8 +20,17 @@ namespace WSRestaurant
             {
                 throw new Exception("return false");
             }
+            
             model.Id = GetLastId();
-            Console.WriteLine(model.Id);
+            model.DishImage = $"{model.Id}{model.DishImage}";
+            sql = $@"UPDATE Dishes SET DishImage = @DishImage WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if(!this.dbContext.Update(sql))
+            {
+                throw new Exception("return false");
+            }
+
             foreach (Category type in model.types)
             {
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
@@ -56,10 +65,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishId", id);
             bool flagChef = this.dbContext.Delete(sql);
 
-            sql = $@"DELETE FROM DishOrder WHERE DishId=@DishId"; //ajust to order
-            this.dbContext.AddParameter("@DishId", id);
-            bool flagOrder = this.dbContext.Delete(sql);
-            if (flagOrder && flagType && flagChef)
+            if (flagType && flagChef)
             {
                 sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
                 this.dbContext.AddParameter("@DishId", id);
@@ -104,7 +110,6 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishImage", model.DishImage);
             this.dbContext.AddParameter("@DishId", model.Id);
 
-            Console.WriteLine(model.DishName + ", " + model.DishDescription);
             bool ok = this.dbContext.Update(sql);
             if (!ok)
                 throw new Exception("return false");
