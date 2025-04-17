@@ -6,8 +6,16 @@
         xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="AddType" Height="300" Width="500">
-    <Grid>
-        
-    </Grid>
+        Title="AddType" Height="300" Width="400">
+    <Canvas Background="#4A90E2">
+        <Label Content="Add new type" Canvas.Left="126" Canvas.Top="27" FontSize="22" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.418,0.476"/>
+
+        <!-- Type Name -->
+        <Label Content="Name:" Canvas.Left="51" Canvas.Top="107" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Background="#4A90E2" FontSize="18" Canvas.Left="150" Canvas.Top="116" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+
+        <Button Content="Create" x:Name="createButton" Canvas.Left="130" Canvas.Top="192" Width="150" Height="51" HorizontalAlignment="Left" VerticalAlignment="Top"
+            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click" RenderTransformOrigin="0.638,0.506"/>
+        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="81" FontSize="16" Foreground="red" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="28"/>
+    </Canvas>
 </Window>

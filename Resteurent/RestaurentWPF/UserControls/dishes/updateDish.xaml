@@ -30,7 +30,7 @@
                 BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
                         <Label Margin="10" FontSize="18" Content="{Binding TypeName}" Foreground="White"/>
                     </StackPanel>
                 </DataTemplate>
@@ -43,7 +43,7 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
                         <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefFirstName}" Foreground="White"/>
                         <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefLastName}" Foreground="White"/>
                         <Image Margin="40,0,0,10" Source="{Binding ChefImage}" Width="60"/>

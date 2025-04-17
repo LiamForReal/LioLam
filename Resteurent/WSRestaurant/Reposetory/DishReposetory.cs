@@ -100,6 +100,17 @@ namespace WSRestaurant
                 return this.modelFactory.createDishObject.CreateModel(dataReader);
             }
         }
+
+        public Dish getByName(string name)
+        {
+            string sql = "SELECT * FROM Dishes WHERE DishName = @DishName";
+            this.dbContext.AddParameter("@DishName", name);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createDishObject.CreateModel(dataReader);
+            }
+        }
         public bool update(Dish model)
         {
 

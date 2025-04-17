@@ -32,6 +32,20 @@ namespace RestaurantWindowsPF.UserControls
             SetScreenByChefsAndTypes();
         }
 
+        private async Task<bool> IsDishExist(string name)
+        {
+            WebClient<bool> client = new WebClient<bool>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/IsDishExist"
+            };
+
+            client.AddParameter("dishName", name);
+
+            return await client.Get();
+        }
         private async Task SetScreenByChefsAndTypes()
         {
             WebClient<AddDishView> client = new WebClient<AddDishView>()
@@ -47,7 +61,7 @@ namespace RestaurantWindowsPF.UserControls
             this.DataContext = addDishView;
         }
 
-        private void createButton_Click(object sender, RoutedEventArgs e)
+        private async void createButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -76,12 +90,17 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "price cannot be negative or 0";
                     return;
                 }
-                else if(dish.types.Count < 1 || dish.chefs.Count < 1)
+                else if(await IsDishExist(dish.DishName))
+                {
+                    errorLable.Content = "dish already exsist";
+                    return;
+                }
+                else if (dish.types.Count < 1 || dish.chefs.Count < 1)
                 {
                     errorLable.Content = "every dish must contains at list one chef and type";
                     return;
                 }
-                addNewDish(dish, this.readerPictureFile);
+                await addNewDish(dish, this.readerPictureFile);
             }
             catch (Exception ex)
             {

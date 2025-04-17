@@ -25,25 +25,25 @@
                    Height="91" Width="297" Foreground="White"/>
 
         <!-- Types -->
-        <Label Content="Types:" FontSize="18" Canvas.Left="108" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.829,0.512"/>
-        <ListView x:Name="types" Background="#FF5DADEC" Canvas.Left="55" Canvas.Top="318" Width="165" Height="120"
-              ItemsSource="{Binding types}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
+        <Label Content="Types:" FontSize="18" Canvas.Left="108" Canvas.Top="321" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.829,0.512"/>
+        <ListView x:Name="types" Background="#FF5DADEC" Canvas.Left="55" Canvas.Top="378" Width="165" Height="120"
+              ItemsSource="{Binding types}" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="-0.734,1.642">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
                         <Label Margin="10" FontSize="18" Content="{Binding TypeName}" Foreground="White"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <!-- Chefs -->
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="348" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.233,0.517"/>
-        <ListView x:Name="chefs" Background="#FF5DADEC" Canvas.Left="246" Canvas.Top="318" Width="262" Height="120"
-                      ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Label Content="Chefs:" FontSize="18" Canvas.Left="354" Canvas.Top="321" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.233,0.517"/>
+        <ListView x:Name="chefs" Background="#FF5DADEC" Canvas.Left="252" Canvas.Top="378" Width="262" Height="120"
+                      ItemsSource="{Binding chefs}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="50">
+                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
                         <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefFirstName}" Foreground="White"/>
                         <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefLastName}" Foreground="White"/>
                         <Image Margin="40,0,0,10" Source="{Binding ChefImage}" Width="60"/>

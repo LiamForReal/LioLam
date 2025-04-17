@@ -90,7 +90,7 @@ namespace RestaurantWindowsPF.UserControls
         }
         private async Task<string> getTypeNameById(string id)
         {
-            WebClient<string> client = new WebClient<string>()
+            WebClient<Category> client = new WebClient<Category>()
             {
                 Scheme = "http",
                 Port = 5125,
@@ -99,14 +99,14 @@ namespace RestaurantWindowsPF.UserControls
             };
 
             client.AddParameter("id", id);
-            return await client.Get();
+            Category type = await client.Get();
+            return type.TypeName;
         }
-        private async void addNewDish_Click(object sender, RoutedEventArgs e)
+        private async void addNewType_Click(object sender, RoutedEventArgs e)
         {
             addTypePage = new AddType();
             addTypePage.ShowDialog();
             await GetAllTypes();
         }
-
     }
 }

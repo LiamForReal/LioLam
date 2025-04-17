@@ -20,13 +20,11 @@ namespace WSRestaurant
         {
             string sql = $@"DELETE FROM DishType WHERE TypeId=@TypeId;";
             this.dbContext.AddParameter("@TypeId", id);
-            if (this.dbContext.Delete(sql))
-            {
-                sql = $@"DELETE FROM Types WHERE TypeId=@TypeId";
-                this.dbContext.AddParameter("@TypeId", id);
-                return this.dbContext.Delete(sql);
-            }
-            else throw new Exception("get false");
+            this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM Types WHERE TypeId=@TypeId;";
+            this.dbContext.AddParameter("@TypeId", id);
+            return this.dbContext.Delete(sql);
         }
 
         public List<Category> getAll()
@@ -54,9 +52,20 @@ namespace WSRestaurant
                 return this.modelFactory.createTypeObject.CreateModel(dataReader);
             }
         }
+
+        public Category getByName(string name)
+        {
+            string sql = "SELECT * FROM Types WHERE TypeName = @TypeName";
+            this.dbContext.AddParameter("@TypeName", name);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createTypeObject.CreateModel(dataReader);
+            }
+        }
         public bool update(Category model)
         {
-            string sql = $@"UPDATE Types SET TypeName = @TypeName WHERE TypeId == @TypeId;";
+            string sql = $@"UPDATE Types SET TypeName = @TypeName WHERE TypeId = @TypeId;";
             this.dbContext.AddParameter("@TypeName", model.TypeName);
             this.dbContext.AddParameter("@TypeId", model.Id);
             return this.dbContext.Update(sql);

@@ -32,7 +32,7 @@ namespace RestaurantWindowsPF.UserControls
         }
         private async Task setScreenByTypeId(string id)
         {
-            WebClient<string> client = new WebClient<string>()
+            WebClient<Category> client = new WebClient<Category>()
             {
                 Scheme = "http",
                 Port = 5125,
@@ -41,13 +41,8 @@ namespace RestaurantWindowsPF.UserControls
             };
 
             client.AddParameter("id", id);
-            string typeName = await client.Get();
-            Category type = new Category()
-            {
-                Id = id,
-                TypeName = typeName,
-            };
-            MessageBox.Show(type.TypeName);
+            Category type = await client.Get();
+
             this.DataContext = type;
 
             loadedType = new Category()
@@ -57,7 +52,21 @@ namespace RestaurantWindowsPF.UserControls
             };
         }
 
-        private void updateButton_Click(object sender, RoutedEventArgs e)
+        private async Task<bool> IsTypeExist(string name)
+        {
+            WebClient<bool> client = new WebClient<bool>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/IsTypeExist"
+            };
+
+            client.AddParameter("typeName", name);
+
+            return await client.Get();
+        }
+        private async void updateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -75,11 +84,16 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "name cannot be empty";
                     return;
                 }
+                else if (loadedType.TypeName != type.TypeName && await IsTypeExist(type.TypeName))
+                {
+                    errorLable.Content = "type already exsist";
+                    return;
+                }
                 else if (loadedType == type)
                 {
                     this.Close();
                 }
-                else updateTypeDetails(type);
+                else await updateTypeDetails(type);
             }
             catch (Exception ex)
             {

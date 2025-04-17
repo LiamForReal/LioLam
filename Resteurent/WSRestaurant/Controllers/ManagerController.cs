@@ -48,6 +48,27 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
+        public bool IsDishExist(string dishName)
+        {
+            try
+            {
+                this.dBContext.Open();
+                Console.WriteLine("here");
+                Dish dish = unitOfWorkReposetory.dishRerposetoryObject.getByName(dishName);
+                return dish != null;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return false;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+        [HttpGet]
         public List<Dish> GetDishes()
         {
             List<Dish> dishes;
@@ -642,13 +663,12 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public string GetTypeById(string id)
+        public Category GetTypeById(string id)
         {
             try
             {
                 this.dBContext.Open();
-                Category type = unitOfWorkReposetory.typeReposetoryObject.getById(id);
-                return type.TypeName;
+                return unitOfWorkReposetory.typeReposetoryObject.getById(id);
             }
             catch (Exception ex)
             {
@@ -686,6 +706,27 @@ namespace WSRestaurant.Controllers
             }
         }
 
+        [HttpGet]
+        public bool IsTypeExist(string typeName)
+        {
+            try
+            {
+                this.dBContext.Open();
+                Category type = unitOfWorkReposetory.typeReposetoryObject.getByName(typeName);
+                return type != null;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return false;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
         [HttpPost]
         public bool Deletetype()
         {
@@ -696,7 +737,6 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
-                Console.WriteLine($"{typeId} deleted type");
                 flag = unitOfWorkReposetory.typeReposetoryObject.delete(typeId);
                 this.dBContext.Commit();
                 return flag;
