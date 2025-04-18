@@ -388,7 +388,7 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public bool IsChefExis(string firstName, string lastName)
+        public bool IsChefExist(string firstName, string lastName)
         {
             try
             {
@@ -526,16 +526,28 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public bool DeleteChef()
         {
+            string json = Request.Form["model"];
+            string chefId = JsonSerializer.Deserialize<string>(json);
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                string chefId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
+                Chef chef = unitOfWorkReposetory.chefRepositoryObject.getById(chefId);
+                string imgName = $"{chef.Id}{Path.GetExtension(chef.ChefImage)}";
+                chef = null;
                 flag = unitOfWorkReposetory.chefRepositoryObject.delete(chefId);
+                if (flag)
+                {
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Chefs");
+                    string fullPath = Path.Combine(basePath, imgName);
+                    Console.WriteLine(fullPath);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
                 this.dBContext.Commit();
-                this.dBContext.Close();
                 return flag;
             }
             catch (Exception ex)
