@@ -24,6 +24,7 @@ public partial class MainWindow : Window
     static startPage startPage;
     static DishesPage dishesPage;
     static TypesPage typesPage;
+    static ChefsPage ChefsPage;
     public MainWindow()
     {
         InitializeComponent();
@@ -73,5 +74,12 @@ public partial class MainWindow : Window
         if (typesPage == null)
             typesPage = new TypesPage();
         this.data.Child = typesPage;
+    }
+
+    private void ChefsButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (ChefsPage == null)
+            ChefsPage= new ChefsPage();
+        this.data.Child = ChefsPage;
     }
 }

@@ -130,8 +130,7 @@ namespace WSRestaurant.Controllers
                 this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.dishRerposetoryObject.create(dish);
                 if (flag)
-                {
-                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"\wwwroot\Images\Customers\");
+                { 
                     string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Dishes\{dish.DishImage}";
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
@@ -159,7 +158,7 @@ namespace WSRestaurant.Controllers
         public async Task<bool> UpdateDish()
         {
             string json = Request.Form["model"];
-            bool isImageChanged = Request.Form.Files.Count > 0;
+            bool isImageExist = Request.Form.Files.Count > 0;
             Dish dish = JsonSerializer.Deserialize<Dish>(json);
             dish.DishImage = $"{dish.Id}{Path.GetExtension(dish.DishImage)}";
             bool flag = false;
@@ -167,17 +166,15 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
-                if (!dish.DishImage.Contains("."))
+                if (!isImageExist)
                 {
                     string savedImage = unitOfWorkReposetory.dishRerposetoryObject.getById(dish.Id).DishImage;
                     dish.DishImage = $"{dish.Id}{Path.GetExtension(savedImage)}";
                 }
                 flag = unitOfWorkReposetory.dishRerposetoryObject.update(dish);
-                if (isImageChanged && flag)
+                if (isImageExist && flag)
                 {
                     IFormFile file = Request.Form.Files[0];
-
-                    string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images\Dishes\");
 
                     string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Dishes");
                     string fileNameWithoutExt = dish.Id; // or customer.CustomerImage if it's just the name
@@ -376,7 +373,6 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
-                this.dBContext.Close();
                 return chefs;
             }
             catch (Exception ex)
@@ -391,17 +387,69 @@ namespace WSRestaurant.Controllers
             }
         }
 
-        [HttpPost]
-        public bool AddNewChef()
+        [HttpGet]
+        public bool IsChefExis(string firstName, string lastName)
         {
+            try
+            {
+                this.dBContext.Open();
+                Chef chef = unitOfWorkReposetory.chefRepositoryObject.getByName(firstName, lastName);
+                return chef != null;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return false;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public Chef GetChefById(string id)
+        {
+            try
+            {
+                this.dBContext.Open();
+                return unitOfWorkReposetory.chefRepositoryObject.getById(id);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpPost]
+        public async Task<bool> AddNewChef()
+        {
+            string json = Request.Form["model"];
+            IFormFile file = Request.Form.Files[0];
+            Chef chef = JsonSerializer.Deserialize<Chef>(json);
+            chef.ChefImage = Path.GetExtension(chef.ChefImage);
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                Chef chef = JsonSerializer.Deserialize<Chef>(json);
                 this.dBContext.Open();
+                this.dBContext.BeginTransaction();
                 flag = unitOfWorkReposetory.chefRepositoryObject.create(chef);
-                this.dBContext.Close();
+                if (flag)
+                {
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Chefs\{chef.ChefImage}";
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    };
+                }
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
@@ -416,17 +464,51 @@ namespace WSRestaurant.Controllers
             }
         }
 
+
         [HttpPost]
-        public bool UpdateChef()
+        public async Task<bool> UpdateChef()
         {
+            string json = Request.Form["model"];
+            bool isImageExsist = Request.Form.Files.Count > 0;
+            Chef chef = JsonSerializer.Deserialize<Chef>(json);
+            chef.ChefImage = $"{chef.Id}{Path.GetExtension(chef.ChefImage)}";
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                Chef chef = JsonSerializer.Deserialize<Chef>(json);
                 this.dBContext.Open();
+                if (!isImageExsist)
+                {
+                    string savedImage = unitOfWorkReposetory.chefRepositoryObject.getById(chef.Id).ChefImage;
+                    chef.ChefImage = $"{chef.Id}{Path.GetExtension(savedImage)}";
+                }
+
                 flag = unitOfWorkReposetory.chefRepositoryObject.update(chef);
-                this.dBContext.Close();
+
+                if (isImageExsist && flag)
+                {
+                    IFormFile file = Request.Form.Files[0];
+
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Chefs");
+                    string fileNameWithoutExt = chef.Id; // or customer.CustomerImage if it's just the name
+
+                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
+
+                    foreach (var ext in possibleExtensions)
+                    {
+                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Chefs\{chef.ChefImage}";
+                    Console.WriteLine($"file path is: {filePath}");
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream); // Use await for proper async call
+                    }
+                }
                 return flag;
             }
             catch (Exception ex)

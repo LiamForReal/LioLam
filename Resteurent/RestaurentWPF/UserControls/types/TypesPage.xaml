@@ -17,7 +17,7 @@
                         <StackPanel Orientation="Horizontal" Width="860">
                             <Label x:Name="dishName" Content="{Binding TypeName}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0"/>
 
-                            <Button x:Name="updateType" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="50,0" Click="updateType_Click"
+                            <Button x:Name="updateType" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="60,0" Click="updateType_Click"
                                     HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
                             
                             <Button x:Name="deleteType" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="deleteType_Click"

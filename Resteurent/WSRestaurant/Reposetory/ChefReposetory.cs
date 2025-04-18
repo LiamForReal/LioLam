@@ -15,21 +15,34 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@ChefFirstName", model.ChefFirstName);
             this.dbContext.AddParameter("@ChefLastName", model.ChefLastName);
             this.dbContext.AddParameter("@ChefImage", model.ChefImage);
-            return this.dbContext.Insert(sql);
-            
+            bool flag = this.dbContext.Insert(sql);
+
+            if (!flag)
+            {
+                throw new Exception("return false");
+            }
+
+            model.Id = GetLastId();
+            model.ChefImage = $"{model.Id}{model.ChefImage}";
+            sql = $@"UPDATE Chefs SET ChefImage = @ChefImage WHERE ChefId = @ChefId";
+            this.dbContext.AddParameter("@ChefImage", model.ChefImage);
+            this.dbContext.AddParameter("@ChefId", model.Id);
+            if (!this.dbContext.Update(sql))
+            {
+                throw new Exception("return false");
+            }
+            return flag;
         }
 
         public bool delete(string id)
         {
             string sql = $@"DELETE FROM DishChef WHERE ChefId=@ChefId";
             this.dbContext.AddParameter("@ChefId", id);
-            if (this.dbContext.Delete(sql))
-            {
-                sql = $@"DELETE FROM Chefs WHERE ChefId=@ChefId";
-                this.dbContext.AddParameter("@ChefId", id);
-                return this.dbContext.Delete(sql);
-            }
-            else throw new Exception("return false");
+            this.dbContext.Delete(sql);
+
+            sql = $@"DELETE FROM Chefs WHERE ChefId=@ChefId";
+            this.dbContext.AddParameter("@ChefId", id);
+            return this.dbContext.Delete(sql);
         }
 
         public List<Chef> getAll()
@@ -49,8 +62,21 @@ namespace WSRestaurant
 
         public Chef getById(string id)
         {
-            string sql = "SELECT FROM Chefs WHERE ChefId = @ChefId";
+            string sql = "SELECT * FROM Chefs WHERE ChefId = @ChefId";
             this.dbContext.AddParameter("@ChefId", id);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.CreateChefObject.CreateModel(dataReader);
+            }
+        }
+
+        public Chef getByName(string firstName, string lastName)
+        {
+            string sql = "SELECT * FROM Chefs WHERE ChefFirstName = @ChefFirstName AND ChefLastName = @ChefLastName";
+            this.dbContext.AddParameter("@ChefFirstName", firstName);
+            this.dbContext.AddParameter("@ChefLastName", lastName);
+
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 dataReader.Read();
@@ -59,7 +85,7 @@ namespace WSRestaurant
         }
         public bool update(Chef model)
         {
-            string sql = $@"UPDATE Chefs SET ChefFirstName = @ChefFirstName, ChefLastName = @ChefLastName, ChefImage = @ChefImage WHERE ChefId == @ChefId;";
+            string sql = $@"UPDATE Chefs SET ChefFirstName = @ChefFirstName, ChefLastName = @ChefLastName, ChefImage = @ChefImage WHERE ChefId = @ChefId;";
             this.dbContext.AddParameter("@ChefFirstName", model.ChefFirstName);
             this.dbContext.AddParameter("@ChefLastName", model.ChefLastName);
             this.dbContext.AddParameter("@ChefImage", model.ChefImage);
@@ -70,9 +96,7 @@ namespace WSRestaurant
         public List<Chef> GetByDish(string dishId)
         {
             List<Chef> list = new List<Chef>();
-            string sql = "SELECT Chefs.ChefId, Chefs.ChefFirstName, Chefs.ChefLastName, Chefs.ChefPicture" +
-                " FROM Chefs INNER JOIN (Dishes INNER JOIN DishChef ON Dishes.DishId = DishChef.DishId) ON Chefs.ChefId = DishChef.ChefId" +
-                " WHERE DishChef.DishId=@DishId;";
+            string sql = "SELECT Chefs.ChefId, Chefs.ChefLastName, Chefs.ChefFirstName, Chefs.ChefImage FROM Chefs INNER JOIN DishChef ON Chefs.ChefId = DishChef.ChefId WHERE DishChef.DishId = @DishId;";
             this.dbContext.AddParameter("@DishId", dishId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {

@@ -121,7 +121,7 @@ namespace RestaurantWindowsPF.UserControls
             bool result;
             if (img == null)
             {
-                this.errorLable.Content = "to create a dish image is requayerd";
+                this.errorLable.Content = "to create a dish, image is requayerd";
                 return;
             }
             else
