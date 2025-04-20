@@ -224,8 +224,12 @@ namespace WSRestaurant.Controllers
         public bool ScheduleReservation(DateTime reserveDate, int amountOfPeople, string CustomerId)
         {
             bool flag = false;
-            Reservation reservation = new Reservation(reserveDate, amountOfPeople);
-            reservation.CustomerId = CustomerId;
+            Reservation reservation = new Reservation()
+            {
+                ReserveDate = reserveDate,
+                AmountOfPeople = amountOfPeople,
+                CustomerId = CustomerId,
+            };
             List<Reservation> reservations;
             try
             {
@@ -291,8 +295,13 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
         {
-            Order order = new Order(date);
-            order.CustomerId = CustomerId;
+            Order order = new Order()
+            {
+                CustomerId = CustomerId,
+                OrderDate = date,
+                dishes = null
+            };
+
             bool flag = false;
             try
             {

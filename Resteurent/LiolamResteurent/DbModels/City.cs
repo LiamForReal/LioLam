@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class City : Model
+    public class City : IModel
     {
         public string CityName { get; set; }
-        public City() { }
-        public City(string cityName)
-        {
-            this.CityName = cityName;
-        }
     }
 }
