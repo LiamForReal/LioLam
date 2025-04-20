@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="UpdateChef" Height="400" Width="700">
     <Canvas Background="#4A90E2">
         <Label Content="update chef" Canvas.Left="235" Canvas.Top="29" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>

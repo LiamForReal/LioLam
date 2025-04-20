@@ -22,10 +22,9 @@ namespace RestaurantWPF.UserControls
     /// <summary>
     /// Interaction logic for inspactDishPage.xaml
     /// </summary>
-    public partial class InspactDish : Window
+    public partial class InspectDish : Window
     {
-        static Dish dish;
-        public InspactDish(string dishId)
+        public InspectDish(string dishId)
         {
             InitializeComponent();
             getDishById(dishId);
@@ -41,11 +40,16 @@ namespace RestaurantWPF.UserControls
             };
             
             client.AddParameter("id", id);
-            dish = await client.Get();
+            Dish dish = await client.Get();
 
             this.DataContext = dish;
             
             this.priceLable.Content = $"{dish.DishPrice}₪";
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

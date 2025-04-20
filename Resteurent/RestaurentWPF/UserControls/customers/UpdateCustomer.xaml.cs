@@ -19,7 +19,7 @@ namespace RestaurantWindowsPF.UserControls
     /// </summary>
     public partial class UpdateCustomer : Window
     {
-        public UpdateCustomer()
+        public UpdateCustomer(string customerId)
         {
             InitializeComponent();
         }

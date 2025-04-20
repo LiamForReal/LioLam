@@ -7,57 +7,70 @@
         mc:Ignorable="d"
         Height="600" Width="800"
         ResizeMode="NoResize"
-        Title="updateDishPage">
-    <Canvas Background="#4A90E2">
-        <Label Content="update dish" Canvas.Left="300" Canvas.Top="20" FontSize="28" FontWeight="Bold" Foreground="White"/>
+        Title="Update Dish">
+    <Canvas Background="#FF22243D">
+
+        <!-- Title -->
+        <Label Content="Update Dish" Canvas.Left="310" Canvas.Top="20" FontSize="28" FontWeight="Bold" Foreground="White"/>
 
         <!-- Dish Name -->
-        <Label Content="Name:" Canvas.Left="55" Canvas.Top="90" FontSize="18" Foreground="White"/>
-        <TextBox x:Name="nameTextBox" Background="#4A90E2" Text="{Binding DishName}" FontSize="18" Canvas.Left="150" Canvas.Top="90" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150"/>
+        <Label Content="Name:" Canvas.Left="60" Canvas.Top="90" FontSize="18" Foreground="White"/>
+        <TextBox x:Name="nameTextBox" Text="{Binding DishName}" FontSize="18" 
+                 Canvas.Left="180" Canvas.Top="90" Width="200"
+                 Background="#FF2A2E4A" Foreground="White" BorderBrush="#FF5DADEC" BorderThickness="1"/>
 
         <!-- Price -->
-        <Label Content="Price:" FontSize="18" Canvas.Left="55" Canvas.Top="135" Foreground="White"/>
-        <TextBox x:Name="priceTextBox" Background="#4A90E2" FontSize="18" Canvas.Left="152" Canvas.Top="135" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="148"/>
+        <Label Content="Price:" Canvas.Left="60" Canvas.Top="135" FontSize="18" Foreground="White"/>
+        <TextBox x:Name="priceTextBox" FontSize="18" Canvas.Left="180" Canvas.Top="135" Width="200"
+                 Background="#FF2A2E4A" Foreground="White" BorderBrush="#FF5DADEC" BorderThickness="1"/>
 
         <!-- Description -->
-        <Label Content="Description:" FontSize="18" Canvas.Left="55" Canvas.Top="180" Foreground="White"/>
-        <TextBox x:Name="descriptionTextBox" Background="#4A90E2" Text="{Binding  DishDescription}" TextWrapping="Wrap" FontSize="16" Canvas.Left="175" Canvas.Top="180"
-               Height="91" Width="297" Foreground="White"/>
-
-        <!-- Types -->
-        <Label Content="Types:" FontSize="18" Canvas.Left="108" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.829,0.512"/>
-        <ListBox x:Name="types" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="55" Canvas.Top="318" Width="165" Height="120"
-                BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="-0.734,1.642">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
-                        <Label Margin="10" FontSize="18" Content="{Binding TypeName}" Foreground="White"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <!-- Chefs -->
-        <Label Content="Chefs:" FontSize="18" Canvas.Left="357" Canvas.Top="275" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.233,0.517"/>
-        <ListBox x:Name="chefs" SelectionMode="Multiple" Background="#FF5DADEC" Canvas.Left="246" Canvas.Top="318" Width="279" Height="120"
-                       BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="auto" Height="55">
-                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefFirstName}" Foreground="White"/>
-                        <Label Margin="15,0,0,10" FontSize="18" Content="{Binding ChefLastName}" Foreground="White"/>
-                        <Image Margin="40,0,0,10" Source="{Binding ChefImage}" Width="60"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
+        <Label Content="Description:" Canvas.Left="60" Canvas.Top="180" FontSize="18" Foreground="White"/>
+        <TextBox x:Name="descriptionTextBox" Text="{Binding DishDescription}" TextWrapping="Wrap"
+                 FontSize="16" Canvas.Left="180" Canvas.Top="180" Height="100" Width="300"
+                 Background="#FF2A2E4A" Foreground="White" BorderBrush="#FF5DADEC" BorderThickness="1"/>
 
         <!-- Dish Image -->
-        <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="599" Canvas.Top="301" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Pickture" RenderTransformOrigin="0.317,0.895" Click="picktureInput_Click"></Button>
-        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Canvas.Left="525" Canvas.Top="90" Width="220" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Update" x:Name="updateButton" Tag="{Binding Id}" Canvas.Left="249" Canvas.Top="482" Width="200" Height="60" HorizontalAlignment="Center" VerticalAlignment="Top"
-            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
-        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Canvas.Left="150" FontSize="18" Foreground="red" Canvas.Top="448" HorizontalAlignment="Center" VerticalAlignment="Top" Width="398"/>
+        <Image x:Name="imgRenderer" Source="{Binding DishImage}" Height="199" Width="220"
+               Canvas.Left="525" Canvas.Top="90" Stretch="UniformToFill" />
+
+        <Button x:Name="picktureInput" Content="Add Picture" Canvas.Left="635" Canvas.Top="330" Width="120" Height="35"
+                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16"
+                BorderBrush="White" BorderThickness="1" Click="picktureInput_Click"/>
+
+        <!-- Types -->
+        <Label Content="Types:" Canvas.Left="60" Canvas.Top="300" FontSize="18" Foreground="White"/>
+        <ListBox x:Name="types" SelectionMode="Multiple" Canvas.Left="60" Canvas.Top="330" Width="180" Height="120"
+                 Background="#FF5DADEC" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label FontSize="16" Content="{Binding TypeName}" Foreground="White" Padding="10,5"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Chefs -->
+        <Label Content="Chefs:" Canvas.Left="270" Canvas.Top="300" FontSize="18" Foreground="White"/>
+        <ListBox x:Name="chefs" SelectionMode="Multiple" Canvas.Left="270" Canvas.Top="330" Width="330" Height="120"
+                 Background="#FF5DADEC" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label FontSize="16" Content="{Binding ChefFirstName}" Foreground="White"/>
+                        <Label FontSize="16" Content="{Binding ChefLastName}" Foreground="White" Margin="10,0,0,0"/>
+                        <Image Source="{Binding ChefImage}" Width="50" Height="50" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Update Button -->
+        <Button x:Name="updateButton" Tag="{Binding Id}" Content="Update" Canvas.Left="300" Canvas.Top="480" Width="200" Height="50"
+                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16"
+                BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
+
+        <!-- Error Label -->
+        <Label x:Name="errorLable" Content="" Canvas.Left="200" Canvas.Top="450" Width="400" FontSize="18"
+               Foreground="Red" HorizontalContentAlignment="Center"/>
     </Canvas>
 </Window>

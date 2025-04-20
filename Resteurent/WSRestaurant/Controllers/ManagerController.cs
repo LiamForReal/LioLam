@@ -253,6 +253,52 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
+        public CustomerLocation GetCustomerLocationById(string Id)
+        {
+            try
+            {
+                this.dBContext.Open();
+                CustomerLocation customerLocation = new CustomerLocation()
+                {
+                    city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(Id),
+                    street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(Id)
+                };
+
+                return customerLocation;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public Customer GetCustomerbyId(string id)
+        {
+            try
+            {
+                this.dBContext.Open();
+                return unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
         public List<Customer> GetCustomers()
         {
             List<Customer> customers;
@@ -260,7 +306,6 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                this.dBContext.Close();
                 return customers;
             }
             catch (Exception ex)

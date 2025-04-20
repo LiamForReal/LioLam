@@ -24,7 +24,7 @@ namespace RestaurantWPF.UserControls
     /// </summary>
     public partial class DishesPage : UserControl
     {
-        static InspactDish inspactDishPage;
+        static InspectDish inspactDishPage;
         static UpdateDish updateDishPage;
         static addDish addDishPage;
         public DishesPage()
@@ -50,7 +50,7 @@ namespace RestaurantWPF.UserControls
         {
             Button inspactButton = sender as Button;
             string dishId = inspactButton.Tag.ToString();
-            inspactDishPage = new InspactDish(dishId);
+            inspactDishPage = new InspectDish(dishId);
             inspactDishPage.ShowDialog();
         }
 

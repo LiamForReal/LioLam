@@ -3,10 +3,72 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
-        Title="InspectCustomer" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="InspectCustomer" Height="550" Width="900"
+        ResizeMode="NoResize"
+        Background="#FF0B2545">
+    <Canvas>
+
+        <!-- Title -->
+        <TextBlock Text="Customer Details"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="#FFE0E0E0"
+                   Canvas.Left="30" Canvas.Top="20"/>
+
+        <!-- Image -->
+        <Border Width="140" Height="140" BorderBrush="#FFE0E0E0" BorderThickness="2" CornerRadius="8"
+                Canvas.Left="700" Canvas.Top="30">
+            <Image Name="CustomerImage" Stretch="UniformToFill"/>
+        </Border>
+
+        <!-- Username -->
+        <TextBlock Text="Username:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="90"/>
+        <TextBox Name="CustomerUsername" Width="250" Height="30" Canvas.Left="150" Canvas.Top="85"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Password -->
+        <TextBlock Text="Password:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="140"/>
+        <PasswordBox Name="CustomerPassword" Width="250" Height="30" Canvas.Left="150" Canvas.Top="135"
+                     Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Phone -->
+        <TextBlock Text="Phone:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="190"/>
+        <TextBox Name="CustomerPhone" Width="250" Height="30" Canvas.Left="150" Canvas.Top="185"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Email -->
+        <TextBlock Text="Email:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="240"/>
+        <TextBox Name="CustomerEmail" Width="250" Height="30" Canvas.Left="150" Canvas.Top="235"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Address Section -->
+        <TextBlock Text="Location:" FontSize="20" FontWeight="Bold" Foreground="#FFE0E0E0"
+                   Canvas.Left="30" Canvas.Top="300"/>
+
+        <!-- House Number -->
+        <TextBlock Text="House No.:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="340"/>
+        <TextBox Name="CustomerHouse" Width="100" Height="30" Canvas.Left="150" Canvas.Top="335"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Street -->
+        <TextBlock Text="Street:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="390"/>
+        <TextBox Name="CustomerStreet" Width="250" Height="30" Canvas.Left="150" Canvas.Top="385"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- City -->
+        <TextBlock Text="City:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="440"/>
+        <TextBox Name="CustomerCity" Width="250" Height="30" Canvas.Left="150" Canvas.Top="435"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Return Button -->
+        <Button Content="Back"
+                Width="100" Height="35"
+                Canvas.Left="750" Canvas.Top="480"
+                Background="#FF3A5F87"
+                Foreground="White"
+                BorderBrush="#FFE0E0E0"
+                FontWeight="Bold"
+                Cursor="Hand"/>
+    </Canvas>
 </Window>

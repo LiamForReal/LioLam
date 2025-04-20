@@ -11,7 +11,9 @@ namespace WSRestaurant
             string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, isOwner) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.streetId},{model.streetId}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
-            return this.dbContext.Insert(sql);
+            bool flag = this.dbContext.Insert(sql);
+            model.Id = GetLastId();
+            return flag;
         }
 
         public bool delete(string id)
