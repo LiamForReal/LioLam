@@ -6,8 +6,78 @@
         xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="UpdateCustomer" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="UpdateCustomer" Height="550" Width="900"
+        Background="#FF0B2545">
+    <Canvas>
+
+        <!-- Title -->
+        <TextBlock Text="Customer Details"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="#FFE0E0E0"
+                   Canvas.Left="30" Canvas.Top="20"/>
+
+        <!-- Image -->
+        <Border Width="140" Height="140" BorderBrush="#FFE0E0E0" BorderThickness="2" CornerRadius="8"
+                Canvas.Left="700" Canvas.Top="30">
+            <Image x:Name="imgRenderer" Stretch="UniformToFill"/>
+        </Border>
+
+        <!-- Username -->
+        <TextBlock Text="Username:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="90"/>
+        <TextBox Name="CustomerUsername" Width="250" Height="30" Canvas.Left="150" Canvas.Top="85"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Password -->
+        <TextBlock Text="Password:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="140"/>
+        <TextBox Name="CustomerPassword" Width="250" Height="30" Canvas.Left="150" Canvas.Top="135"
+                     Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Phone -->
+        <TextBlock Text="Phone:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="190"/>
+        <TextBox Name="CustomerPhone" Width="250" Height="30" Canvas.Left="150" Canvas.Top="185"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Email -->
+        <TextBlock Text="Email:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="240"/>
+        <TextBox Name="CustomerEmail" Width="250" Height="30" Canvas.Left="150" Canvas.Top="235"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Address Section -->
+        <TextBlock Text="Location:" FontSize="20" FontWeight="Bold" Foreground="#FFE0E0E0"
+                   Canvas.Left="30" Canvas.Top="300"/>
+
+        <!-- House Number -->
+        <TextBlock Text="House No.:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="340"/>
+        <TextBox Name="CustomerHouse" Width="100" Height="30" Canvas.Left="150" Canvas.Top="335"
+                 Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
+
+        <!-- Street -->
+        <TextBlock Text="Street:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="390"/>
+        <ComboBox x:Name="StreetComboBox" Canvas.Left="150" Canvas.Top="386" Background="#FF102840" Foreground="#FFE0E0E0" Width="200" Height="30" FontSize="14" DisplayMemberPath="StreetName" SelectedValuePath="Id" BorderBrush="Gold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        <!-- City -->
+        <TextBlock Text="City:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="440"/>
+        <ComboBox x:Name="CityComboBox" Canvas.Left="150" Canvas.Top="439" Background="#FF102840" Foreground="#FFE0E0E0" Width="200" Height="30" FontSize="14" DisplayMemberPath="CityName" SelectedValuePath="Id"  BorderBrush="Gold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Button x:Name="picktureInput" Content="Add Picture" Width="100" Height="35"
+                Canvas.Left="720" Canvas.Top="201"
+                Background="#FF3A5F87"
+                Foreground="White"
+                BorderBrush="#FFE0E0E0" Click="picktureInput_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- Error Label -->
+        <Label x:Name="errorLable" Content="" Canvas.Left="275" Canvas.Top="469" Width="400" FontSize="18"
+        Foreground="Red" HorizontalContentAlignment="Center"/>
+
+        <!-- Update Button -->
+        <Button Content="Update" Tag="{Binding Id}"
+                Width="100" Height="35"
+                Canvas.Left="770" Canvas.Top="464"
+                Background="#FF3A5F87"
+                Foreground="White"
+                BorderBrush="#FFE0E0E0"
+                FontWeight="Bold"
+                Cursor="Hand" Click="updateButton_Click"/>
+    </Canvas>
 </Window>

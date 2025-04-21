@@ -253,15 +253,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public CustomerLocation GetCustomerLocationById(string Id)
+        public CustomerLocation GetCustomerLocationById(string id)
         {
             try
             {
                 this.dBContext.Open();
                 CustomerLocation customerLocation = new CustomerLocation()
                 {
-                    city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(Id),
-                    street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(Id)
+                    city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(id),
+                    street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(id)
                 };
 
                 return customerLocation;
@@ -271,6 +271,27 @@ namespace WSRestaurant.Controllers
                 string msg = ex.Message;
                 Console.WriteLine(msg);
                 return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public bool IsCustomerExist(string userName)
+        {
+            try
+            {
+                this.dBContext.Open();
+                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getByName(userName);
+                return customer != null;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return false;
             }
             finally
             {
@@ -893,15 +914,15 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public List<City> GetCities()
+        public UpdateCustomerView GetUpdateCustomerView()
         {
-            List<City> cities;
+            UpdateCustomerView updateCustomerView = new UpdateCustomerView();
             try
             {
                 this.dBContext.Open();
-                cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
-                this.dBContext.Close();
-                return cities;
+                updateCustomerView.cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                updateCustomerView.streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
+                return updateCustomerView;
             }
             catch (Exception ex)
             {
@@ -914,30 +935,5 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
-
-        [HttpGet]
-        public List<Street> GetStreets()
-        {
-            List<Street> streets;
-            try
-            {
-                this.dBContext.Open();
-                streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
-                this.dBContext.Close();
-                return streets;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return null;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-        }
-
-
     }
 }

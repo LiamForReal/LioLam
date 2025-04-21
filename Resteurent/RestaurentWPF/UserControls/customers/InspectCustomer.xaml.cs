@@ -25,9 +25,9 @@ namespace RestaurantWindowsPF.UserControls
         public InspectCustomer(string customerId)
         {
             InitializeComponent();
-            getcustomerById(customerId);
+            getCustomerById(customerId);
         }
-        private async Task getcustomerById(string id)
+        private async Task getCustomerById(string id)
         {
             
             WebClient<Customer> client = new WebClient<Customer>()
@@ -35,15 +35,12 @@ namespace RestaurantWindowsPF.UserControls
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Guest/GetSingleDish"
+                Path = "api/Manager/GetCustomerById"
             };
 
             client.AddParameter("id", id);
             Customer customer = await client.Get();
-
             
-            this.DataContext = customer;
-
             WebClient<CustomerLocation> client2 = new WebClient<CustomerLocation>()
             {
                 Scheme = "http",
@@ -52,10 +49,17 @@ namespace RestaurantWindowsPF.UserControls
                 Path = "api/Manager/GetCustomerLocationById"
             };
 
-            client.AddParameter("id", id);
+            client2.AddParameter("id", id);
             CustomerLocation CustomerLocation = await client2.Get();
-            //ajast city and street
 
+            this.DataContext = customer;
+            this.CustomerCity.Text = CustomerLocation.city.CityName;
+            this.CustomerStreet.Text = CustomerLocation.street.StreetName;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

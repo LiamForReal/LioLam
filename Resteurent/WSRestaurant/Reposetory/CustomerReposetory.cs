@@ -109,5 +109,18 @@ namespace WSRestaurant
                 return "";
             }
         }
+
+        internal Customer getByName(string userName)
+        {
+            string sql = "SELECT * FROM Customers WHERE CustomerUserName = @CustomerUserName";
+            this.dbContext.AddParameter("@CustomerUserName", userName);
+
+            //($"sql is: {sql}, id is: {id}");
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createCustomerObject.CreateModel(dataReader);
+            }
+        }
     }
 }
