@@ -34,9 +34,9 @@ namespace RestaurantWindowsPF.UserControls
         }
         //SelectedValue="{Binding SelectedCityId, Mode=TwoWay}"
 
-        private async Task<UpdateCustomerView> SetScreenByCitiesAndStreets()
+        private async Task<RegisterViewModel> SetScreenByCitiesAndStreets()
         {
-            WebClient<UpdateCustomerView> client = new WebClient<UpdateCustomerView>()
+            WebClient<RegisterViewModel> client = new WebClient<RegisterViewModel>()
             {
                 Scheme = "http",
                 Port = 5125,
@@ -68,32 +68,21 @@ namespace RestaurantWindowsPF.UserControls
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Manager/GetCustomerById"
+                Path = "api/Customer/GetCustomerById"
             };
 
             client.AddParameter("id", id);
             Customer customer = await client.Get();
 
-            UpdateCustomerView updateCustomerView = await SetScreenByCitiesAndStreets();
-
-            WebClient<CustomerLocation> client2 = new WebClient<CustomerLocation>()
-            {
-                Scheme = "http",
-                Port = 5125,
-                Host = "localhost",
-                Path = "api/Manager/GetCustomerLocationById"
-            };
-
-            client2.AddParameter("id", id);
-            CustomerLocation CustomerLocation = await client2.Get();
+            RegisterViewModel registerViewModel = await SetScreenByCitiesAndStreets();
 
             this.DataContext = customer;
 
-            this.CityComboBox.ItemsSource = updateCustomerView.cities;
-            this.CityComboBox.SelectedValue = CustomerLocation.city;
+            this.CityComboBox.ItemsSource = registerViewModel.Cities;
+            this.CityComboBox.SelectedValue = customer.city;
 
-            this.StreetComboBox.ItemsSource = updateCustomerView.streets;
-            this.CityComboBox.SelectedValue = CustomerLocation.street;
+            this.StreetComboBox.ItemsSource = registerViewModel.Streets;
+            this.CityComboBox.SelectedValue = customer.street;
 
             loadedCustomer = new Customer()
             {

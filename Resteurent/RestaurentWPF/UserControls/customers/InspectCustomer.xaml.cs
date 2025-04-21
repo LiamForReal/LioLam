@@ -35,26 +35,16 @@ namespace RestaurantWindowsPF.UserControls
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Manager/GetCustomerById"
+                Path = "api/Customer/GetCustomerById"
             };
 
             client.AddParameter("id", id);
             Customer customer = await client.Get();
             
-            WebClient<CustomerLocation> client2 = new WebClient<CustomerLocation>()
-            {
-                Scheme = "http",
-                Port = 5125,
-                Host = "localhost",
-                Path = "api/Manager/GetCustomerLocationById"
-            };
-
-            client2.AddParameter("id", id);
-            CustomerLocation CustomerLocation = await client2.Get();
 
             this.DataContext = customer;
-            this.CustomerCity.Text = CustomerLocation.city.CityName;
-            this.CustomerStreet.Text = CustomerLocation.street.StreetName;
+            this.CustomerCity.Text = customer.city.CityName;
+            this.CustomerStreet.Text = customer.street.StreetName;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

@@ -253,32 +253,6 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public CustomerLocation GetCustomerLocationById(string id)
-        {
-            try
-            {
-                this.dBContext.Open();
-                CustomerLocation customerLocation = new CustomerLocation()
-                {
-                    city = unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(id),
-                    street = unitOfWorkReposetory.streetReposetoryObject.getByCustomer(id)
-                };
-
-                return customerLocation;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return null;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-        }
-
-        [HttpGet]
         public bool IsCustomerExist(string userName)
         {
             try
@@ -292,26 +266,6 @@ namespace WSRestaurant.Controllers
                 string msg = ex.Message;
                 Console.WriteLine(msg);
                 return false;
-            }
-            finally
-            {
-                this.dBContext.Close();
-            }
-        }
-
-        [HttpGet]
-        public Customer GetCustomerbyId(string id)
-        {
-            try
-            {
-                this.dBContext.Open();
-                return unitOfWorkReposetory.customerRerposetoryObject.getById(id);
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                Console.WriteLine(msg);
-                return null;
             }
             finally
             {
@@ -914,14 +868,14 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public UpdateCustomerView GetUpdateCustomerView()
+        public RegisterViewModel GetUpdateCustomerView()
         {
-            UpdateCustomerView updateCustomerView = new UpdateCustomerView();
+            RegisterViewModel updateCustomerView = new RegisterViewModel();
             try
             {
                 this.dBContext.Open();
-                updateCustomerView.cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
-                updateCustomerView.streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
+                updateCustomerView.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                updateCustomerView.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
                 return updateCustomerView;
             }
             catch (Exception ex)
