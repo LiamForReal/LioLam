@@ -31,6 +31,8 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();//add cities and streets and house number 
                 Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
+                customer.city = unitOfWorkReposetory.cityRerposetoryObject.getById(customer.city.Id);
+                customer.street = unitOfWorkReposetory.streetReposetoryObject.getById(customer.street.Id);
                 return customer;
             }
             catch (Exception ex)

@@ -17,7 +17,7 @@ namespace LiolamResteurent
         public string CustomerImage { get; set; }
         public bool IsOwner { get; set;}
 
-        public string cityId { get; set; }
-        public string streetId { get; set; }
+        public City city { get; set; }
+        public Street street { get; set; }
     }
 }

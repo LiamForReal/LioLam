@@ -99,7 +99,7 @@ else
             <select id="cities" class="cities" name="CityId">
                 @foreach (City city in Model.registerView.Cities)
                 {
-                    @if (Model.Customer.cityId == @city.Id)
+                    @if (Model.Customer.city.Id == @city.Id)
                     {
                         <option selected="selected" value="@city.Id">@city.CityName</option>
                     }
@@ -115,7 +115,7 @@ else
             <select id="streets" class="streets" name="StreetId">
                 @foreach (Street street in Model.registerView.Streets)
                 {
-                    @if(Model.Customer.streetId == street.Id)
+                    @if(Model.Customer.street.Id == street.Id)
                     {
                         <option selected="selected" value="@street.Id">@street.StreetName</option>
                     }
