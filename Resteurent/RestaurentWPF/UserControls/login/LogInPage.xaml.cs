@@ -31,13 +31,13 @@ namespace RestaurantWPF.UserControls
         {
             InitializeComponent();
             this.userNameInput.Text = "tmp1";//for debuge
-            this.passwordInput.Text = "tmp1";
+            this.passwordInput.Password = "tmp1";
         }
 
         private void clear_Click(object sender, RoutedEventArgs e)
         {
             this.userNameInput.Text = "";
-            this.passwordInput.Text = "";
+            this.passwordInput.Password = "";
         }
 
         private void submit_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace RestaurantWPF.UserControls
           
             this.statusLable.Visibility = Visibility.Hidden;
 
-            if (this.userNameInput.Text == "" || this.passwordInput.Text == "")
+            if (this.userNameInput.Text == "" || this.passwordInput.Password == "")
             {
                 this.statusLable.Content = "user name or password cannot be empty!";
                 this.statusLable.Foreground = new SolidColorBrush(Colors.Red);
@@ -68,7 +68,7 @@ namespace RestaurantWPF.UserControls
 
             Customer customer = new Customer();
             customer.CustomerUserName = this.userNameInput.Text;
-            customer.CustomerPassword = this.passwordInput.Text;
+            customer.CustomerPassword = this.passwordInput.Password;
 
             try
             {
@@ -81,7 +81,7 @@ namespace RestaurantWPF.UserControls
                 }
                 LoginSuccessful?.Invoke(this, EventArgs.Empty);
                 this.userNameInput.Text = "";
-                this.passwordInput.Text = "";
+                this.passwordInput.Password = "";
                 //show main window
             }
             catch (Exception ex)

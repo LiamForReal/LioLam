@@ -154,7 +154,7 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "every dish must contains at list one chef and type";
                     return;
                 }
-                else if (loadedDish == dish && this.readerPictureFile == null)
+                else if (loadedDish.Equals(dish) && this.readerPictureFile == null)
                 {
                     this.Close();
                 }

@@ -89,7 +89,7 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "type already exsist";
                     return;
                 }
-                else if (loadedType == type)
+                else if (loadedType.Equals(type))
                 {
                     this.Close();
                 }

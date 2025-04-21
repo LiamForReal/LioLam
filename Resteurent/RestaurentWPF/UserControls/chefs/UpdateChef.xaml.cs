@@ -98,7 +98,7 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "Chef with that name already exist";
                     return;
                 }
-                else if (loadedChef == Chef && this.readerPictureFile == null)
+                else if (loadedChef.Equals(Chef) && this.readerPictureFile == null)
                 {
                     this.Close();
                 }

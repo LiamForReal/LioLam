@@ -326,19 +326,49 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCustomer()
+        public async Task<bool> UpdateCustomer()
         {
+            string json = Request.Form["model"];
+            bool isImageExist = Request.Form.Files.Count > 0;
+            Customer customer = JsonSerializer.Deserialize<Customer>(json);
+            customer.CustomerImage = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                Customer customer = JsonSerializer.Deserialize<Customer>(json);
                 this.dBContext.Open();
-                List<City> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
+                this.dBContext.BeginTransaction();
+                if (!isImageExist)
+                {
+                    string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
+                    customer.CustomerImage = $"{customer.Id} {Path.GetExtension(savedImage)}";
+                }
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
-                //connection with city 
-                //connection with street
-                this.dBContext.Close();
+                if (isImageExist && flag)
+                {
+                    IFormFile file = Request.Form.Files[0];
+
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
+                    string fileNameWithoutExt = customer.Id; // or customer.CustomerImage if it's just the name
+
+                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
+
+                    foreach (var ext in possibleExtensions)
+                    {
+                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+                    Console.WriteLine($"file path is: {filePath}");
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream); // ← Use await for proper async call
+                    }
+                }
+                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)
@@ -868,9 +898,9 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public RegisterViewModel GetUpdateCustomerView()
+        public CustomerLocationView GetUpdateCustomerView()
         {
-            RegisterViewModel updateCustomerView = new RegisterViewModel();
+            CustomerLocationView updateCustomerView = new CustomerLocationView();
             try
             {
                 this.dBContext.Open();

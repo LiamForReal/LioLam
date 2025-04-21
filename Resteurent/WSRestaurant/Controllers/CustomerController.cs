@@ -31,8 +31,8 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();//add cities and streets and house number 
                 Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
-                customer.city = unitOfWorkReposetory.cityRerposetoryObject.getById(customer.city.Id);
-                customer.street = unitOfWorkReposetory.streetReposetoryObject.getById(customer.street.Id);
+                customer.city.CityName = unitOfWorkReposetory.cityRerposetoryObject.getById(customer.city.Id).CityName;
+                customer.street.StreetName = unitOfWorkReposetory.streetReposetoryObject.getById(customer.street.Id).StreetName;
                 return customer;
             }
             catch (Exception ex)
@@ -96,11 +96,11 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public RegisterViewModel ShowSignUp()
+        public CustomerLocationView ShowSignUp()
         {
             try
             {
-                RegisterViewModel registerViewModel = new RegisterViewModel();
+                CustomerLocationView registerViewModel = new CustomerLocationView();
                 this.dBContext.Open();
                 registerViewModel.Cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 registerViewModel.Streets = unitOfWorkReposetory.streetReposetoryObject.getAll();
