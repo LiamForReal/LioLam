@@ -9,5 +9,14 @@ namespace LiolamResteurent
     public class City : IModel
     {
         public string CityName { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is City city)
+            {
+                return this.Id == city.Id && this.CityName == city.CityName;
+            }
+            return false;
+        }
     }
 }

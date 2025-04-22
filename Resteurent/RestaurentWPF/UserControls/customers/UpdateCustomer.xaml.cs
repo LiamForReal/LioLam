@@ -135,7 +135,11 @@ namespace RestaurantWindowsPF.UserControls
                     IsOwner = true
                 };
 
-                if (customer.CustomerUserName == "" || customer.CustomerPassword == "")
+                if (loadedCustomer.Equals(customer) && this.readerPictureFile == null)
+                {
+                    this.Close();
+                }
+                else if (customer.CustomerUserName == "" || customer.CustomerPassword == "")
                 {
                     errorLable.Content = "user name or password cannot be empty";
                     return;
@@ -155,9 +159,15 @@ namespace RestaurantWindowsPF.UserControls
                     errorLable.Content = "city and type cannot be empty";
                     return;
                 }
-                else if (loadedCustomer.Equals(customer) && this.readerPictureFile == null)
+                else if (customer.Id.Length != 9 || !int.TryParse(customer.Id, out _))
                 {
-                    this.Close();
+                    errorLable.Content = "invalid Id, should contains 9 nameric characters";
+                    return;
+                }
+                else if (customer.CustomerPhone.Length != 10 || !int.TryParse(customer.CustomerPhone, out _) && !customer.CustomerPhone.StartsWith("05"))
+                {
+                    errorLable.Content = "invalid Phone, should contains 10 nameric characters";
+                    return;
                 }
                 else await updateCustomersDetails(customer, this.readerPictureFile);
             }

@@ -88,7 +88,11 @@ namespace RestaurantWindowsPF.UserControls
                     ChefLastName = this.lastNameTextBox.Text,
                 };
 
-                if (Chef.ChefFirstName == "" || Chef.ChefLastName == "")
+                if (loadedChef.Equals(Chef) && this.readerPictureFile == null)
+                {
+                    this.Close();
+                }
+                else if (Chef.ChefFirstName == "" || Chef.ChefLastName == "")
                 {
                     errorLable.Content = "first and last name cannot be empty";
                     return;
@@ -97,10 +101,6 @@ namespace RestaurantWindowsPF.UserControls
                 {
                     errorLable.Content = "Chef with that name already exist";
                     return;
-                }
-                else if (loadedChef.Equals(Chef) && this.readerPictureFile == null)
-                {
-                    this.Close();
                 }
                 else await updateChefDetails(Chef, this.readerPictureFile);
             }

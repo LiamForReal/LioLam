@@ -19,5 +19,17 @@ namespace LiolamResteurent
 
         public City city { get; set; }
         public Street street { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Customer customer)
+            {
+
+                return customer.Id == this.Id && customer.city.Equals(this.city) && customer.street.Equals(this.street) &&
+                customer.IsOwner == this.IsOwner && customer.CustomerUserName == this.CustomerUserName && this.CustomerMail == customer.CustomerMail &&
+                this.CustomerPhone == customer.CustomerPhone && this.CustomerHouse == customer.CustomerHouse;
+            }
+            return false;
+        }
     }
 }

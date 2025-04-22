@@ -298,19 +298,25 @@ namespace WSRestaurant.Controllers
         //add city function 
         //in every add chek the parameters
         [HttpPost]
-        public bool AddNewCustomer()
+        public async Task<bool> AddNewCustomer()
         {
+            string json = Request.Form["model"];
+            IFormFile file = Request.Form.Files[0];
+            Customer customer = JsonSerializer.Deserialize<Customer>(json);
+            customer.CustomerImage = Path.GetExtension(customer.CustomerImage);
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                Customer customer = JsonSerializer.Deserialize<Customer>(json);
                 this.dBContext.Open();
-                List<City> cities = unitOfWorkReposetory.cityRerposetoryObject.getAll();
                 flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
-                //connection with city 
-                //connection with street
-                this.dBContext.Close();
+                if (flag)
+                {
+                    string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    };
+                }
                 return flag;
             }
             catch (Exception ex)
@@ -386,21 +392,26 @@ namespace WSRestaurant.Controllers
         [HttpPost]
         public bool DeleteCustomer()
         {
+            string json = Request.Form["model"];
+            string customerId = JsonSerializer.Deserialize<string>(json);
             bool flag = false;
             try
             {
-                string json = Request.Form["model"];
-                string customerId = JsonSerializer.Deserialize<string>(json);
                 this.dBContext.Open();
-                this.dBContext.BeginTransaction();
-                if (unitOfWorkReposetory.orderRerposetoryObject.deleteByCustomer(customerId) &&
-                    unitOfWorkReposetory.reservationRerposetoryObject.deleteByCustomer(customerId))
+                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(customerId);
+                string imgName = $"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
+                customer = null;
+                flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
+                if (flag)
                 {
-                    flag = unitOfWorkReposetory.customerRerposetoryObject.delete(customerId);
+                    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
+                    string fullPath = Path.Combine(basePath, imgName);
+                    Console.WriteLine(fullPath);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
                 }
-                else throw new Exception("return false");
-
-                this.dBContext.Commit();
                 return flag;
             }
             catch (Exception ex)

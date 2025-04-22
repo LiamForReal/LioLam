@@ -79,7 +79,11 @@ namespace RestaurantWindowsPF.UserControls
                     TypeName = this.nameTextBox.Text
                 };
 
-                if (type.TypeName == "")
+                if (loadedType.Equals(type))
+                {
+                    this.Close();
+                }
+                else if (type.TypeName == "")
                 {
                     errorLable.Content = "name cannot be empty";
                     return;
@@ -88,10 +92,6 @@ namespace RestaurantWindowsPF.UserControls
                 {
                     errorLable.Content = "type already exsist";
                     return;
-                }
-                else if (loadedType.Equals(type))
-                {
-                    this.Close();
                 }
                 else await updateTypeDetails(type);
             }

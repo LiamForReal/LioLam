@@ -13,6 +13,7 @@ namespace WSRestaurant
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
             bool flag = this.dbContext.Insert(sql);
             model.Id = GetLastId();
+            model.CustomerImage = $"{model.Id}{model.CustomerImage}";
             return flag;
         }
 

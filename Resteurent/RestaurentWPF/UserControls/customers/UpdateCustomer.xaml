@@ -11,7 +11,7 @@
     <Canvas>
 
         <!-- Title -->
-        <TextBlock Text="Customer Details"
+        <TextBlock Text="Update Customer"
                    FontSize="28"
                    FontWeight="Bold"
                    Foreground="#FFE0E0E0"
@@ -72,8 +72,8 @@
 
         <!-- Update Button -->
         <Button Content="Update" Tag="{Binding Id}"
-                Width="100" Height="35"
-                Canvas.Left="770" Canvas.Top="464"
+                Width="150" Height="43"
+                Canvas.Left="695" Canvas.Top="439"
                 Background="#FF3A5F87"
                 Foreground="White"
                 BorderBrush="#FFE0E0E0"
