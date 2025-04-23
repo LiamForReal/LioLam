@@ -104,7 +104,7 @@ namespace RestaurantWindowsPF.UserControls
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Manager/GetCustomerbyId"
+                Path = "api/Customer/GetCustomerbyId"
             };
 
             client.AddParameter("id", id);

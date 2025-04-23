@@ -34,9 +34,9 @@ namespace RestaurantWindowsPF.UserControls
         }
         //SelectedValue="{Binding SelectedCityId, Mode=TwoWay}"
 
-        private async Task<UpdateCustomerView> SetScreenByCitiesAndStreets()
+        private async Task<CustomerLocationView> SetScreenByCitiesAndStreets()
         {
-            WebClient<UpdateCustomerView> client = new WebClient<UpdateCustomerView>()
+            WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
                 Scheme = "http",
                 Port = 5125,
@@ -68,32 +68,38 @@ namespace RestaurantWindowsPF.UserControls
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
-                Path = "api/Manager/GetCustomerById"
+                Path = "api/Customer/GetCustomerById"
             };
 
             client.AddParameter("id", id);
             Customer customer = await client.Get();
 
-            UpdateCustomerView updateCustomerView = await SetScreenByCitiesAndStreets();
-
-            WebClient<CustomerLocation> client2 = new WebClient<CustomerLocation>()
-            {
-                Scheme = "http",
-                Port = 5125,
-                Host = "localhost",
-                Path = "api/Manager/GetCustomerLocationById"
-            };
-
-            client2.AddParameter("id", id);
-            CustomerLocation CustomerLocation = await client2.Get();
+            CustomerLocationView customerLocationView = await SetScreenByCitiesAndStreets();
 
             this.DataContext = customer;
 
-            this.CityComboBox.ItemsSource = updateCustomerView.cities;
-            this.CityComboBox.SelectedValue = CustomerLocation.city;
+            this.CityComboBox.ItemsSource = customerLocationView.Cities;
 
-            this.StreetComboBox.ItemsSource = updateCustomerView.streets;
-            this.CityComboBox.SelectedValue = CustomerLocation.street;
+            foreach(City city in customerLocationView.Cities)
+            {
+                if(city.Id == customer.city.Id)
+                {
+                    this.CityComboBox.SelectedItem = city;
+                    break;
+                }
+            }
+            
+
+            this.StreetComboBox.ItemsSource = customerLocationView.Streets;
+
+            foreach (Street street in customerLocationView.Streets)
+            {
+                if (street.Id == customer.street.Id)
+                {
+                    this.StreetComboBox.SelectedItem = street;
+                    break;
+                }
+            }
 
             loadedCustomer = new Customer()
             {
@@ -102,7 +108,10 @@ namespace RestaurantWindowsPF.UserControls
                 CustomerPassword = customer.CustomerPassword,
                 CustomerHouse = customer.CustomerHouse,
                 CustomerMail = customer.CustomerMail, 
-                CustomerPhone = customer.CustomerPhone
+                CustomerPhone = customer.CustomerPhone,
+                city = customer.city, 
+                street = customer.street, 
+                IsOwner = true
             };
         }
 
@@ -118,41 +127,53 @@ namespace RestaurantWindowsPF.UserControls
                     Id = customerId,
                     CustomerUserName = this.CustomerUsername.Text,
                     CustomerPassword = this.CustomerPassword.Text, 
-                    CustomerMail = this.CustomerEmail.Text, 
+                    CustomerMail = this.CustomerMail.Text, 
                     CustomerHouse = int.Parse(this.CustomerHouse.Text),
                     CustomerPhone = this.CustomerPhone.Text,
+                    city = (City)(this.CityComboBox.SelectedItem),
+                    street = (Street)(this.StreetComboBox.SelectedItem),
+                    IsOwner = true
                 };
-                //checks
-                //if (dish.DishName == "" || dish.DishDescription == "")
-                //{
-                //    errorLable.Content = "name or description cannot be empty";
-                //    return;
-                //}
-                //else if (dish.DishPrice <= 0)
-                //{
-                //    errorLable.Content = "price cannot be negative or 0";
-                //    return;
-                //}
-                //else if (loadedDish.DishName != dish.DishName && await IsDishExist(dish.DishName))
-                //{
-                //    errorLable.Content = "dish with that name already exist";
-                //    return;
-                //}
-                //else if (dish.types.Count < 1 || dish.chefs.Count < 1)
-                //{
-                //    errorLable.Content = "every dish must contains at list one chef and type";
-                //    return;
-                //}
-                //else if (loadedDish == dish && this.readerPictureFile == null)
-                //{
-                //    this.Close();
-                //}
-                //else
-                await updateCustomersDetails(customer, this.readerPictureFile);
+
+                if (loadedCustomer.Equals(customer) && this.readerPictureFile == null)
+                {
+                    this.Close();
+                }
+                else if (customer.CustomerUserName == "" || customer.CustomerPassword == "")
+                {
+                    errorLable.Content = "user name or password cannot be empty";
+                    return;
+                }
+                else if (loadedCustomer.CustomerUserName != customer.CustomerUserName && await IsCustomerExist(customer.CustomerUserName))
+                {
+                    errorLable.Content = "dish with that name already exist";
+                    return;
+                }
+                else if(customer.CustomerMail == "" || customer.CustomerPhone == "")
+                {
+                    errorLable.Content = "phone and mail cannot be empty";
+                    return;
+                }
+                else if (customer.street == null || customer.city == null)
+                {
+                    errorLable.Content = "city and type cannot be empty";
+                    return;
+                }
+                else if (customer.Id.Length != 9 || !int.TryParse(customer.Id, out _))
+                {
+                    errorLable.Content = "invalid Id, should contains 9 nameric characters";
+                    return;
+                }
+                else if (customer.CustomerPhone.Length != 10 || !int.TryParse(customer.CustomerPhone, out _) && !customer.CustomerPhone.StartsWith("05"))
+                {
+                    errorLable.Content = "invalid Phone, should contains 10 nameric characters";
+                    return;
+                }
+                else await updateCustomersDetails(customer, this.readerPictureFile);
             }
             catch (Exception ex)
             {
-                this.errorLable.Content = "price must be an integer";
+                this.errorLable.Content = "house must be an integer";
             }
         }
 

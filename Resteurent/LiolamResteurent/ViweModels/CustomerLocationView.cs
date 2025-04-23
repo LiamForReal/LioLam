@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-   public class RegisterViewModel
+   public class CustomerLocationView
     {
         public List<City> Cities { get; set; }
+
         public List<Street> Streets { get; set; }
     }
 }
