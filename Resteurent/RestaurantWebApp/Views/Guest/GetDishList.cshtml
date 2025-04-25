@@ -1,8 +1,12 @@
 ﻿@using LiolamResteurent
 @model Menu
-
+@{
+    var customerId = Context.Session.GetString("Id");
+}
 <div class="dishes" id="dishes">
-        @foreach (Dish dish in Model.Dishes)
+    @foreach (Dish dish in Model.Dishes)
+    {
+        @if (customerId == null || customerId == "")
         {
             <a class="link" href="http://localhost:7287/Guest/GetDish?dishId=@dish.Id">
                 <div class="dish">
@@ -11,6 +15,17 @@
                 </div>
             </a>
         }
+        else
+        {
+            <a class="link" href="http://localhost:7287/Customer/AddNewDishToOrder?dishId=@dish.Id">
+                <div class="dish">
+                    <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
+                    <p class="dish-name">@dish.DishName</p>
+                </div>
+            </a>
+        }
+
+    }
 </div>
 <div class="pagination" id="pagination">
     @for (int i = 1; i <= Model.totalPages; i++)

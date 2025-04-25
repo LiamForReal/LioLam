@@ -12,7 +12,7 @@ namespace Models
         public int Quatity { get; set; }
         public string Image { get; set; } 
         public string Name { get; set; }
-        public int overAllPrice { get; set; }
+        public int totalPrice { get; set; }
         
     }
 }

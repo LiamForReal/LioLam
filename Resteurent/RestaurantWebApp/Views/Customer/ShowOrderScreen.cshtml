@@ -10,6 +10,10 @@
 {
 <link href="~/css/customer/order.css" rel="stylesheet" />
 }
+@section Js
+{
+    <script src="~/javascript/customer/orderfetch.js"></script>
+}
 
 @if (ViewBag.Error == true)
 {
@@ -17,6 +21,7 @@
 }
 else
 {
+    @Html.AntiForgeryToken()
     <div class="order-container">
         <h2>Online Order</h2>
 
@@ -32,8 +37,8 @@ else
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <input class="dish-quantity" type="number" min="1" value="@product.Quatity"/>
-                        <span class="dish-price">@String.Format("{0:C}", product.overAllPrice.ToString())</span>
+                        <input class="dish-quantity" type="number" min="1" value="@product.Quatity" onchange="updateQuantity(@product.Id, this.value)" />
+                        <span class="dish-price">@String.Format("{0:C}", product.totalPrice.ToString())</span>
                         <button class="remove-button">-</button>
                     </div>
                 }
@@ -45,7 +50,7 @@ else
         </div>
 
         <div class="sum-box">
-            Sum: @(Model.products?.Sum(d => d.overAllPrice) ?? 0) $
+            Sum: @(Model.products?.Sum(d => d.totalPrice) ?? 0) $
         </div>
 
         <div class="action-buttons">

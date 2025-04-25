@@ -37,7 +37,6 @@ namespace RestaurantWebApp.Controllers
                     return View("ShowLogInForm");
                 }
                 ViewBag.Error = false;
-                TempData["Id"] = customerId; //actual edit tmp data
 
                 HttpContext.Session.SetString("Id", customerId);//session is the thread the server allocate to client to handle in my project it is a stateless space
                                                                    //the id property is added to the setion
@@ -70,7 +69,6 @@ namespace RestaurantWebApp.Controllers
             {
                 client.AddParameter("id", HttpContext.Session.GetString("Id"));
                 WelcomeDetails welcomeDetails = await client.Get();
-                TempData["Id"] = HttpContext.Session.GetString("Id");
                 return View("GetDefaultScreen", welcomeDetails);
             }
             return View("GetDefaultScreen");
@@ -106,9 +104,6 @@ namespace RestaurantWebApp.Controllers
                 return RedirectToAction("ShowSignUpForm", "Customer");
             }
 
-
-            TempData["Id"] = customers.Id; //actual edit tmp data
-            // Store session info for logged-in user
             HttpContext.Session.SetString("Id", customers.Id);
 
             // Redirect to a successful page
@@ -194,8 +189,6 @@ namespace RestaurantWebApp.Controllers
                 Path = "api/Customer/GetCustomerById"
             };
 
-            TempData["Id"] = HttpContext.Session.GetString("Id");
-
             client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
             Customer customer = await client2.Get();
 
@@ -208,22 +201,20 @@ namespace RestaurantWebApp.Controllers
             return View("ShowSignUpForm", account);
         }
 
-        [HttpGet]//gonna do this with ajax
-        public async Task<IActionResult> EditExsistingDish(int Quantity, string dishId)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateDishQuantity([FromBody] DishQuantityUpdateRequest request)
         {
-            int price = 0;
             List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
-            foreach(var product in products)
-            { 
-                if(product.Id == dishId)
-                {
-                    price = product.overAllPrice / product.Quatity;
-                    product.Quatity = Quantity;
-                    product.overAllPrice = price * Quantity;
-                }
-            }    
-            HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
-            return RedirectToAction("ShowOrderScreen", "customer");
+            var product = products.FirstOrDefault(d => d.Id == request.DishId.ToString());
+            if ( product != null)
+            {
+                int priceForOne = product.totalPrice / product.Quatity;
+                product.Quatity = request.Quantity;
+                product.totalPrice = priceForOne * product.Quatity;
+                HttpContext.Session.SetObject("productList", products);
+            }
+            return Ok();
         }
 
         [HttpGet]
@@ -246,7 +237,7 @@ namespace RestaurantWebApp.Controllers
                 Id = dishId,
                 Name = dish.DishName,
                 Quatity = 1,
-                overAllPrice = dish.DishPrice
+                totalPrice = dish.DishPrice
             };
             
             if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") == null)
@@ -281,6 +272,7 @@ namespace RestaurantWebApp.Controllers
         {
             try
             {
+                
                 WebClient<Menu> client = new WebClient<Menu>()
                 {
                     Scheme = "http",
@@ -290,13 +282,13 @@ namespace RestaurantWebApp.Controllers
                 };
 
                 Menu menu = await client.Get();
-                return View("OrderMenu", menu);
+                return View("GetMenu", menu);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-            return View();
+            return View("GetMenu");
         }
         [HttpGet]
         public async Task<IActionResult> ShowOrderScreen()
@@ -320,8 +312,6 @@ namespace RestaurantWebApp.Controllers
                 Host = "localhost",
                 Path = "api/Customer/getCurrentOrderId"
             };
-
-            TempData["Id"] = HttpContext.Session.GetString("Id");
             client.AddParameter("customerId", HttpContext.Session.GetString("Id"));
 
             Order order = await client.Get();

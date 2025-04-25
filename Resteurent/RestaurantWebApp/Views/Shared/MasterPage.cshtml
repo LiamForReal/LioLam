@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "MasterPage";
+    var customerId = Context.Session.GetString("Id");
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -9,7 +10,7 @@
 
 @section Styles 
 {
-    
+
 }
 @RenderSection("Styles", required: false)
 @section Js
@@ -22,15 +23,13 @@
 {
     <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
 }
-
-
 <script src="~/javaScript/Guest/MenuAjax.js"></script>
 
 <div class="header">
     <i class="fas fa-utensils headerIcon"></i>
     <p class="headerTitle">LioLam</p>
     
-    @if (TempData["Id"] == null)
+    @if (customerId == null || customerId == "")
     {
         <a href="http://localhost:7287/Guest/GetDefaultScreen" class="firstHeaderMenu" onclk="HomePage()">Home</a>
         <a class="headerMenu" href="http://localhost:7287/Guest/GetMenu">Menu</a>
@@ -43,7 +42,7 @@
         <a href="http://localhost:7287/Guest/GetDefaultScreen" class="headerMenu">LogOut</a>
         <a href="http://localhost:7287/Customer/ShowEditSignUpForm" class="headerMenu">Edit Account Info</a>
         <a class="headerMenu">Reservations</a>
-        <a href="http://localhost:7287/Customer/ShowOrderScreen" class="headerMenu">Orders</a>
+        <a href="http://localhost:7287/Customer/ShowOrderDefaultScreen" class="headerMenu">Orders</a>
     }
 </div>
 <div class="body" id="body">

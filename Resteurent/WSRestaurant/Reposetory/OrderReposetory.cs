@@ -21,7 +21,7 @@ namespace WSRestaurant
             //        sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
             //        this.dbContext.AddParameter("@DishId", product.Id);
             //        this.dbContext.AddParameter("@OrderId", model.Id);
-            //        this.dbContext.AddParameter("@Price", product.overAllPrice.ToString());
+            //        this.dbContext.AddParameter("@Price", product.totalPrice.ToString());
             //        this.dbContext.AddParameter("@Quantity",product.Quatity.ToString());
             //        if(!this.dbContext.Insert(sql))
             //        {
