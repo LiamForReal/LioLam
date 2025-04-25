@@ -32,7 +32,7 @@ else
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <span class="dish-quantity">@product.Quatity</span>
+                        <input class="dish-quantity" type="number" min="1" value="@product.Quatity"/>
                         <span class="dish-price">@String.Format("{0:C}", product.overAllPrice.ToString())</span>
                         <button class="remove-button">-</button>
                     </div>

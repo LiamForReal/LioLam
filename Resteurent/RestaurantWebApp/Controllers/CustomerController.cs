@@ -208,7 +208,7 @@ namespace RestaurantWebApp.Controllers
             return View("ShowSignUpForm", account);
         }
 
-        [HttpGet]
+        [HttpGet]//gonna do this with ajax
         public async Task<IActionResult> EditExsistingDish(int Quantity, string dishId)
         {
             int price = 0;
