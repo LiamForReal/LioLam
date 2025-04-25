@@ -13,9 +13,14 @@ namespace LiolamResteurent
 
         public override bool Equals(object obj)
         {
-            if(obj is Dish dish)
+            if (obj is Dish dish)
+            {
+                if (this.chefs == null && this.types == null && dish.chefs == null && dish.types == null)
+                    return this.Id == dish.Id && this.DishName == dish.DishName && this.DishPrice == dish.DishPrice;
+
                 return this.Id == dish.Id && this.DishName == dish.DishName && this.DishPrice == dish.DishPrice &&
-                this.chefs.Equals(dish.chefs) && this.types.Equals(dish.types);
+                    this.chefs.Equals(dish.chefs) && this.types.Equals(dish.types);
+            }
             return false;
         }
     }

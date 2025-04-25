@@ -14,6 +14,8 @@ namespace LiolamResteurent
         {
             if (obj is Category type)
             {
+                if (this == null && obj == null)
+                    return true;
                 return this.Id == type.Id && this.TypeName == type.TypeName;
             }
             return false;

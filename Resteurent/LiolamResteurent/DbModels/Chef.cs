@@ -16,6 +16,8 @@ namespace LiolamResteurent
         {
             if (obj is Chef chef)
             {
+                if (this == null && obj == null)
+                    return true;
                 return this.Id == chef.Id && this.ChefFirstName == chef.ChefFirstName && this.ChefLastName == chef.ChefLastName;
             }
             return false;
