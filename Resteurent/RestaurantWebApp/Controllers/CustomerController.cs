@@ -190,6 +190,8 @@ namespace RestaurantWebApp.Controllers
                 Path = "api/Customer/GetCustomerById"
             };
 
+            TempData["Id"] = HttpContext.Session.GetString("Id");
+
             client2.AddParameter("id", HttpContext.Session.GetString("Id")); //check it later!!!
             Customer customer = await client2.Get();
 
@@ -200,6 +202,24 @@ namespace RestaurantWebApp.Controllers
             };
 
             return View("ShowSignUpForm", account);
+        }
+
+        public async Task<IActionResult> ShowOrderScreen()
+        {
+            WebClient<Order> client = new WebClient<Order>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/getCurrentOrderId"
+            };
+
+            TempData["Id"] = HttpContext.Session.GetString("Id");
+            client.AddParameter("customerId", HttpContext.Session.GetString("Id"));
+
+            Order order = await client.Get();
+
+            return View(order);
         }
 
     }

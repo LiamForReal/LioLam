@@ -44,6 +44,11 @@ namespace WSRestaurant
             else throw new Exception("return false");
         }
 
+        public string getLastId()
+        {
+            string sql = $"SELECT MAX(OrderId) FROM Orders";
+            return this.dbContext.ReadValue(sql)?.ToString();
+        }
         public bool delete(string id)
         {
             string sql = $@"DELETE FROM Order WHERE OrderId=@OrderId";

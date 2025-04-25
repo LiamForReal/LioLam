@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Web;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WSRestaurant.Controllers
 {
@@ -293,7 +294,31 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
-
+        [HttpGet]
+        public Order getCurrentOrderId(string customerId)
+        {
+            try
+            {
+                this.dBContext.Open();
+                Order order = new Order()
+                {
+                    CustomerId = customerId,
+                    Id = unitOfWorkReposetory.orderRerposetoryObject.getLastId()
+                };
+                order.Id = (int.Parse(order.Id) + 1).ToString();
+                return order;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
         [HttpPost]
         public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
         {
@@ -309,7 +334,6 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 flag = unitOfWorkReposetory.orderRerposetoryObject.create(order);
-                this.dBContext.Close();
                 return flag;
             }
             catch (Exception ex)

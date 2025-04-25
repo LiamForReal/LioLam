@@ -1,0 +1,81 @@
+﻿body {
+    background-color: #22243D;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.order-container {
+    background-color: #2a2a3d;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.order-header {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #D4AF37; /* gold accent */
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .input-group input {
+        flex: 1;
+        padding: 8px 12px;
+        margin-right: 10px;
+        border-radius: 8px;
+        border: 1px solid #555;
+        background-color: #333;
+        color: white;
+    }
+
+    .input-group span {
+        color: #ff5555;
+        font-size: 20px;
+    }
+
+.sum-box {
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    background-color: #333;
+    color: #ccc;
+}
+
+.pay-button {
+    margin-top: 30px;
+    padding: 12px 40px;
+    background-color: #D4AF37;
+    color: #22243D;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .pay-button:hover {
+        background-color: #c9a128;
+    }

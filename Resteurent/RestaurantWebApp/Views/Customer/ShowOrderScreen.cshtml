@@ -1,0 +1,39 @@
+﻿@using LiolamResteurent
+@model Order
+@{
+    ViewData["Title"] = "ShowOrderScreen";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@section Styles
+{
+    <link href="~/css/customer/order.css" rel="stylesheet" />
+}
+
+<div class="order-container">
+    <h2>Online Order</h2>
+
+    <div class="order-header">
+        Order Number: @Model.Id
+    </div>
+
+    <div class="input-group">
+        <input type="text" placeholder="Dish Name" />
+        <button>-</button>
+    </div>
+
+    <div class="input-group">
+        <input type="text" placeholder="Dish Name" />
+        <button>-</button>
+    </div>
+
+    <div class="input-group" style="justify-content: center;">
+        <input type="text" placeholder="+" style="width: 70%; text-align: center;" />
+    </div>
+
+    <div class="sum-box">
+        Sum: dish1.price + dish2.price
+    </div>
+
+    <button class="pay-button">Pay</button>
+</div>

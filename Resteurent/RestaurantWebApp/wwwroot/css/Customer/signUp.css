@@ -4,12 +4,13 @@
     justify-content: center;
     height: 77vh;
     position: absolute;
-    align-items: center;
     padding: 25px;
     border: 2px gold solid;
     background-color: #1a1a2e;
     font-size: 16px;
     margin-bottom: 50px;
+    left: 25%;
+    margin-bottom: 20px;
 }
 
 input::placeholder {
