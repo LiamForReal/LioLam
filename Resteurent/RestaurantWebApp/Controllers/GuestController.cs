@@ -55,11 +55,14 @@ namespace ResteurantWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDish(string dishId)
         {
-            WebClient<Dish> client = new WebClient<Dish>();
-            client.Scheme = "http";
-            client.Port = 5125;
-            client.Host = "localhost";
-            client.Path = "api/guest/GetSingleDish";
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/guest/GetSingleDish"
+            };
+            
             client.AddParameter("id", dishId);
             Dish dish = await client.Get();
             return View(dish);

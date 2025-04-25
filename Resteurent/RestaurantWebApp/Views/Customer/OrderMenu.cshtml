@@ -1,0 +1,70 @@
+﻿@using LiolamResteurent
+@model Menu
+@{
+    ViewData["Title"] = "AddDishToOrder";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+@section Styles
+{
+    <link href="~/css/Guest/GetMenu.css" rel="stylesheet" />
+}
+@section Js
+{
+    <script src="~/javaScript/Guest/MenuAjax.js"></script>
+}
+
+<div class="menu-container">
+    @if (Model == null)
+    {
+        <h3 class="error">The connection is lost. Try again later.</h3>
+    }
+    else
+    {
+
+        <div class="dishes" id="dishes">
+            @foreach (Dish dish in Model.Dishes)
+            {
+                <a href="http://localhost:7287/customer/AddNewDishToOrder?dishId=@dish.Id">
+                    <div class="dish">
+                        <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
+                        <p class="dish-name">@dish.DishName</p>
+                    </div>
+                </a>
+            }
+        </div>
+        <div class="side-panel">
+            <div class="chefs-list">
+                <h4>Chefs</h4>
+                <ul>
+                    @foreach (var chef in Model.Chefs)
+                    {
+                        <span class="link" data-chefId="@chef.Id">
+                        <li>@chef.ChefFirstName @chef.ChefLastName</li>
+                        </span>
+                    }
+                </ul>
+            </div>
+
+            <div class="dish-types">
+                <h4>Dish Types</h4>
+                <ul>
+                    @foreach (var type in Model.Types)
+                    {
+                        <span class="link" data-typeId="@type.Id">
+                        <li>@type.TypeName</li>
+                        </span>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="pagination" id="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <span data-pageNumber="@i" class="link page-number @(i == Model.PageNumber ? "active" : "")">@i</span>
+            }
+        </div>
+    }
+</div>
+
+

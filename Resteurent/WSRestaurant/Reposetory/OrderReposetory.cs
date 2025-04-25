@@ -2,6 +2,7 @@
 using System.Data;
 using System.Diagnostics.Metrics;
 using LiolamResteurent;
+using Models;
 namespace WSRestaurant
 {
     public class OrderRerposetory : Reposetory, IReposetory<Order>
@@ -9,46 +10,37 @@ namespace WSRestaurant
         public OrderRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Order model)
         {
-            List<int> counts = new List<int>();
-            List<Dish> dishes = new List<Dish>();
             string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
             this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
-            bool ok = this.dbContext.Insert(sql);
-            foreach(Dish dish in model.dishes)
-            {
-                if (dishes.IndexOf(dish) == -1)
-                {
-                    dishes.Add(dish);
-                    counts.Add(model.dishes.Count(d => d.Equals(dish)));
-                }
-            }
-            if (ok)
-            {
-                int i = 0;
-                foreach (Dish dish in dishes)//TO fix
-                {
-                    sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
-                    this.dbContext.AddParameter("@DishId", dish.Id);
-                    this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
-                    this.dbContext.AddParameter("@Price", dish.DishPrice.ToString());
-                    this.dbContext.AddParameter("@Quantity", counts.ToArray()[i].ToString());
-                    if(!this.dbContext.Insert(sql))
-                    {
-                        throw new Exception("return false seconed");
-                    }
-                    i++;
-                }
-                return ok;
-            }
-            else throw new Exception("return false");
+            return this.dbContext.Insert(sql);
+            //if (ok)
+            //{
+            //    foreach (OrderProduct product in model.products)//TO fix
+            //    {
+            //        sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
+            //        this.dbContext.AddParameter("@DishId", product.Id);
+            //        this.dbContext.AddParameter("@OrderId", model.Id);
+            //        this.dbContext.AddParameter("@Price", product.overAllPrice.ToString());
+            //        this.dbContext.AddParameter("@Quantity",product.Quatity.ToString());
+            //        if(!this.dbContext.Insert(sql))
+            //        {
+            //            throw new Exception("return false seconed");
+            //        }
+            //    }
+            //    return ok;
+            //}
+            //else throw new Exception("return false");
         }
 
         public string getLastId()
         {
             string sql = $"SELECT MAX(OrderId) FROM Orders";
-            return this.dbContext.ReadValue(sql)?.ToString();
+            string orderId = this.dbContext.ReadValue(sql)?.ToString();
+            return (int.Parse(orderId) + 1).ToString();
         }
+
+        //public bool addNewDishToOrder()
         public bool delete(string id)
         {
             string sql = $@"DELETE FROM Order WHERE OrderId=@OrderId";
@@ -96,34 +88,10 @@ namespace WSRestaurant
         {
             List<int> counts = new List<int>();
             List<Dish> dishes = new List<Dish>();
-            string sql = $@"UPDATE Orders SET CustomerId = @CustomerId, OrderDate = @OrderDate WHERE OrderId == @OrderId";
-            this.dbContext.AddParameter("@CustomerId", model.CustomerId);
-            this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
-            bool ok = this.dbContext.Update(sql);
-            foreach (Dish dish in model.dishes)
-            {
-                if (dishes.IndexOf(dish) == -1)
-                {
-                    dishes.Add(dish);
-                    counts.Add(model.dishes.Count(d => d.Equals(dish)));
-                }
-            }
-            if (ok)
-            {
-                int i = 0;
-                foreach (Dish dish in dishes)//TO fix
-                {
-                    sql = $@"UPDATE DishOrder OrderId = @OrderId, Price = @Price, Quantity = @Quantity WHERE (SELECT OrderId FROM DishOrder WHERE ORDER BY DishId LIMIT 1) = @DishId";
-                    this.dbContext.AddParameter("@DishId", dish.Id);
-                    this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
-                    this.dbContext.AddParameter("@Price", dish.DishPrice.ToString());
-                    this.dbContext.AddParameter("@Quantity", counts.ToArray()[i].ToString());
-                    i++;
-                }
-                return ok;
-            }
-            else throw new Exception("return false");
-
+            string sql = $@"UPDATE Orders SET Payed = @Payed WHERE OrderId = @OrderId";
+            this.dbContext.AddParameter("@OrderId", model.Id);
+            return this.dbContext.Update(sql);
+            //to change
         }
 
         public bool deleteByCustomer(string customerId)

@@ -14,8 +14,8 @@ namespace WSRestaurant
             {
                 Id = Convert.ToString(src["OrderId"]),
                 OrderDate = Convert.ToDateTime(src["OrderDate"]), 
-                CustomerId = "",
-                dishes = null
+                CustomerId = Convert.ToString(src["CustomerId"]),
+                products = null
             };
             return order;
         }

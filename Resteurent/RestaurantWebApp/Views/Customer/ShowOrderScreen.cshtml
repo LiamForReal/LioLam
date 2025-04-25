@@ -1,5 +1,6 @@
 ﻿@using LiolamResteurent
 @model Order
+
 @{
     ViewData["Title"] = "ShowOrderScreen";
     Layout = "~/Views/Shared/MasterPage.cshtml";
@@ -7,33 +8,50 @@
 
 @section Styles
 {
-    <link href="~/css/customer/order.css" rel="stylesheet" />
+<link href="~/css/customer/order.css" rel="stylesheet" />
 }
 
-<div class="order-container">
-    <h2>Online Order</h2>
+@if (ViewBag.Error == true)
+{
+    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+}
+else
+{
+    <div class="order-container">
+        <h2>Online Order</h2>
 
-    <div class="order-header">
-        Order Number: @Model.Id
+        <div class="order-header">
+            Order Number: @Model.Id
+        </div>
+
+        <div class="dishes-list">
+            @if (Model.products != null)
+            {
+                foreach (var product in Model.products)
+                {
+                    <div class="dish-item">
+                        <img src="@product.Image" alt="Dish Image" class="dish-image" />
+                        <span class="dish-name">@product.Name</span>
+                        <span class="dish-quantity">@product.Quatity</span>
+                        <span class="dish-price">@String.Format("{0:C}", product.overAllPrice.ToString())</span>
+                        <button class="remove-button">-</button>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="add-dish-container">
+            <button class="add-button" href="http://localhost:7287/customer/ShowOrderMenu">+</button>
+        </div>
+
+        <div class="sum-box">
+            Sum: @(Model.products?.Sum(d => d.overAllPrice) ?? 0) $
+        </div>
+
+        <div class="action-buttons">
+            <button class="pay-button">Pay</button>
+            <button class="load-button">Load Existing Order</button>
+        </div>
     </div>
+}
 
-    <div class="input-group">
-        <input type="text" placeholder="Dish Name" />
-        <button>-</button>
-    </div>
-
-    <div class="input-group">
-        <input type="text" placeholder="Dish Name" />
-        <button>-</button>
-    </div>
-
-    <div class="input-group" style="justify-content: center;">
-        <input type="text" placeholder="+" style="width: 70%; text-align: center;" />
-    </div>
-
-    <div class="sum-box">
-        Sum: dish1.price + dish2.price
-    </div>
-
-    <button class="pay-button">Pay</button>
-</div>

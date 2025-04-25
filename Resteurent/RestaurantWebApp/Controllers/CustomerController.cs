@@ -4,6 +4,10 @@ using WebApiClient;
 using NuGet.Protocol;
 using System.Runtime.CompilerServices;
 using NuGet.Packaging.Signing;
+using Microsoft.AspNetCore.Http;
+using RestaurantWebApplication.externals;
+using Models;
+using System.Collections.Generic;
 
 namespace RestaurantWebApp.Controllers
 {
@@ -204,8 +208,111 @@ namespace RestaurantWebApp.Controllers
             return View("ShowSignUpForm", account);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditExsistingDish(int Quantity, string dishId)
+        {
+            int price = 0;
+            List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            foreach(var product in products)
+            { 
+                if(product.Id == dishId)
+                {
+                    price = product.overAllPrice / product.Quatity;
+                    product.Quatity = Quantity;
+                    product.overAllPrice = price * Quantity;
+                }
+            }    
+            HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
+            return RedirectToAction("ShowOrderScreen", "customer");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddNewDishToOrder(string dishId)
+        {
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/guest/GetSingleDish"
+            };
+
+            client.AddParameter("id", dishId);
+            Dish dish = await client.Get();
+
+            OrderProduct product = new OrderProduct()
+            {
+                Image = dish.DishImage,
+                Id = dishId,
+                Name = dish.DishName,
+                Quatity = 1,
+                overAllPrice = dish.DishPrice
+            };
+            
+            if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") == null)
+            {
+                List<OrderProduct> products = new List<OrderProduct>();
+                products.Add(product);
+                HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
+            }
+            else
+            {
+                bool alreadyExsist = false;
+                List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+                foreach(var Iproduct in products)
+                {
+                    if(Iproduct.Id == product.Id)
+                    {
+                        Iproduct.Quatity++;
+                        alreadyExsist = true;
+                    }
+                }
+                if(!alreadyExsist)
+                    products.Add(product);
+                HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
+            }
+            
+            return RedirectToAction("ShowOrderScreen", "customer");
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> ShowOrderMenu()
+        {
+            try
+            {
+                WebClient<Menu> client = new WebClient<Menu>()
+                {
+                    Scheme = "http",
+                    Port = 5125,
+                    Host = "localhost",
+                    Path = "api/Guest/GetMenu"
+                };
+
+                Menu menu = await client.Get();
+                return View("OrderMenu", menu);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return View();
+        }
+        [HttpGet]
         public async Task<IActionResult> ShowOrderScreen()
         {
+            Order order = new Order();
+            if (HttpContext.Session.GetString("orderId") != null)
+                order.Id = HttpContext.Session.GetString("orderId");
+            if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
+                order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            return View(order);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowOrderDefaultScreen()
+        {
+            //get Order ID
             WebClient<Order> client = new WebClient<Order>()
             {
                 Scheme = "http",
@@ -218,8 +325,10 @@ namespace RestaurantWebApp.Controllers
             client.AddParameter("customerId", HttpContext.Session.GetString("Id"));
 
             Order order = await client.Get();
+            //save order Id
+            HttpContext.Session.SetString("orderId", order.Id);
 
-            return View(order);
+            return View("ShowOrderScreen", order);
         }
 
     }

@@ -295,17 +295,15 @@ namespace WSRestaurant.Controllers
             }
         }
         [HttpGet]
-        public Order getCurrentOrderId(string customerId)
+        public Order getCurrentOrderId()
         {
             try
             {
                 this.dBContext.Open();
                 Order order = new Order()
                 {
-                    CustomerId = customerId,
                     Id = unitOfWorkReposetory.orderRerposetoryObject.getLastId()
                 };
-                order.Id = (int.Parse(order.Id) + 1).ToString();
                 return order;
             }
             catch (Exception ex)
@@ -319,22 +317,39 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
-        [HttpPost]
-        public bool AddNewOrder(string CustomerId, DateTime date) //find a way to get products 
-        {
-            Order order = new Order()
-            {
-                CustomerId = CustomerId,
-                OrderDate = date,
-                dishes = null
-            };
 
+        //[HttpPost] make it when it will be relevent
+        //public bool AddDishToOrder()
+        //{
+            
+        //    try
+        //    {
+        //        this.dBContext.Open();
+        //        unitOfWorkReposetory.orderRerposetoryObject.
+        //        return order;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string msg = ex.Message;
+        //        Console.WriteLine(msg);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        this.dBContext.Close();
+        //    }
+        //}
+
+        [HttpPost]
+        public bool AddNewOrder() //find a way to get products 
+        {
+            string json = Request.Form["model"];
+            Order order = JsonSerializer.Deserialize<Order>(json);
             bool flag = false;
             try
             {
                 this.dBContext.Open();
-                flag = unitOfWorkReposetory.orderRerposetoryObject.create(order);
-                return flag;
+                return unitOfWorkReposetory.orderRerposetoryObject.create(order);
             }
             catch (Exception ex)
             {
