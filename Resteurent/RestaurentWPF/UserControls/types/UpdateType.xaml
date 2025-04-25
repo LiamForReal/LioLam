@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="UpdateType" Height="300" Width="400">
+        Title="UpdateType" Height="600" Width="800">
     <Canvas Background="#FF22243D">
-        <Label Content="Update type" Canvas.Left="126" Canvas.Top="27" FontSize="22" FontWeight="Bold" Foreground="White"/>
+        <Label Content="Update type" Canvas.Left="314" Canvas.Top="80" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <!-- Type Name -->
-        <Label Content="Name:" Canvas.Left="51" Canvas.Top="107" FontSize="18" Foreground="White"/>
-        <TextBox x:Name="nameTextBox" Background="#FF22243D" Text="{Binding TypeName}" FontSize="18" Canvas.Left="150" Canvas.Top="116" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
+        <Label Content="Name:" Canvas.Left="251" Canvas.Top="268" FontSize="18" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Background="#FF22243D" Text="{Binding TypeName}" FontSize="18" Canvas.Left="400" Canvas.Top="266" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150"/>
 
-        <Button Content="Update" x:Name="updateButton" Canvas.Left="118" Canvas.Top="198" Width="150" Height="51" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <Button Content="Update" x:Name="updateButton" Canvas.Left="314" Canvas.Top="426" Width="192" Height="65" HorizontalAlignment="Left" VerticalAlignment="Top"
             Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="updateButton_Click"/>
-        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="81" FontSize="16" Foreground="red" Canvas.Top="159" Width="200" Height="28"/>
+        <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="300" FontSize="16" Foreground="red" Canvas.Top="355" Width="200" Height="28"/>
     </Canvas>
 </Window>

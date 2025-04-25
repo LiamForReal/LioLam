@@ -10,5 +10,13 @@ namespace LiolamResteurent
     {
         public string TypeName { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Category type)
+            {
+                return this.Id == type.Id && this.TypeName == type.TypeName;
+            }
+            return false;
+        }
     }
 }

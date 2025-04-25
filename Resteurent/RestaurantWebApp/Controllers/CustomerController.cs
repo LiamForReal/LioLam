@@ -150,19 +150,19 @@ namespace RestaurantWebApp.Controllers
         public async Task<IActionResult> ShowSignUpForm()
         {
             //city and strits lists from ws
-            WebClient<RegisterViewModel> client = new WebClient<RegisterViewModel>()
+            WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
             };
-            RegisterViewModel registerViewModel = await client.Get();
+            CustomerLocationView customerLocationView = await client.Get();
 
             Account account = new Account()
             {
                 Customer = null,
-                registerView = registerViewModel
+                registerView = customerLocationView
             };
 
             return View(account);
@@ -173,14 +173,14 @@ namespace RestaurantWebApp.Controllers
         {
             
             //city and strits lists from ws
-            WebClient<RegisterViewModel> client = new WebClient<RegisterViewModel>()
+            WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
                 Scheme = "http",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
             };
-            RegisterViewModel registerViewModel = await client.Get();
+            CustomerLocationView customerLocationView = await client.Get();
 
             WebClient<Customer> client2 = new WebClient<Customer>()
             {
@@ -196,7 +196,7 @@ namespace RestaurantWebApp.Controllers
             Account account = new Account()
             {
                 Customer = customer, 
-                registerView = registerViewModel
+                registerView = customerLocationView
             };
 
             return View("ShowSignUpForm", account);

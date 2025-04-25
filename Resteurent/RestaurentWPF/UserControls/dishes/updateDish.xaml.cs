@@ -134,7 +134,11 @@ namespace RestaurantWindowsPF.UserControls
                     chefs = this.chefs.SelectedItems.Cast<Chef>().ToList()
                 };
 
-                if (dish.DishName == "" || dish.DishDescription == "")
+                if (loadedDish.Equals(dish) && this.readerPictureFile == null)
+                {
+                    this.Close();
+                }
+                else if (dish.DishName == "" || dish.DishDescription == "")
                 {
                     errorLable.Content = "name or description cannot be empty";
                     return;
@@ -153,10 +157,6 @@ namespace RestaurantWindowsPF.UserControls
                 {
                     errorLable.Content = "every dish must contains at list one chef and type";
                     return;
-                }
-                else if (loadedDish == dish && this.readerPictureFile == null)
-                {
-                    this.Close();
                 }
                 else await updateDishDetails(dish, this.readerPictureFile);
             }

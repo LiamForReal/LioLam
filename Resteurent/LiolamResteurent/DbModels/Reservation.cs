@@ -12,5 +12,14 @@ namespace LiolamResteurent
         public DateTime ReserveDate { get; set; }
         public int AmountOfPeople { get; set; }
         public string ReserveHour { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Reservation reservation)
+                return this.Id == reservation.Id && reservation.CustomerId == this.CustomerId && 
+                this.ReserveDate == reservation.ReserveDate && this.AmountOfPeople == reservation.AmountOfPeople
+                && this.ReserveHour == reservation.ReserveHour;
+            return false;
+        }
     }
 }
