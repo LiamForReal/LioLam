@@ -1,0 +1,123 @@
+﻿using LiolamResteurent;
+using RestaurantWindowsPF.UserControls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using WebApiClient;
+
+namespace RestaurantWPF.UserControls
+{
+    /// <summary>
+    /// Interaction logic for Dishes.xaml
+    /// </summary>
+    public partial class DishesPage : UserControl
+    {
+        static InspectDish inspactDishPage;
+        static UpdateDish updateDishPage;
+        static addDish addDishPage;
+        public DishesPage()
+        {
+            InitializeComponent();
+            GetAllDishes();
+        }
+
+        private async Task GetAllDishes()
+        {
+            WebClient<List<Dish>> client = new WebClient<List<Dish>>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/GetDishes"
+            };
+           
+            this.listView.ItemsSource = await client.Get();
+        }
+
+        private void inspectDish_Click(object sender, RoutedEventArgs e)
+        {
+            Button inspactButton = sender as Button;
+            string dishId = inspactButton.Tag.ToString();
+            inspactDishPage = new InspectDish(dishId);
+            inspactDishPage.ShowDialog();
+        }
+
+        private async void updateDish_Click(object sender, RoutedEventArgs e)
+        {
+            Button updateButton = sender as Button;
+            string dishId = updateButton.Tag.ToString();
+            updateDishPage = new UpdateDish(dishId);
+            updateDishPage.ShowDialog();
+            await GetAllDishes();
+        }
+
+        private async void deleteDish_Click(object sender, RoutedEventArgs e)
+        {
+            Button deleteButton = sender as Button;
+            string dishId = deleteButton.Tag.ToString();
+            string dishName = await getDishNameById(dishId);
+            string messageBoxText = $"Confirm delete: '{dishName}'?";
+            string caption = "Word Processor";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await deleteDish(dishId);
+                await GetAllDishes();
+            }
+        }
+        private async Task deleteDish(string dishId)
+        {
+            WebClient<string> client = new WebClient<string>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Manager/DeleteDish"
+            };
+
+            bool result = await client.Post(dishId);
+
+            if(!result)
+            {
+                //error
+            }
+        }
+        private async Task<string> getDishNameById(string id)
+        {
+            WebClient<Dish> client = new WebClient<Dish>()
+            {
+                Scheme = "http",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Guest/GetSingleDish"
+            };
+            
+            client.AddParameter("id", id);
+            Dish dish = await client.Get();
+            return dish.DishName;
+        }
+        private async void addNewDish_Click(object sender, RoutedEventArgs e)
+        {
+            addDishPage = new addDish();
+            addDishPage.ShowDialog(); 
+            await GetAllDishes();
+        }
+    }
+}

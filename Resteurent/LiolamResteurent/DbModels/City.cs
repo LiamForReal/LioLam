@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class City : Model
+    public class City : IModel
     {
         public string CityName { get; set; }
-        public City() { }
-        public City(string cityName)
+
+        public override bool Equals(object obj)
         {
-            this.CityName = cityName;
+            if (obj is City city)
+            {
+                return this.Id == city.Id && this.CityName == city.CityName;
+            }
+            return false;
         }
     }
 }

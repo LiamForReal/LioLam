@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Chef : Model
+    public class Chef : IModel
     {
         public string ChefFirstName { get; set; }
         public string ChefLastName { get; set; }
         public string ChefImage { get; set; }
-        public Chef(string chefFirstName, string chefLastName, string chefImage)
-        {
-            ChefFirstName = chefFirstName;
-            ChefLastName = chefLastName;
-            ChefImage = chefImage;
-        }
 
-        public Chef()
+        public override bool Equals(object obj)
         {
+            if (obj is Chef chef)
+            {
+                if (this == null && obj == null)
+                    return true;
+                return this.Id == chef.Id && this.ChefFirstName == chef.ChefFirstName && this.ChefLastName == chef.ChefLastName;
+            }
+            return false;
         }
     }
 }

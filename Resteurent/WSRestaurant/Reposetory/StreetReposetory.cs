@@ -40,7 +40,7 @@ namespace WSRestaurant
 
         public Street getById(string id)
         {
-            string sql = "SELECT FROM Streets WHERE StreetId = @StreetId";
+            string sql = "SELECT * FROM Streets WHERE StreetId = @StreetId";
             this.dbContext.AddParameter("@StreetId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {

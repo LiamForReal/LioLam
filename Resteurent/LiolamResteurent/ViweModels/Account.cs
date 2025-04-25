@@ -10,7 +10,7 @@ namespace LiolamResteurent
     {
         public Customer Customer { get; set; }
 
-        public registerViewModel registerView { get; set; }
+        public CustomerLocationView registerView { get; set; }
 
     }
 }

@@ -46,15 +46,9 @@ namespace WSRestaurant
 
         public bool delete(string id)
         {
-            string sql = $@"DELETE DishOrder WHERE OrderId=@OrderId";
+            string sql = $@"DELETE FROM Order WHERE OrderId=@OrderId";
             this.dbContext.AddParameter("@OrderId", id);
-            if (this.dbContext.Delete(sql))
-            {
-                sql = $@"DELETE FROM Orders WHERE OrderId=@OrderId";
-                this.dbContext.AddParameter("@OrderId", id);
-                return this.delete(sql);
-            }
-            else throw new Exception("return false");
+            return this.dbContext.Delete(sql);
         }
 
         public List<Order> getAll()

@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Street : Model
+    public class Street : IModel
     {
         public string StreetName { get; set; }
-        public Street(string streetName)
-        {
-            this.StreetName = streetName;
-        }
 
-        public Street()
+        public override bool Equals(object obj)
         {
+            if(obj is Street street)
+                return this.Id == street.Id && this.StreetName == street.StreetName;
+            return false;
         }
     }
 }

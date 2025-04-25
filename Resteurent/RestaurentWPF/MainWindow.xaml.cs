@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RestaurantWindowsPF.UserControls;
 using RestaurantWPF.UserControls;
 namespace RestaurentWPF;
 
@@ -22,11 +23,14 @@ public partial class MainWindow : Window
     static LogInPage loginPage;
     static startPage startPage;
     static DishesPage dishesPage;
+    static TypesPage typesPage;
+    static ChefsPage ChefsPage;
+    static CustomersPage customersPage;
     public MainWindow()
     {
         InitializeComponent();
         isLogin = false;
-        setStartWindows();
+        this.buttons.Visibility = Visibility.Hidden;
         Index();
     }
 
@@ -38,29 +42,25 @@ public partial class MainWindow : Window
         }
         this.data.Child = startPage;
     }
-    private void setStartWindows()
-    {
-        if (isLogin) this.buttons.Visibility = Visibility.Visible;
-        else this.buttons.Visibility = Visibility.Hidden;
-    }
 
     private void LogInButton_Click(object sender, RoutedEventArgs e)
     {
         if (!isLogin)
             loginPage = new LogInPage();
-        
+
         Button button = (Button)(sender);
-        if (isLogin)
-        {
-            button.Content = "Log out";
-        }
-        else
-        {
-            button.Content = "Log In";
-            this.data.Child = loginPage;
-            isLogin = true;
-        }
-        setStartWindows();
+        button.Content = "Log In";
+        this.data.Child = loginPage;
+        isLogin = false;
+        this.buttons.Visibility = Visibility.Hidden;
+        loginPage.LoginSuccessful += OnLoginSuccessful;
+    }
+
+    private void OnLoginSuccessful(object sender, EventArgs e)
+    {
+        this.LogInButton.Content = "Log out";
+        isLogin = true;
+        this.buttons.Visibility = Visibility.Visible;
     }
 
     private void DishesButton_Click(object sender, RoutedEventArgs e)
@@ -68,5 +68,26 @@ public partial class MainWindow : Window
         if (dishesPage == null)
             dishesPage = new DishesPage();
         this.data.Child = dishesPage;
+    }
+
+    private void TypesButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (typesPage == null)
+            typesPage = new TypesPage();
+        this.data.Child = typesPage;
+    }
+
+    private void ChefsButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (ChefsPage == null)
+            ChefsPage= new ChefsPage();
+        this.data.Child = ChefsPage;
+    }
+
+    private void CustomersButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (customersPage == null)
+            customersPage = new CustomersPage();
+        this.data.Child = customersPage;
     }
 }

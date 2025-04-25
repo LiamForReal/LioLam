@@ -66,25 +66,6 @@ namespace WebApiClient
                 return default(T);
             }
         }
-
-        public async Task<string> PostId(T model)
-        {
-            this.request.Method = HttpMethod.Post;
-            this.request.RequestUri = new Uri(this.uriBuilder.ToString());
-            ObjectContent<T> objectContent = new ObjectContent<T>(model, new JsonMediaTypeFormatter());
-            this.request.Content = objectContent;
-            using (HttpClient client = new HttpClient())
-            {
-                this.response = await client.SendAsync(this.request);
-                if (this.response.IsSuccessStatusCode == true)
-                {
-                    return await this.response.Content.ReadAsAsync<string>();
-                }
-               
-            }
-            return "";
-        }
-
         public async Task<bool> Post(T model)
         {
             this.request.Method = HttpMethod.Post;

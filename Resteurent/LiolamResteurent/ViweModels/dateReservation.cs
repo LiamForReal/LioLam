@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class dateReservation
+    public class DateReservation
     {
         public DateTime ReserveDate { get; set; }
         public List<Reservation> DayReservations { get; set; }

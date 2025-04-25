@@ -8,10 +8,12 @@ namespace WSRestaurant
         public CustomerRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Customer model)
         {
-            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, isOwner) 
-                            VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.cityId},{model.streetId}, '{model.CustomerPhone}',
+            model.CustomerImage = $"{model.Id}{model.CustomerImage}";
+            string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, IsOwner) 
+                            VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.city.Id},{model.street.Id}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
-            return this.dbContext.Insert(sql);
+            bool flag = this.dbContext.Insert(sql);
+            return flag;
         }
 
         public bool delete(string id)
@@ -42,7 +44,8 @@ namespace WSRestaurant
             string sql = "SELECT * FROM Customers WHERE CustomerId = @CustomerId";
             this.dbContext.AddParameter("@CustomerId", id);
 
-            //Console.WriteLine($"sql is: {sql}, id is: {id}");
+            //
+            //($"sql is: {sql}, id is: {id}");
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
                 dataReader.Read();
@@ -55,8 +58,8 @@ namespace WSRestaurant
                        ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
             this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
             this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-            this.dbContext.AddParameter("@CityId", model.cityId.ToString());
-            this.dbContext.AddParameter("@StreetId", model.streetId.ToString());
+            this.dbContext.AddParameter("@CityId", model.city.Id);
+            this.dbContext.AddParameter("@StreetId", model.street.Id);
             this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
             this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
             this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
@@ -88,10 +91,9 @@ namespace WSRestaurant
 
         public string CheckIfAdmin(string userName, string password)
         {
-            string sql = @"SELECT Customers.CustomerId, Customers.CustomerUserName, Customers.CustomerPassword
-                            FROM Customers
+            string sql = @"SELECT Customers.CustomerId FROM Customers
                             WHERE Customers.CustomerUserName=@CustomerUserName AND
-                            Customers.CustomerPassword=@CustomerPassword AND Customers.IsOwner = true";
+                            Customers.CustomerPassword=@CustomerPassword AND Customers.IsOwner = true;";
 
             this.dbContext.AddParameter("@CustomerUserName", userName);
             this.dbContext.AddParameter("@CustomerPassword", password);
@@ -105,6 +107,19 @@ namespace WSRestaurant
             catch (Exception e)
             {
                 return "";
+            }
+        }
+
+        internal Customer getByName(string userName)
+        {
+            string sql = "SELECT * FROM Customers WHERE CustomerUserName = @CustomerUserName";
+            this.dbContext.AddParameter("@CustomerUserName", userName);
+
+            //($"sql is: {sql}, id is: {id}");
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createCustomerObject.CreateModel(dataReader);
             }
         }
     }

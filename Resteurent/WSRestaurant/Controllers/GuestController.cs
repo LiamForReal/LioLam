@@ -45,7 +45,6 @@ namespace WSRestaurant
                 menu.PageNumber = 1;
                 menu.ChefId = -1;
                 menu.TypeId = -1;
-                this.dBContext.Close();
             }
             catch (Exception ex) 
             {
@@ -110,8 +109,6 @@ namespace WSRestaurant
                 menu.Chefs = null;
                 menu.Types = null;
                 menu.PageNumber = pageNumber;
-                this.dBContext.Close();
-
                 return menu;
             }
             catch (Exception ex)
@@ -178,7 +175,6 @@ namespace WSRestaurant
                 menu.Chefs = unitOfWorkReposetory.chefRepositoryObject.getAll();
                 menu.Types = unitOfWorkReposetory.typeReposetoryObject.getAll();
                 menu.PageNumber = pageNumber;
-                this.dBContext.Close();
             }
             catch (Exception ex)
             {
@@ -203,7 +199,6 @@ namespace WSRestaurant
                 dish = unitOfWorkReposetory.dishRerposetoryObject.getById(id);
                 dish.types = unitOfWorkReposetory.typeReposetoryObject.getByDish(id);
                 dish.chefs = unitOfWorkReposetory.chefRepositoryObject.GetByDish(id);
-                this.dBContext.Close();
                 return dish;
             }
             catch (Exception ex)

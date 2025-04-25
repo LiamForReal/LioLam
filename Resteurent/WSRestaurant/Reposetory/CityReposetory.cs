@@ -38,7 +38,7 @@ namespace WSRestaurant
 
         public City getById(string id)
         {
-            string sql = "SELECT FROM Cities WHERE CityId = @CityId";
+            string sql = "SELECT * FROM Cities WHERE CityId = @CityId";
             this.dbContext.AddParameter("@CityId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {

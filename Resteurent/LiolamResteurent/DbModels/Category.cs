@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Category : Model
+    public class Category : IModel
     {
         public string TypeName { get; set; }
-        public Category(string typeName)
-        {
-            TypeName = typeName;
-        }
 
-        public Category()
+        public override bool Equals(object obj)
         {
+            if (obj is Category type)
+            {
+                if (this == null && obj == null)
+                    return true;
+                return this.Id == type.Id && this.TypeName == type.TypeName;
+            }
+            return false;
         }
     }
 }

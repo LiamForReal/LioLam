@@ -6,23 +6,20 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Reservation : Model
+    public class Reservation : IModel
     {
         public string CustomerId { get; set; }//To change may
         public DateTime ReserveDate { get; set; }
         public int AmountOfPeople { get; set; }
         public string ReserveHour { get; set; }
 
-        public Reservation(DateTime reserveDate, int amountOfPeople)
+        public override bool Equals(object obj)
         {
-            CustomerId = "";
-            ReserveDate = reserveDate;
-            AmountOfPeople = amountOfPeople;
-            ReserveHour = reserveDate.ToString("HH:mm");
-        }
-
-        public Reservation()
-        {
+            if(obj is Reservation reservation)
+                return this.Id == reservation.Id && reservation.CustomerId == this.CustomerId && 
+                this.ReserveDate == reservation.ReserveDate && this.AmountOfPeople == reservation.AmountOfPeople
+                && this.ReserveHour == reservation.ReserveHour;
+            return false;
         }
     }
 }

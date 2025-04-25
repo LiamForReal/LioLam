@@ -10,17 +10,28 @@ namespace WSRestaurant
         public DishRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Dish model)
         {
-            string sql = $@"INSERT INTO Dishes (DishDescription, DishName, DishPrice, DishImage) VALUES (@DishDescription, @DishName, @DishPrice, @DishImage)";
-            this.dbContext.AddParameter("@DishDescription", model.DishName);
+            string sql = $@"INSERT INTO Dishes (DishName, DishDescription ,DishPrice, DishImage) VALUES (@DishName, @DishDescription ,@DishPrice, @DishImage)";
+            this.dbContext.AddParameter("@DishDescription", model.DishDescription);
             this.dbContext.AddParameter("@DishName", model.DishName);
-            this.dbContext.AddParameter("@DishPrice", model.DishName);
-            this.dbContext.AddParameter("@DishImage", model.DishName);
+            this.dbContext.AddParameter("@DishPrice", model.DishPrice.ToString());
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
             bool ok = this.dbContext.Insert(sql);
-            if (ok)
+            if (!ok)
             {
                 throw new Exception("return false");
             }
-            foreach(Category type in model.types)
+            
+            model.Id = GetLastId();
+            model.DishImage = $"{model.Id}{model.DishImage}";
+            sql = $@"UPDATE Dishes SET DishImage = @DishImage WHERE DishId = @DishId";
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
+            this.dbContext.AddParameter("@DishId", model.Id);
+            if(!this.dbContext.Update(sql))
+            {
+                throw new Exception("return false");
+            }
+
+            foreach (Category type in model.types)
             {
                 sql = $@"INSERT INTO DishType (DishId, TypeId) VALUES(@DishId, @TypeId)";
                 this.dbContext.AddParameter("@DishId", model.Id);
@@ -54,10 +65,7 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@DishId", id);
             bool flagChef = this.dbContext.Delete(sql);
 
-            sql = $@"DELETE FROM DishOrder WHERE DishId=@DishId"; //ajust to order
-            this.dbContext.AddParameter("@DishId", id);
-            bool flagOrder = this.dbContext.Delete(sql);
-            if (flagOrder && flagType && flagChef)
+            if (flagType && flagChef)
             {
                 sql = $@"DELETE FROM Dishes WHERE DishId=@DishId";
                 this.dbContext.AddParameter("@DishId", id);
@@ -92,16 +100,29 @@ namespace WSRestaurant
                 return this.modelFactory.createDishObject.CreateModel(dataReader);
             }
         }
+
+        public Dish getByName(string name)
+        {
+            string sql = "SELECT * FROM Dishes WHERE DishName = @DishName";
+            this.dbContext.AddParameter("@DishName", name);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                dataReader.Read();
+                return this.modelFactory.createDishObject.CreateModel(dataReader);
+            }
+        }
         public bool update(Dish model)
         {
-            string sql = $@"UPDATE Dishes SET DishDescription = @DishDescription, DishName = @DishName, DishPrice = @DishPrice, DishImage = @DishImage WHERE DishId = @DishId";
+
+            string sql = $@"UPDATE Dishes SET DishName = @DishName, DishDescription = @DishDescription, DishPrice = @DishPrice, DishImage = @DishImage WHERE DishId = @DishId;";
             this.dbContext.AddParameter("@DishName", model.DishName);
-            this.dbContext.AddParameter("@DishDescription", model.DishName);
-            this.dbContext.AddParameter("@DishPrice", model.DishName);
-            this.dbContext.AddParameter("@DishImage", model.DishName);
+            this.dbContext.AddParameter("@DishDescription", model.DishDescription);
+            this.dbContext.AddParameter("@DishPrice", model.DishPrice.ToString());
+            this.dbContext.AddParameter("@DishImage", model.DishImage);
             this.dbContext.AddParameter("@DishId", model.Id);
+
             bool ok = this.dbContext.Update(sql);
-            if (ok)
+            if (!ok)
                 throw new Exception("return false");
 
             sql = "DELETE FROM DishType WHERE DishId = @DishId";
@@ -135,6 +156,7 @@ namespace WSRestaurant
                     throw new Exception("return false seconed");
                 }
             }
+
             return ok;
         }
 

@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace LiolamResteurent
 {
-    public class Order : Model
+    public class Order : IModel
     {
         public DateTime OrderDate { get; set; }
         public string CustomerId { get; set; } //To change maybe
         public List<Dish> dishes { get; set; }
-        public Order(DateTime orderDate)
-        {
-            OrderDate = orderDate;
-            CustomerId = "";
-            this.dishes = null;
-        }
 
-        public Order()
+        public override bool Equals(object obj)
         {
+            if(obj is Order order)
+                return order.Id == this.Id && order.OrderDate == this.OrderDate && this.dishes.Equals(order);
+            return false;
         }
     }
 }

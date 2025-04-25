@@ -9,7 +9,6 @@ namespace WebApiClient
     public interface IWebClient<T>
     {
         Task<T> Get();
-        Task<string> PostId(T model);
         Task<bool> Post(T model);
         Task<bool> Post(T model, Stream file);
         Task<bool> Post(T model, List<Stream> files);
