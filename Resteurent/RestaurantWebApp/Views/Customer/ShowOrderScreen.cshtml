@@ -37,16 +37,16 @@ else
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <input class="dish-quantity" type="number" min="1" value="@product.Quatity" onchange="updateQuantity(@product.Id, this.value)" />
-                        <span class="dish-price">@String.Format("{0:C}", product.totalPrice.ToString())</span>
-                        <button class="remove-button">-</button>
+                        <input id="quantity" class="dish-quantity" type="number" min="1" value="@product.Quatity" onchange="updateQuantity('@product.Id', this.value)" />
+                        <span id="total_price" class="dish-price">@product.totalPrice.ToString()</span>
+                        <a class="remove-button" href="http://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>
                 }
             }
         </div>
 
         <div class="add-dish-container">
-            <button class="add-button" href="http://localhost:7287/customer/ShowOrderMenu">+</button>
+            <a class="add-button" href="http://localhost:7287/customer/ShowOrderMenu">+</a>
         </div>
 
         <div class="sum-box">

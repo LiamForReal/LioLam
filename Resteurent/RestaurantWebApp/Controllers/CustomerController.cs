@@ -202,21 +202,23 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateDishQuantity([FromBody] DishQuantityUpdateRequest request)
+        public IActionResult UpdateDishQuantity([FromBody] DishQuantityUpdateRequest request)
         {
             List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
-            var product = products.FirstOrDefault(d => d.Id == request.DishId.ToString());
-            if ( product != null)
+            foreach (var Iproduct in products)
             {
-                int priceForOne = product.totalPrice / product.Quatity;
-                product.Quatity = request.Quantity;
-                product.totalPrice = priceForOne * product.Quatity;
-                HttpContext.Session.SetObject("productList", products);
+                if (Iproduct.Id == request.DishId.ToString())
+                {
+                    int priceForOne = Iproduct.totalPrice / Iproduct.Quatity;
+                    Iproduct.Quatity = request.Quantity;
+                    Iproduct.totalPrice = priceForOne * Iproduct.Quatity;
+                    HttpContext.Session.SetObject("productList", products);
+                    // RETURN JSON here:
+                    return Ok(new { newTotalPrice = Iproduct.totalPrice, newQuantity = Iproduct.Quatity });
+                }
             }
-            return Ok();
+            return BadRequest(); // If product not found
         }
-
         [HttpGet]
         public async Task<IActionResult> AddNewDishToOrder(string dishId)
         {
@@ -290,6 +292,24 @@ namespace RestaurantWebApp.Controllers
             }
             return View("GetMenu");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveDishFromOrder(string dishId)
+        {
+            List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            foreach (var Iproduct in products)
+            {
+                if (Iproduct.Id == dishId)
+                {
+                    products.Remove(Iproduct);
+                    break;
+                }
+            }
+            HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
+            
+            return RedirectToAction("ShowOrderScreen", "customer");
+        }
+
         [HttpGet]
         public async Task<IActionResult> ShowOrderScreen()
         {
@@ -317,6 +337,9 @@ namespace RestaurantWebApp.Controllers
             Order order = await client.Get();
             //save order Id
             HttpContext.Session.SetString("orderId", order.Id);
+
+            if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
+                order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
 
             return View("ShowOrderScreen", order);
         }

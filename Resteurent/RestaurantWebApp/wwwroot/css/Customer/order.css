@@ -60,6 +60,7 @@ h2 {
 }
 
 .remove-button {
+    display:inline-block;
     background-color: #ff5555;
     color: #fff;
     border: none;
@@ -67,6 +68,7 @@ h2 {
     width: 32px;
     height: 32px;
     font-size: 18px;
+    text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -82,16 +84,16 @@ h2 {
 }
 
 .add-button {
-    background-color: #D4AF37;
-    color: #22243D;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
+    display: inline-block;
+    width: 50px; /* or whatever you want */
     height: 50px;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #4CAF50; /* button color */
+    color: white;
+    text-align: center;
+    line-height: 50px; /* vertical center the + */
+    text-decoration: none; /* remove underline */
+    border-radius: 8px; /* rounded corners if you want */
+    font-size: 24px; /* bigger + */
 }
 
     .add-button:hover {
