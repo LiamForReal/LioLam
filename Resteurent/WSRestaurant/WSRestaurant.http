@@ -1,4 +1,4 @@
-@WSRestaurant_HostAddress = http://localhost:5125
+@WSRestaurant_HostAddress = https://localhost:5125
 
 GET {{WSRestaurant_HostAddress}}/weatherforecast/
 Accept: application/json

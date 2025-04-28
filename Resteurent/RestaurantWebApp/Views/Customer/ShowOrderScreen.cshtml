@@ -39,14 +39,14 @@ else
                         @Html.AntiForgeryToken()
                         <input id="quantity" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity" onchange="updateQuantity('@product.Id', @this.Context)" />
                         <span id="total_price" class="dish-price">@product.totalPrice.ToString()</span>
-                        <a class="remove-button" href="http://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
+                        <a class="remove-button" href="https://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>
                 }
             }
         </div>
 
         <div class="add-dish-container">
-            <a class="add-button" href="http://localhost:7287/customer/ShowOrderMenu">+</a>
+            <a class="add-button" href="https://localhost:7287/customer/ShowOrderMenu">+</a>
         </div>
 
         <div class="sum-box">
@@ -54,7 +54,7 @@ else
         </div>
 
         <div class="action-buttons">
-            <a class="pay-button" href="http://localhost:7287/customer/ShowCreditCardInfo">Pay</a>
+            <a class="pay-button" href="https://localhost:7287/customer/ShowCreditCardInfo">Pay</a>
             <a class="load-button">Load Existing Order</a>
         </div>
     </div>

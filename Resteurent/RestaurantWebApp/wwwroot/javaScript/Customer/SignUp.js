@@ -39,12 +39,61 @@ function checkPassword() {
     var password = document.getElementById("password").value;
     var lbl = document.getElementById("passwordError");
     lbl.style.visibility = "hidden";
+    var isFormValid = true;
+
+    // Check if password is empty
     if (password == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password can not be empty";
         isFormValid = false;
-        return;
+        return isFormValid;
     }
+
+    // Check password length (at least 8 characters)
+    if (password.length < 8) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password must be at least 8 characters long";
+        isFormValid = false;
+        return isFormValid;
+    }
+
+    // Check for at least one uppercase letter
+    var upperCasePattern = /[A-Z]/;
+    if (!upperCasePattern.test(password)) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password must contain at least one uppercase letter";
+        isFormValid = false;
+        return isFormValid;
+    }
+
+    // Check for at least one lowercase letter
+    var lowerCasePattern = /[a-z]/;
+    if (!lowerCasePattern.test(password)) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password must contain at least one lowercase letter";
+        isFormValid = false;
+        return isFormValid;
+    }
+
+    // Check for at least one number
+    var numberPattern = /[0-9]/;
+    if (!numberPattern.test(password)) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password must contain at least one number";
+        isFormValid = false;
+        return isFormValid;
+    }
+
+    // Check for at least one special character
+    var specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!specialCharPattern.test(password)) {
+        lbl.style.visibility = "visible";
+        lbl.innerHTML = "Password must contain at least one special character";
+        isFormValid = false;
+        return isFormValid;
+    }
+
+    return isFormValid;
 }
 
 function checkHouse()

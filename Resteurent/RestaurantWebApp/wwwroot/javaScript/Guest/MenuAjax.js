@@ -2,7 +2,7 @@
     function () {
         $(".link").click(
             function () {
-                let uri = "http://localhost:7287/Guest/GetDishList/?"
+                let uri = "https://localhost:7287/Guest/GetDishList/?"
                 if (this.hasAttribute("data-chefId")) {
                     let ext = "chefId=" + this.getAttribute("data-chefId");
                     uri = uri + ext;

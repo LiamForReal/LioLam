@@ -28,7 +28,7 @@
             {
                 @if (customerId == null || customerId == "")
                 {
-                    <a href="http://localhost:7287/guest/GetDish?dishId=@dish.Id">
+                    <a href="https://localhost:7287/guest/GetDish?dishId=@dish.Id">
                         <div class="dish">
                             <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                             <p class="dish-name">@dish.DishName</p>
@@ -37,7 +37,7 @@
                 }
                 else
                 {
-                    <a href="http://localhost:7287/Customer/AddNewDishToOrder?dishId=@dish.Id">
+                    <a href="https://localhost:7287/Customer/AddNewDishToOrder?dishId=@dish.Id">
                         <div class="dish">
                             <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                             <p class="dish-name">@dish.DishName</p>

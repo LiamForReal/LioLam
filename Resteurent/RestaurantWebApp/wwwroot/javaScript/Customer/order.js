@@ -1,7 +1,7 @@
 ﻿function updateQuantity(dishId, newQuantity) {
     const token = document.getElementById('antiForgeryToken').value;
 
-    fetch('http://localhost:7287/customer/UpdateDishQuantity', {
+    fetch('https://localhost:7287/customer/UpdateDishQuantity', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

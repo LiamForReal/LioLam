@@ -34,7 +34,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<List<Category>> client = new WebClient<List<Category>>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetTypes"
@@ -75,7 +75,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<string> client = new WebClient<string>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/DeleteType"
@@ -92,7 +92,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Category> client = new WebClient<Category>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetTypeById"

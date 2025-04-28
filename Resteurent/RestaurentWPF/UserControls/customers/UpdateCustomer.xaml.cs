@@ -38,7 +38,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetUpdateCustomerView"
@@ -51,7 +51,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<bool> client = new WebClient<bool>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/IsCustomerExist"
@@ -65,7 +65,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Customer> client = new WebClient<Customer>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/GetCustomerById"
@@ -181,7 +181,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Customer> client = new WebClient<Customer>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/UpdateCustomer"

@@ -19,7 +19,7 @@ namespace RestaurantWebApp.Controllers
 
             WebClient<string> client = new WebClient<string>
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/LogIn"
@@ -59,7 +59,7 @@ namespace RestaurantWebApp.Controllers
         {
             WebClient<WelcomeDetails> client = new WebClient<WelcomeDetails>
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/GetWelcomeDetails"
@@ -86,7 +86,7 @@ namespace RestaurantWebApp.Controllers
             Console.WriteLine($"customer id is {customers.Id}" );
             WebClient<Customer> client = new WebClient<Customer>
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/SignUp"
@@ -116,7 +116,7 @@ namespace RestaurantWebApp.Controllers
             Console.WriteLine($"customer id is {customers.Id}");
             WebClient<Customer> client = new WebClient<Customer>
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/UpdateExistingUser"
@@ -151,7 +151,7 @@ namespace RestaurantWebApp.Controllers
             //city and strits lists from ws
             WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
@@ -174,7 +174,7 @@ namespace RestaurantWebApp.Controllers
             //city and strits lists from ws
             WebClient<CustomerLocationView> client = new WebClient<CustomerLocationView>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/ShowSignUp"
@@ -183,7 +183,7 @@ namespace RestaurantWebApp.Controllers
 
             WebClient<Customer> client2 = new WebClient<Customer>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/GetCustomerById"
@@ -224,7 +224,7 @@ namespace RestaurantWebApp.Controllers
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/guest/GetSingleDish"
@@ -277,7 +277,7 @@ namespace RestaurantWebApp.Controllers
                 
                 WebClient<Menu> client = new WebClient<Menu>()
                 {
-                    Scheme = "http",
+                    Scheme = "https",
                     Port = 5125,
                     Host = "localhost",
                     Path = "api/Guest/GetMenu"
@@ -327,7 +327,7 @@ namespace RestaurantWebApp.Controllers
             //get Order ID
             WebClient<Order> client = new WebClient<Order>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/getCurrentOrderId"
@@ -363,7 +363,7 @@ namespace RestaurantWebApp.Controllers
 
             //WebClient<Order> client = new WebClient<Order>()
             //{
-            //    Scheme = "http",
+            //    Scheme = "https",
             //    Port = 5125,
             //    Host = "localhost",
             //    Path = "api/Customer/AddNewOrder"

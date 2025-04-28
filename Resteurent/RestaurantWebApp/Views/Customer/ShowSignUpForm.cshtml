@@ -28,7 +28,7 @@ else
 {
     @if(Model.Customer == null)
     {
-        <form class="formBounts" method="post" action="http://localhost:7287/Customer/SignUp" enctype="multipart/form-data">
+        <form class="formBounts" method="post" action="https://localhost:7287/Customer/SignUp" enctype="multipart/form-data">
             <label>User Id</label>
             <input class="textinputId" type="text" id="userId" name="Id" placeholder="Enter your Id" /><br>
             <lable class="error" id="idError"></lable>
@@ -78,7 +78,7 @@ else
     }
     else
     {
-        <form class="formBounts" method="post" action="http://localhost:7287/Customer/EditAccount" enctype="multipart/form-data">
+        <form class="formBounts" method="post" action="https://localhost:7287/Customer/EditAccount" enctype="multipart/form-data">
             <label>User Id</label>
             <input class="textinputId" type="text" id="userId" name="Id" value="@Model.Customer.Id" readonly/><br>
             <lable class="error" id="idError"></lable>

@@ -37,7 +37,7 @@ namespace RestaurantWPF.UserControls
         {
             WebClient<List<Dish>> client = new WebClient<List<Dish>>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetDishes"
@@ -86,7 +86,7 @@ namespace RestaurantWPF.UserControls
         {
             WebClient<string> client = new WebClient<string>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/DeleteDish"
@@ -103,7 +103,7 @@ namespace RestaurantWPF.UserControls
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Guest/GetSingleDish"

@@ -20,7 +20,7 @@ namespace ResteurantWebApp.Controllers
             try
             {
                 WebClient<Menu> client = new WebClient<Menu>();
-                client.Scheme = "http";
+                client.Scheme = "https";
                 client.Port = 5125;
                 client.Host = "localhost";
                 client.Path = "api/Guest/GetMenu";
@@ -56,7 +56,7 @@ namespace ResteurantWebApp.Controllers
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/guest/GetSingleDish"
@@ -70,7 +70,7 @@ namespace ResteurantWebApp.Controllers
         public async Task<IActionResult> GetDishList(string? chefId = null, string? typeId = null, int pageNumber = 1 , int dishPerPage = 12)
         {
             WebClient<Menu> client = new WebClient<Menu>();
-            client.Scheme = "http";
+            client.Scheme = "https";
             client.Port = 5125;
             client.Host = "localhost";
             client.Path = "api/Guest/GetDishList";

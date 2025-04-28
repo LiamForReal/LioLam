@@ -36,7 +36,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<bool> client = new WebClient<bool>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/IsChefExist"
@@ -81,7 +81,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Chef> client = new WebClient<Chef>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/AddNewChef"

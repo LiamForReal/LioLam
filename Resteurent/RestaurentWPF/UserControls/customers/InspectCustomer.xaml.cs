@@ -32,7 +32,7 @@ namespace RestaurantWindowsPF.UserControls
             
             WebClient<Customer> client = new WebClient<Customer>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/GetCustomerById"

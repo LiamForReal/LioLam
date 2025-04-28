@@ -35,7 +35,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<List<Customer>> client = new WebClient<List<Customer>>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetCustomers"
@@ -84,7 +84,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<string> client = new WebClient<string>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/DeleteCustomer"
@@ -101,7 +101,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Customer> client = new WebClient<Customer>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Customer/GetCustomerbyId"

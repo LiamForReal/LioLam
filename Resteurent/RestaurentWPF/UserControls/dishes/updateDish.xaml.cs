@@ -39,7 +39,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<AddDishView> client = new WebClient<AddDishView>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/GetAddDishView"
@@ -54,7 +54,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<bool> client = new WebClient<bool>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/IsDishExist"
@@ -68,7 +68,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Guest/GetSingleDish"
@@ -170,7 +170,7 @@ namespace RestaurantWindowsPF.UserControls
         {
             WebClient<Dish> client = new WebClient<Dish>()
             {
-                Scheme = "http",
+                Scheme = "https",
                 Port = 5125,
                 Host = "localhost",
                 Path = "api/Manager/UpdateDish"
