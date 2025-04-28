@@ -1,10 +1,12 @@
 ﻿.credit-card-form {
+    display:inline-block;
     width: 400px;
     margin: auto;
     padding: 30px;
     background-color: #5e2d2d; /* Dark reddish like your site */
     border-radius: 10px;
     color: white;
+    height:90vh;
     text-align: center;
 }
 
@@ -21,7 +23,7 @@
 #cardForm {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
     #cardForm label {

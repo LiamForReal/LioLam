@@ -377,7 +377,7 @@ namespace RestaurantWebApp.Controllers
             //}
 
             //ViewBag.Error = true;
-            return View("ShowOrderScreen", order.products.Sum(item => item.totalPrice));
+            return View(order.products.Sum(item => item.totalPrice));
         }
 
         [HttpPost]

@@ -1,16 +1,17 @@
 .formBounts {
+    display: inline-block;
     margin-top: 20px;
     width: 500px;
-    justify-content: center;
-    height: 77vh;
+    height: 80vh;
     position: absolute;
     padding: 25px;
     border: 2px gold solid;
     background-color: #1a1a2e;
     font-size: 16px;
-    margin-bottom: 50px;
-    left: 25%;
+    text-align:center;
     margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 12px 30px rgba(0.2,0.3);
 }
 
 input::placeholder {
@@ -117,7 +118,7 @@ button {
     font-size: 14px;
     color: black;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 #moreInfoError {
@@ -131,7 +132,6 @@ button {
 
 .submit {
     font-weight: bold;
-    margin-left: 75px;
     border: 2px gold solid;
     background-color: #1a1a2e;
     color: white;
@@ -147,7 +147,7 @@ button {
 
 .clear {
     font-weight: bold;
-    margin-left: 125px;
+    margin-left: 30px;
     border: 2px gold solid;
     color: white;
     background-color: #1a1a2e;
