@@ -344,5 +344,47 @@ namespace RestaurantWebApp.Controllers
             return View("ShowOrderScreen", order);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ShowCreditCardInfo()
+        {
+            Order order = new Order()
+            {
+                Id = HttpContext.Session.GetString("orderId"),
+                CustomerId = HttpContext.Session.GetString("Id"),
+                OrderDate = DateTime.Today,
+                products = HttpContext.Session.GetObject<List<OrderProduct>>("productList")
+            };
+
+            if (order.products == null)
+            {
+                ViewBag.Error = true;
+                return View("ShowOrderScreen");
+            }
+
+            //WebClient<Order> client = new WebClient<Order>()
+            //{
+            //    Scheme = "http",
+            //    Port = 5125,
+            //    Host = "localhost",
+            //    Path = "api/Customer/AddNewOrder"
+            //};
+
+            //bool result = await client.Post(order);
+
+            //if(result == true)
+            //{
+            //    return View();//cradit card 
+            //}
+
+            //ViewBag.Error = true;
+            return View("ShowOrderScreen", order.products.Sum(item => item.totalPrice));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PayWithCardDetails()
+        {
+            //no need to take the info bc it only to simulate paying 
+            return View();
+        }
     }
 }

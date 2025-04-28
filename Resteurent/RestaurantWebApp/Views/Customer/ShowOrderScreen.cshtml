@@ -12,16 +12,15 @@
 }
 @section Js
 {
-    <script src="~/javascript/customer/orderfetch.js"></script>
+<script src="~/javascript/customer/orderfetch.js"></script>
 }
 
 @if (ViewBag.Error == true)
 {
-    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+    <h4 class="error">someting went wrong. try order later - every order must contains one dish at list</h4>
 }
 else
 {
-    @Html.AntiForgeryToken()
     <div class="order-container">
         <h2>Online Order</h2>
 
@@ -37,7 +36,8 @@ else
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <input id="quantity" class="dish-quantity" type="number" min="1" value="@product.Quatity" onchange="updateQuantity('@product.Id', this.value)" />
+                        @Html.AntiForgeryToken()
+                        <input id="quantity" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity" onchange="updateQuantity('@product.Id', @this.Context)" />
                         <span id="total_price" class="dish-price">@product.totalPrice.ToString()</span>
                         <a class="remove-button" href="http://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>
@@ -54,8 +54,8 @@ else
         </div>
 
         <div class="action-buttons">
-            <button class="pay-button">Pay</button>
-            <button class="load-button">Load Existing Order</button>
+            <a class="pay-button" href="http://localhost:7287/customer/ShowCreditCardInfo">Pay</a>
+            <a class="load-button">Load Existing Order</a>
         </div>
     </div>
 }

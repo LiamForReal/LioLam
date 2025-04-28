@@ -13,24 +13,24 @@ namespace WSRestaurant
             string sql = $@"INSERT INTO Orders (CustomerId, OrderDate) VALUES (@CustomerId, @OrderDate)";
             this.dbContext.AddParameter("@CustomerId", model.CustomerId);
             this.dbContext.AddParameter("@OrderDate", model.OrderDate.ToString());
-            return this.dbContext.Insert(sql);
-            //if (ok)
-            //{
-            //    foreach (OrderProduct product in model.products)//TO fix
-            //    {
-            //        sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
-            //        this.dbContext.AddParameter("@DishId", product.Id);
-            //        this.dbContext.AddParameter("@OrderId", model.Id);
-            //        this.dbContext.AddParameter("@Price", product.totalPrice.ToString());
-            //        this.dbContext.AddParameter("@Quantity",product.Quatity.ToString());
-            //        if(!this.dbContext.Insert(sql))
-            //        {
-            //            throw new Exception("return false seconed");
-            //        }
-            //    }
-            //    return ok;
-            //}
-            //else throw new Exception("return false");
+            bool ok = this.dbContext.Insert(sql);
+            if (ok)
+            {
+                foreach (OrderProduct product in model.products)
+                {
+                    sql = $@"INSERT INTO DishOrder (DishId, OrderId, Price, Quantity) VALUES (@DishId, @OrderId, @Price, @Quantity)";
+                    this.dbContext.AddParameter("@DishId", product.Id);
+                    this.dbContext.AddParameter("@OrderId", model.Id);
+                    this.dbContext.AddParameter("@Price", product.totalPrice.ToString());
+                    this.dbContext.AddParameter("@Quantity", product.Quatity.ToString());
+                    if (!this.dbContext.Insert(sql))
+                    {
+                        throw new Exception("return false seconed");
+                    }
+                }
+                return ok;
+            }
+            else throw new Exception("return false");
         }
 
         public string getLastId()

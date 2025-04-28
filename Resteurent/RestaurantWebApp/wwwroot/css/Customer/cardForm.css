@@ -1,0 +1,73 @@
+﻿.credit-card-form {
+    width: 400px;
+    margin: auto;
+    padding: 30px;
+    background-color: #5e2d2d; /* Dark reddish like your site */
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+    .credit-card-form h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .credit-card-form p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+#cardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    #cardForm label {
+        text-align: left;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    #cardForm input,
+    #cardForm select {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #222;
+        color: white;
+    }
+
+        #cardForm select option {
+            background-color: #444;
+            color: white;
+        }
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancel-btn, .submit-btn {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .cancel-btn:hover, .submit-btn:hover {
+        background-color: darkgray;
+    }
+.nameError, cvcError, dateError, numberError{
+    margin-top:10px;
+    font-size:16px;
+    color:red;
+}

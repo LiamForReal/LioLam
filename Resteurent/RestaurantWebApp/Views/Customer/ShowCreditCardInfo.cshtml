@@ -1,0 +1,64 @@
+﻿@model int
+@{
+    ViewData["Title"] = "ShowCreditCardInfo";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+
+@section Styles
+{
+    <link href="~/css/customer/cardForm.css" rel="stylesheet" />
+}
+@section Js
+{
+    <script src="~\javascript\customer\cardvalidation.js"></script>
+}
+
+<div class="credit-card-form">
+    <h2>Price is: @Model NIS</h2>
+    <p>pls enter card details</p>
+
+    <form id="cardForm" method="post" action="http://localhost:7287/Customer/PayWithCardDetails">
+        <label>*Card Name</label>
+
+        <select id="cardName" class="cities" name="CityId" required>  
+            <option>visa</option>
+            <option>mir</option>
+            <option>rupay</option>
+            <option>maestro</option>
+            <option>unionpay</option>
+            <option>jcb</option>
+            <option>diners club</option>
+            <option>discover</option>
+            <option>american express</option>
+            <option>mastercard</option>
+            <option>solo</option>
+            <option>tarjeta shopping</option>
+            <option>verve</option>
+            <option>uzcard</option>
+            <option>cabal</option>
+            <option>naranja</option>
+            <option>carnet</option>
+            <option>elo</option>
+            <option>laser</option>
+        </select>
+        <lable class="nameError" id="nameError"></lable>
+
+        <label>*Card Number</label>
+        <input type="text" id="cardNumber" placeholder="Enter card number" required>
+        <lable class="numberError" id="numberError"></lable>
+
+        <label>*CVC</label>
+        <input type="text" id="cardCVC" placeholder="Enter CVC" required>
+        <lable class="cvcError" id="cvcError"></lable>
+
+        <label>*Card Date</label>
+        <input type="text" id="cardDate" placeholder="MM/YY" required>
+        <lable class="dateError" id="dateError"></lable>
+
+        <div class="form-buttons">
+            <button type="reset" class="cancel-btn">Cancel</button>
+            <button type="submit" onclick="checkForm()" class="submit-btn">Submit</button>
+        </div>
+    </form>
+</div>

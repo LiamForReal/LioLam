@@ -141,9 +141,6 @@ button {
     }
 
 .pagination {
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -151,8 +148,8 @@ button {
     gap: 20px;
     padding: 10px 0;
     background-color: #1a1a2e;
-    border-top: 1px solid #3a3d62; /* Top border for separation */
-    z-index: 1000; /* Ensure it stays above other elements */
+    border-radius:5px;
+    border-top: 1px solid #3a3d62;
 }
 
 
@@ -189,4 +186,8 @@ button {
     position: absolute;
     width: 500px;
     height: 500px;
+}
+
+.footer{
+    display:none;
 }

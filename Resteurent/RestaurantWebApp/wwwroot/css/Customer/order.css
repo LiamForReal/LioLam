@@ -63,6 +63,8 @@ h2 {
     display:inline-block;
     background-color: #ff5555;
     color: #fff;
+    text-align:center;
+    align-items:center;
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -118,6 +120,9 @@ h2 {
 
 .pay-button,
 .load-button {
+    display:inline-block;
+    text-align:center;
+    align-items:center;
     background-color: #D4AF37;
     color: #22243D;
     font-weight: bold;
