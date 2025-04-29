@@ -38,15 +38,18 @@ function checkId() {
 function checkPassword() {
     var password = document.getElementById("password").value;
     var lbl = document.getElementById("passwordError");
+    var formAction = document.querySelector("form").action
     lbl.style.visibility = "hidden";
-    var isFormValid = true;
+
+    if (formAction.includes("EditAccount") && password == "")
+        return;
 
     // Check if password is empty
     if (password == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password can not be empty";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
 
     // Check password length (at least 8 characters)
@@ -54,7 +57,7 @@ function checkPassword() {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must be at least 8 characters long";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
 
     // Check for at least one uppercase letter
@@ -63,7 +66,7 @@ function checkPassword() {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one uppercase letter";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
 
     // Check for at least one lowercase letter
@@ -72,7 +75,7 @@ function checkPassword() {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one lowercase letter";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
 
     // Check for at least one number
@@ -81,7 +84,7 @@ function checkPassword() {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one number";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
 
     // Check for at least one special character
@@ -90,10 +93,8 @@ function checkPassword() {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one special character";
         isFormValid = false;
-        return isFormValid;
+        return;
     }
-
-    return isFormValid;
 }
 
 function checkHouse()

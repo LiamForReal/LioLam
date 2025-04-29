@@ -7,6 +7,8 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace WSRestaurant.Controllers
 {
@@ -81,8 +83,14 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                string customerId = unitOfWorkReposetory.customerRerposetoryObject.GetCustomerId(userName, password);
-                return customerId;
+                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getByName(userName);
+                if (customer != null)
+                {
+                    string passwordHash = BCrypt.Net.BCrypt.HashPassword(password); // hash the password with salt
+                    if (BCrypt.Net.BCrypt.Verify(customer.CustomerPassword, passwordHash)) // check if the password and the already exisiting password are mached
+                        return customer.Id;
+                }
+                return "";
             }
             catch (Exception ex)
             {
@@ -137,7 +145,15 @@ namespace WSRestaurant.Controllers
                     customer.CustomerImage = $"{customer.Id}{Path.GetExtension(savedImage)}";
                 }
                 Console.WriteLine($"customer Image is {customer.CustomerImage}");
-                if (isImageChanged)
+
+
+                if (customer.CustomerPassword != "")
+                    customer.CustomerPassword = BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword); //hash the password with salt
+                else customer.CustomerPassword = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerPassword;
+
+                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
+
+                if (isImageChanged && flag)
                 {
                     IFormFile file = Request.Form.Files[0];
 
@@ -165,9 +181,6 @@ namespace WSRestaurant.Controllers
                     }
                 }
 
-           
-                flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
-
                 this.dBContext.Commit();
                 return flag;
             }
@@ -189,7 +202,8 @@ namespace WSRestaurant.Controllers
             string json = Request.Form["model"];
             IFormFile file = Request.Form.Files[0];
             Customer customer = JsonSerializer.Deserialize<Customer>(json);
-            customer.CustomerImage=$"{customer.Id}{ Path.GetExtension(customer.CustomerImage)}";
+            customer.CustomerPassword =  BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword); //hash the password with salt
+            customer.CustomerImage=$"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
             try
             { //216849635
               

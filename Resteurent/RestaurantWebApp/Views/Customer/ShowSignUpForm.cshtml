@@ -7,12 +7,12 @@
 }
 
 @section Styles
-{ 
-<link href="~/css/Customer/signUp.css" rel="stylesheet" />
+{
+    <link href="~/css/Customer/signUp.css" rel="stylesheet" />
 }
 @section Js
 {
-<script src="~/javaScript/Customer/SignUp.js"></script>
+    <script src="~/javaScript/Customer/SignUp.js"></script>
 }
 
 @if (ViewBag.Error == true)
@@ -26,27 +26,27 @@
 }
 else
 {
-    @if(Model.Customer == null)
+    @if (Model.Customer == null)
     {
         <form class="formBounts" method="post" action="https://localhost:7287/Customer/SignUp" enctype="multipart/form-data">
             <label>User Id</label>
-            <input class="textinputId" type="text" id="userId" name="Id" placeholder="Enter your Id" /><br>
+            <input class="textinputId" type="text" id="userId" name="Id" placeholder="Enter your Id" required/><br>
             <lable class="error" id="idError"></lable>
             <label>User Name</label>
-            <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" /><br>
+            <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" required /><br>
             <lable class="error" id="userNameError"></lable>
             <label>Password</label>
-            <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password" /><br>
+            <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password" required /><br>
             <lable class="error" id="passwordError"></lable>
             <label>Email</label>
-            <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" /><br>
+            <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" required /><br>
             <lable class="error" id="emailError"></lable>
             <label>Phone</label>
-            <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" /><br>
+            <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" required /><br>
             <lable class="error" id="phoneError"></lable>
 
             <label class="cityText">City</label>
-            <select id = "cities" class="cities" name="CityId">
+            <select  id="cities" class="cities" name="city.Id">
                 @foreach (City city in Model.registerView.Cities)
                 {
                     <option value="@city.Id">@city.CityName</option>
@@ -55,7 +55,7 @@ else
             <lable class="error" id="cityError"></lable>
 
             <label class="streetText"><br />Street</label>
-            <select id="streets" class="streets" name="StreetId">
+            <select id="streets" class="streets" name="street.Id">
                 @foreach (Street street in Model.registerView.Streets)
                 {
                     <option value="@street.Id">@street.StreetName</option>
@@ -65,11 +65,11 @@ else
             <lable class="error" id="streetError"></lable>
 
             <label><br />House Number</label>
-            <input class="textinputHouseNumber" type="text" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" /><br>
+            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" required /><br>
             <lable class="error" id="houseNumberError"></lable>
 
             <label>Image</label>
-            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*"/><br>
+            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" required /><br>
             <lable class="error" id="ImageError"></lable>
 
             <button type="button" class="submit" onclick="checkForm()">Submit</button>
@@ -78,50 +78,50 @@ else
     }
     else
     {
-        <form class="formBounts" method="post" action="https://localhost:7287/Customer/EditAccount" enctype="multipart/form-data">
+        <form class="formBounts" method="post" id="form" action="https://localhost:7287/Customer/EditAccount" enctype="multipart/form-data">
             <label>User Id</label>
-            <input class="textinputId" type="text" id="userId" name="Id" value="@Model.Customer.Id" readonly/><br>
+            <input class="textinputId" type="text" id="userId" name="Id" value="@Model.Customer.Id" readonly /><br>
             <lable class="error" id="idError"></lable>
             <label>User Name</label>
-            <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" value="@Model.Customer.CustomerUserName"/><br>
+            <input class="textinputUser" type="text" id="userName" name="CustomerUserName" placeholder="Enter your User Name" value="@Model.Customer.CustomerUserName" required /><br>
             <lable class="error" id="userNameError"></lable>
-            <label>Password</label>
-            <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password" value="@Model.Customer.CustomerPassword"/><br>
+            <label>Change Password</label>
+            <input class="password" type="password" id="password" name="CustomerPassword" placeholder="Enter your Password"/><br>
             <lable class="error" id="passwordError"></lable>
             <label>Email</label>
-            <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" value="@Model.Customer.CustomerMail" /><br>
+            <input class="email" type="email" id="email" name="CustomerMail" placeholder="Enter your Email" value="@Model.Customer.CustomerMail" required /><br>
             <lable class="error" id="emailError"></lable>
             <label>Phone</label>
-            <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" value="@Model.Customer.CustomerPhone" /><br>
+            <input class="textinputPhone" type="text" id="phone" name="CustomerPhone" placeholder="Enter your Phone Number" value="@Model.Customer.CustomerPhone" required /><br>
             <lable class="error" id="phoneError"></lable>
 
             <label class="cityText">City</label>
-            <select id="cities" class="cities" name="CityId">
+            <select id="cities" class="cities" name="city">
                 @foreach (City city in Model.registerView.Cities)
                 {
                     @if (Model.Customer.city.Id == @city.Id)
                     {
-                        <option selected="selected" value="@city.Id">@city.CityName</option>
+                        <option selected="selected" value="@city">@city.CityName</option>
                     }
                     else
                     {
-                        <option value="@city.Id">@city.CityName</option>
+                        <option value="@city">@city.CityName</option>
                     }
                 }
             </select>
             <lable class="error" id="cityError"></lable>
 
             <label class="streetText"><br />Street</label>
-            <select id="streets" class="streets" name="StreetId">
+            <select id="streets" class="streets" name="street.Id">
                 @foreach (Street street in Model.registerView.Streets)
                 {
-                    @if(Model.Customer.street.Id == street.Id)
+                    @if (Model.Customer.street.Id == street.Id)
                     {
                         <option selected="selected" value="@street.Id">@street.StreetName</option>
                     }
                     else
                     {
-                        <option value="@street.Id">@street.StreetName</option>
+                        <option value="@street">@street.StreetName</option>
                     }
                 }
             </select>
@@ -129,7 +129,7 @@ else
             <lable class="error" id="streetError"></lable>
 
             <label><br />House Number</label>
-            <input class="textinputHouseNumber" type="text" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" value="@Model.Customer.CustomerHouse"/><br>
+            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" value="@Model.Customer.CustomerHouse" /><br>
             <lable class="error" id="houseNumberError"></lable>
 
             <label>Image</label>

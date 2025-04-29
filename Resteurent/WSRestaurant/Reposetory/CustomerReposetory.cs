@@ -8,7 +8,6 @@ namespace WSRestaurant
         public CustomerRerposetory(DBContext dbContext) : base(dbContext) { }
         public bool create(Customer model)
         {
-            model.CustomerImage = $"{model.Id}{model.CustomerImage}";
             string sql = $@"INSERT INTO Customers (CustomerId, CustomerUserName, CustomerHouse,CityId, StreetId, CustomerPhone, CustomerMail, CustomerPassword, CustomerImage, IsOwner) 
                             VALUES ('{model.Id}', '{model.CustomerUserName}', '{model.CustomerHouse}',{model.city.Id},{model.street.Id}, '{model.CustomerPhone}',
                                     '{model.CustomerMail}','{model.CustomerPassword}', '{model.CustomerImage}', {false})";
@@ -67,26 +66,6 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@CustomerId", model.Id);
             return this.dbContext.Update(sql);
             
-        }
-
-        public string GetCustomerId(string userName, string password)
-        {
-            string sql = @"SELECT Customers.CustomerId, Customers.CustomerUserName, Customers.CustomerPassword
-                            FROM Customers
-                            WHERE Customers.CustomerUserName=@CustomerUserName AND Customers.CustomerPassword=@CustomerPassword";
-            this.dbContext.AddParameter("@CustomerUserName", userName);
-            this.dbContext.AddParameter("@CustomerPassword", password);
-            try
-            {
-                var response = this.dbContext.ReadValue(sql);
-                if(response != null)
-                    return response.ToString();
-                return "";
-            }
-            catch(Exception e)
-            {
-                return "";
-            }
         }
 
         public string CheckIfAdmin(string userName, string password)
