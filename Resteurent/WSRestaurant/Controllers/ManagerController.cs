@@ -31,8 +31,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                string customerId = unitOfWorkReposetory.customerRerposetoryObject.
-                    CheckIfAdmin(customer.CustomerUserName, customer.CustomerPassword);
+                string customerId = unitOfWorkReposetory.customerRerposetoryObject.CheckIfAdmin(customer.CustomerUserName, customer.CustomerPassword);
                 return customerId != "";
             }
             catch (Exception ex)
@@ -303,6 +302,7 @@ namespace WSRestaurant.Controllers
             string json = Request.Form["model"];
             IFormFile file = Request.Form.Files[0];
             Customer customer = JsonSerializer.Deserialize<Customer>(json);
+            customer.CustomerPassword = BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword);
             customer.CustomerImage = Path.GetExtension(customer.CustomerImage);
             bool flag = false;
             try
@@ -343,10 +343,12 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
+                if(customer.CustomerPassword != "")
+                    customer.CustomerPassword = BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword);
                 if (!isImageExist)
                 {
                     string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
-                    customer.CustomerImage = $"{customer.Id} {Path.GetExtension(savedImage)}";
+                    customer.CustomerImage = $"{customer.Id}{Path.GetExtension(savedImage)}";
                 }
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 if (isImageExist && flag)

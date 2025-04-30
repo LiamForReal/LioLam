@@ -28,19 +28,16 @@
                  Background="#FF102840" Foreground="#FFE0E0E0"/>
 
         <!-- Password -->
-        <TextBlock Text="Password:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="140"/>
-        <TextBlock x:Name="CustomerPassword" Text="{Binding CustomerPassword}" Width="250" Height="30" Canvas.Left="150" Canvas.Top="135"
-                     Background="#FF102840" Foreground="#FFE0E0E0" />
 
         <!-- Phone -->
-        <TextBlock Text="Phone:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="190"/>
-        <TextBlock x:Name="CustomerPhone" Text="{Binding CustomerPhone}" Width="250" Height="30" Canvas.Left="150" Canvas.Top="185"
-                 Background="#FF102840" Foreground="#FFE0E0E0" />
+        <TextBlock Text="Phone:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="149" RenderTransformOrigin="0.3,0.636" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock x:Name="CustomerPhone" Text="{Binding CustomerPhone}" Width="250" Height="30" Canvas.Left="142" Canvas.Top="140"
+                 Background="#FF102840" Foreground="#FFE0E0E0" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
         <!-- Email -->
-        <TextBlock Text="Email:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="240"/>
-        <TextBlock x:Name="CustomerMail" Text="{Binding CustomerMail}" Width="250" Height="30" Canvas.Left="150" Canvas.Top="235"
-                 Background="#FF102840" Foreground="#FFE0E0E0"/>
+        <TextBlock Text="Email:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="218" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock x:Name="CustomerMail" Text="{Binding CustomerMail}" Width="250" Height="30" Canvas.Left="150" Canvas.Top="209"
+                 Background="#FF102840" Foreground="#FFE0E0E0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <!-- Address Section -->
         <TextBlock Text="Location:" FontSize="20" FontWeight="Bold" Foreground="#FFE0E0E0"

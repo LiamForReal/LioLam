@@ -29,8 +29,8 @@
                  Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
 
         <!-- Password -->
-        <TextBlock Text="Password:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="140"/>
-        <TextBox Name="CustomerPassword" Text="{Binding CustomerPassword}" Width="250" Height="30" Canvas.Left="150" Canvas.Top="135"
+        <TextBlock Text="Change Password:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="139" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <PasswordBox Name="CustomerPassword" Width="250" Height="30" Canvas.Left="200" Canvas.Top="139"
                      Background="#FF102840" Foreground="#FFE0E0E0" BorderBrush="#FF3A5F87"/>
 
         <!-- Phone -->
@@ -67,7 +67,7 @@
                 BorderBrush="#FFE0E0E0" Click="picktureInput_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <!-- Error Label -->
-        <Label x:Name="errorLable" Content="" Canvas.Left="275" Canvas.Top="469" Width="400" FontSize="18"
+        <Label x:Name="errorLable" Content="" Canvas.Left="275" Canvas.Top="474" Width="400" FontSize="18"
         Foreground="Red" HorizontalContentAlignment="Center"/>
 
         <!-- Update Button -->

@@ -83,14 +83,7 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();//add cities and streets and house number 
-                Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getByName(userName);
-                if (customer != null)
-                {
-                    string passwordHash = BCrypt.Net.BCrypt.HashPassword(password); // hash the password with salt
-                    if (BCrypt.Net.BCrypt.Verify(customer.CustomerPassword, passwordHash)) // check if the password and the already exisiting password are mached
-                        return customer.Id;
-                }
-                return "";
+                return unitOfWorkReposetory.customerRerposetoryObject.login(userName, password);
             }
             catch (Exception ex)
             {

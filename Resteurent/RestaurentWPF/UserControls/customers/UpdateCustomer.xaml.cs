@@ -1,4 +1,5 @@
 ﻿using LiolamResteurent;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Win32;
 using Models;
 using System;
@@ -105,7 +106,6 @@ namespace RestaurantWindowsPF.UserControls
             {
                 Id = customer.Id, 
                 CustomerUserName = customer.CustomerUserName,
-                CustomerPassword = customer.CustomerPassword,
                 CustomerHouse = customer.CustomerHouse,
                 CustomerMail = customer.CustomerMail, 
                 CustomerPhone = customer.CustomerPhone,
@@ -126,7 +126,7 @@ namespace RestaurantWindowsPF.UserControls
                 {
                     Id = customerId,
                     CustomerUserName = this.CustomerUsername.Text,
-                    CustomerPassword = this.CustomerPassword.Text, 
+                    CustomerPassword = this.CustomerPassword.Password, 
                     CustomerMail = this.CustomerMail.Text, 
                     CustomerHouse = int.Parse(this.CustomerHouse.Text),
                     CustomerPhone = this.CustomerPhone.Text,
@@ -135,21 +135,32 @@ namespace RestaurantWindowsPF.UserControls
                     IsOwner = true
                 };
 
+                string password = customer.CustomerPassword;
+
+                if (password != "")
+                {
+                    if (password.Length < 8)
+                    {
+                        errorLable.Content = "Password must be at list 8 tavs long";
+                        return;
+                    }
+                    else if (!password.Any(char.IsDigit) || !password.Any(char.IsUpper) || !password.Any(char.IsLower))
+                    {
+                        errorLable.Content = "Password must be strong -> contains one tav one big and small letter and one number at list";
+                        return;
+                    }
+                }
+
                 if (loadedCustomer.Equals(customer) && this.readerPictureFile == null)
                 {
                     this.Close();
-                }
-                else if (customer.CustomerUserName == "" || customer.CustomerPassword == "")
-                {
-                    errorLable.Content = "user name or password cannot be empty";
-                    return;
                 }
                 else if (loadedCustomer.CustomerUserName != customer.CustomerUserName && await IsCustomerExist(customer.CustomerUserName))
                 {
                     errorLable.Content = "dish with that name already exist";
                     return;
                 }
-                else if(customer.CustomerMail == "" || customer.CustomerPhone == "")
+                else if (customer.CustomerMail == "" || customer.CustomerPhone == "")
                 {
                     errorLable.Content = "phone and mail cannot be empty";
                     return;
