@@ -145,6 +145,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -203,6 +204,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -243,6 +245,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -383,6 +386,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -519,6 +523,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -617,6 +622,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -902,6 +908,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally

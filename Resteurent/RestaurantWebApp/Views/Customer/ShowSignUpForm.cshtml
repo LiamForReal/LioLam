@@ -17,12 +17,11 @@
 
 @if (ViewBag.Error == true)
 {
-    <h4 class="error">someting went wrong. try to otenticate you details and try again</h4>
+    <h4 class="error">your user name or Id is maching other user details (recommended user name firstName_LastName)</h4>
 }
-
-@if (Model == null)
+else if (Model == null)
 {
-    <h4 class="error">someting went wrong. try to otenticate you details and try again (the system do not alowed customers with the same Id or User Name)</h4>
+    <h4 class="error">someting went wrong. try again later</h4>
 }
 else
 {
@@ -65,14 +64,14 @@ else
             <lable class="error" id="streetError"></lable>
 
             <label><br />House Number</label>
-            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" required /><br>
+            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" required/><br>
             <lable class="error" id="houseNumberError"></lable>
 
             <label>Image</label>
-            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" required /><br>
+            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" required/><br>
             <lable class="error" id="ImageError"></lable>
 
-            <button type="button" class="submit" onclick="checkForm()">Submit</button>
+            <button type="submit" class="submit" onclick="checkForm()">Submit</button>
             <button type="reset" class="clear">Clear</button>
         </form>
     }
@@ -96,16 +95,16 @@ else
             <lable class="error" id="phoneError"></lable>
 
             <label class="cityText">City</label>
-            <select id="cities" class="cities" name="city">
+            <select id="cities" class="cities" name="city.Id">
                 @foreach (City city in Model.registerView.Cities)
                 {
-                    @if (Model.Customer.city.Id == @city.Id)
+                    @if (Model.Customer.city.Id == city.Id)
                     {
-                        <option selected="selected" value="@city">@city.CityName</option>
+                        <option value="@city.Id" selected="selected">@city.CityName</option>
                     }
                     else
                     {
-                        <option value="@city">@city.CityName</option>
+                        <option value="@city.Id">@city.CityName</option>
                     }
                 }
             </select>
@@ -121,7 +120,7 @@ else
                     }
                     else
                     {
-                        <option value="@street">@street.StreetName</option>
+                        <option value="@street.Id">@street.StreetName</option>
                     }
                 }
             </select>
@@ -129,14 +128,13 @@ else
             <lable class="error" id="streetError"></lable>
 
             <label><br />House Number</label>
-            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" value="@Model.Customer.CustomerHouse" /><br>
-            <lable class="error" id="houseNumberError"></lable>
+            <input class="textinputHouseNumber" type="number" min="0" id="houseNumber" name="CustomerHouse" placeholder="Enter your House Number" value="@Model.Customer.CustomerHouse" required/><br>
 
             <label>Image</label>
-            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" /><br>
+            <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" required/><br>
             <lable class="error" id="ImageError"></lable>
 
-            <button type="button" class="submit" onclick="checkForm()">Submit</button>
+            <button type="submit" class="submit" onclick="checkForm()">Submit</button>
             <button type="reset" class="clear">Clear</button>
         </form>
     }

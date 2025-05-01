@@ -13,7 +13,7 @@ namespace WSRestaurant
         private static DBContext dbContext; // Singleton instance of DBContext
 
         // Singleton pattern for DBContext: ensures a single instance is used.
-        //tools -> nugget -> middle one -> search oledb -> make it only on wsResteurant 
+        //tools -> nugget -> search for oledb -> make it only on wsResteurant 
         public static DBContext GetInstance()
         {
             if (dbContext == null)
@@ -59,6 +59,9 @@ namespace WSRestaurant
             this.transaction.Commit();
         }
 
+        /// <summary>
+        /// begin new transaction
+        /// </summary>
         public void BeginTransaction()
         {
             this.transaction = this.connection.BeginTransaction();

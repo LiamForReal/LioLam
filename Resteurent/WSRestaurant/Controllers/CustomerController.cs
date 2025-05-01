@@ -140,7 +140,7 @@ namespace WSRestaurant.Controllers
                 Console.WriteLine($"customer Image is {customer.CustomerImage}");
 
 
-                if (customer.CustomerPassword != "")
+                if (customer.CustomerPassword != "" && customer.CustomerPassword != null)
                     customer.CustomerPassword = BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword); //hash the password with salt
                 else customer.CustomerPassword = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerPassword;
 
@@ -181,6 +181,7 @@ namespace WSRestaurant.Controllers
             {
                 string msg = ex.Message;
                 Console.WriteLine(msg);
+                this.dBContext.Rollback();
                 return false;
             }
             finally
@@ -201,7 +202,12 @@ namespace WSRestaurant.Controllers
             { //216849635
               
                 dBContext.Open();
-                dBContext.BeginTransaction();
+                List<Customer> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
+                foreach(Customer Icustomer in customers)
+                {
+                    if (Icustomer.CustomerUserName == customer.CustomerUserName || Icustomer.Id == customer.Id)
+                        return false;
+                }
                 bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
                 if(flag)
                 {
@@ -212,15 +218,10 @@ namespace WSRestaurant.Controllers
                         await file.CopyToAsync(fileStream);
                     };
                 }
-
-                // Save customer to database
-                this.dBContext.Commit();
-              
                 return true;
             }
             catch (Exception ex)
             {
-                this.dBContext.Rollback();
                 return false;
             }
             finally

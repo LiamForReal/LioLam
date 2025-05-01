@@ -91,6 +91,7 @@ namespace RestaurantWebApp.Controllers
                 Host = "localhost",
                 Path = "api/Customer/SignUp"
             };
+
             customers.CustomerImage = Image.FileName;
 
             // Read image stream

@@ -54,36 +54,18 @@ namespace WSRestaurant
         }
         public bool update(Customer model)
         {
-            if(model.CustomerPassword != "")
-            {
-                string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone" +
-                     ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
-                this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
-                this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-                this.dbContext.AddParameter("@CityId", model.city.Id);
-                this.dbContext.AddParameter("@StreetId", model.street.Id);
-                this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
-                this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
-                this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
-                this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-                this.dbContext.AddParameter("@CustomerId", model.Id);
-                return this.dbContext.Update(sql);
-            }
-            else
-            {
-                string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone" +
-                     ", CustomerMail = @CustomerMail, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
-                this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
-                this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
-                this.dbContext.AddParameter("@CityId", model.city.Id);
-                this.dbContext.AddParameter("@StreetId", model.street.Id);
-                this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
-                this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
-                this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
-                this.dbContext.AddParameter("@CustomerId", model.Id);
-                return this.dbContext.Update(sql);
-            }
-
+            string sql = $@"UPDATE Customers SET CustomerUserName = @CustomerUserName, CustomerHouse =  @CustomerHouse,CityId = @CityId, StreetId = @StreetId ,CustomerPhone =  @CustomerPhone" +
+                 ", CustomerMail = @CustomerMail, CustomerPassword = @CustomerPassword, CustomerImage = @CustomerImage WHERE CustomerId = @CustomerId;";
+            this.dbContext.AddParameter("@CustomerUserName", model.CustomerUserName);
+            this.dbContext.AddParameter("@CustomerHouse", model.CustomerHouse.ToString());
+            this.dbContext.AddParameter("@CityId", model.city.Id);
+            this.dbContext.AddParameter("@StreetId", model.street.Id);
+            this.dbContext.AddParameter("@CustomerPhone", model.CustomerPhone);
+            this.dbContext.AddParameter("@CustomerMail", model.CustomerMail);
+            this.dbContext.AddParameter("@CustomerPassword", model.CustomerPassword);
+            this.dbContext.AddParameter("@CustomerImage", model.CustomerImage);
+            this.dbContext.AddParameter("@CustomerId", model.Id);
+            return this.dbContext.Update(sql);
         }
 
         public string CheckIfAdmin(string userName, string password)
