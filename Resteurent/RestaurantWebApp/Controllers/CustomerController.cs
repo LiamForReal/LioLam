@@ -202,6 +202,40 @@ namespace RestaurantWebApp.Controllers
             return View("ShowSignUpForm", account);
         }
 
+        [HttpGet]
+        public async Task GetCustomerOrders(string Id)
+        {
+            WebClient<List<string>> client = new WebClient<List<string>>()
+            {
+                Scheme = "https",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/customer/getOrderList"
+            };
+
+            client.AddParameter("Id", Id);
+
+            HttpContext.Session.SetObject<List<string>>("prevOrders", await client.Get());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoadOrderById(string orderId)
+        {
+            WebClient<List<OrderProduct>> client = new WebClient<List<OrderProduct>> ()
+            {
+                Scheme = "https",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/customer/LoadOrderById"
+            };
+            client.AddParameter("Id", HttpContext.Session.GetString("Id"));
+            client.AddParameter("orderId", orderId);
+
+            HttpContext.Session.SetObject<List<OrderProduct>>("productList", await client.Get());
+
+            return RedirectToAction("ShowOrderScreen", "customer");
+        }
+
         [HttpPost]
         [IgnoreAntiforgeryToken]
         public IActionResult UpdateDishInOrder([FromBody] DishQuantityUpdateRequest request)
@@ -322,6 +356,7 @@ namespace RestaurantWebApp.Controllers
                 order.Id = HttpContext.Session.GetString("orderId");
             if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
                 order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            await GetCustomerOrders(HttpContext.Session.GetString("Id"));
             return View(order);
         }
 
@@ -341,6 +376,8 @@ namespace RestaurantWebApp.Controllers
             Order order = await client.Get();
             //save order Id
             HttpContext.Session.SetString("orderId", order.Id);
+
+            await GetCustomerOrders(HttpContext.Session.GetString("Id"));
 
             if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
                 order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");

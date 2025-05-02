@@ -1,4 +1,5 @@
 ﻿using LiolamResteurent;
+using RestaurantWebSerice;
 
 namespace WSRestaurant
 {
@@ -13,6 +14,7 @@ namespace WSRestaurant
         StreetCreator streetCreator;
         TypeCreator typeCreator;
         OrdersCreator ordersCreator;
+        OrderProductCreator orderProductCreator;
 
         /// <summary>
         /// Property to create or retrieve a ChefCreator instance.
@@ -24,6 +26,19 @@ namespace WSRestaurant
                 if (this.chefCreator == null)
                     this.chefCreator = new ChefCreator();
                 return this.chefCreator;
+            }
+        }
+
+        /// <summary>
+        /// Property to create or retrieve a order product Creator instance.
+        /// </summary>
+        public OrderProductCreator CreateOrderProductObject
+        {
+            get
+            {
+                if (this.orderProductCreator == null)
+                    this.orderProductCreator = new OrderProductCreator();
+                return this.orderProductCreator;
             }
         }
 

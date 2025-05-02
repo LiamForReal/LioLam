@@ -1,9 +1,11 @@
 ﻿@using LiolamResteurent
+@using RestaurantWebApplication.externals
 @model Order
 
 @{
     ViewData["Title"] = "ShowOrderScreen";
     Layout = "~/Views/Shared/MasterPage.cshtml";
+    List<string> prevOrders = Context.Session.GetObject<List<string>>("prevOrders");
 }
 
 @section Styles
@@ -57,7 +59,24 @@ else
 
         <div class="action-buttons">
             <a class="pay-button" href="https://localhost:7287/customer/ShowCreditCardInfo">Pay</a>
-            <a class="load-button">Load Existing Order</a>
+            <form action="https://localhost:7287/customer/LoadOrderById" method="get" class="load-form">
+                @if (prevOrders != null && prevOrders.Count > 0)
+                {
+                    <select name="orderId" class="load-input" required>
+                        <option value="">Select a previous order</option>
+                        @foreach (var orderId in prevOrders)
+                        {
+                            <option value="@orderId">#@orderId</option>
+                        }
+                    </select>
+                    <button type="submit" class="load-button">Load Order</button>
+                }
+                else
+                {
+                    <input type="text" class="load-input readonly" value="No previous orders available" readonly />
+                    <button class="load-button" disabled>Load Order</button>
+                }
+            </form>
         </div>
     </div>
 }

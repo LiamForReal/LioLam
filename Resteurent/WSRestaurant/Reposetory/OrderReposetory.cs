@@ -65,7 +65,7 @@ namespace WSRestaurant
 
         public Order getById(string id)
         {
-            string sql = "SELECT FROM Orders WHERE OrderId = @OrderId";
+            string sql = "SELECT * FROM Orders WHERE OrderId = @OrderId";
             this.dbContext.AddParameter("@OrderId", id);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
@@ -74,15 +74,36 @@ namespace WSRestaurant
             }
         }
 
-        public Order getByCustomer(string customerId)
+        public List<string> getByCustomer(string customerId)
         {
-            string sql = "SELECT FROM Orders WHERE CustomerId = @CustomerId";
+            List<string> ordersId = new List<string>();
+            string sql = "SELECT * FROM Orders WHERE CustomerId = @CustomerId";
             this.dbContext.AddParameter("@CustomerId", customerId);
             using (IDataReader dataReader = this.dbContext.Read(sql))
             {
-                dataReader.Read();
-                return this.modelFactory.createOrderObject.CreateModel(dataReader);
+                while (dataReader.Read())
+                {
+                    string id = Convert.ToString(dataReader["OrderId"]);
+                    ordersId.Add(id);
+                }
             }
+            return ordersId;
+        }
+
+        public List<OrderProduct> getOrderProducts(string orderId)
+        {
+            List<OrderProduct> orderProducts = new List<OrderProduct>();
+            string sql = "SELECT * FROM DishOrder WHERE OrderId = @OrderId";
+            this.dbContext.AddParameter("@OrderId", orderId);
+            using (IDataReader dataReader = this.dbContext.Read(sql))
+            {
+                while (dataReader.Read())
+                {
+                    OrderProduct product = modelFactory.CreateOrderProductObject.CreateModel(dataReader);
+                    orderProducts.Add(product);
+                }
+            }
+            return orderProducts;
         }
         public bool update(Order model) //not in use
         {
@@ -92,20 +113,6 @@ namespace WSRestaurant
             this.dbContext.AddParameter("@OrderId", model.Id);
             return this.dbContext.Update(sql);
             //to change
-        }
-
-        public bool deleteByCustomer(string customerId)
-        {
-            Order order = this.getByCustomer(customerId);
-            string sql = $@"DELETE FROM Orders WHERE CustomerId=@CustomerId";
-            this.dbContext.AddParameter("@CustomerId", customerId);
-            if (this.dbContext.Delete(sql))
-            {
-                sql = $@"DELETE FROM DishOrder WHERE OrderId=@OrderId";
-                this.dbContext.AddParameter("@DishId", order.Id);
-                return this.dbContext.Delete(sql);
-            }
-            else throw new Exception("return false");
         }
     }
 }

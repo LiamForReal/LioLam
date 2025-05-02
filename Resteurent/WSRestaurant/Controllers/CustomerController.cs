@@ -9,6 +9,7 @@ using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Identity;
+using Models;
 
 namespace WSRestaurant.Controllers
 {
@@ -329,7 +330,7 @@ namespace WSRestaurant.Controllers
         //[HttpPost] make it when it will be relevent
         //public bool AddDishToOrder()
         //{
-            
+
         //    try
         //    {
         //        this.dBContext.Open();
@@ -348,6 +349,63 @@ namespace WSRestaurant.Controllers
         //    }
         //}
 
+        [HttpGet]
+        public List<string> getOrderList(string Id)
+        {
+            try
+            {
+                this.dBContext.Open();
+                return unitOfWorkReposetory.orderRerposetoryObject.getByCustomer(Id);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public List<OrderProduct> LoadOrderById(string Id, string orderId)
+        {
+            try
+            {
+                this.dBContext.Open();
+                this.dBContext.BeginTransaction();
+                List<string> OrderIds = unitOfWorkReposetory.orderRerposetoryObject.getByCustomer(Id);
+                if(OrderIds.Contains(orderId))
+                {
+                    Dish dish;
+                    List<OrderProduct> products = unitOfWorkReposetory.orderRerposetoryObject.getOrderProducts(orderId);
+                    foreach(OrderProduct product in products)
+                    {
+                        dish = unitOfWorkReposetory.dishRerposetoryObject.getById(product.Id);
+                        product.Name = dish.DishName;
+                        product.Image = dish.DishImage;
+                        if (product.totalPrice / product.Quatity != dish.DishPrice)
+                            product.totalPrice = product.Quatity * dish.DishPrice;
+                    }
+                    return products;
+                }
+                this.dBContext.Commit();
+                return null;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                this.dBContext.Rollback();
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
         [HttpPost]
         public bool AddNewOrder() //find a way to get products 
         {

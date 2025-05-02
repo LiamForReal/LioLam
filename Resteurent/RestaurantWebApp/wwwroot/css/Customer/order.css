@@ -123,6 +123,7 @@ h2 {
     display:inline-block;
     text-align:center;
     align-items:center;
+    text-decoration:none;
     background-color: #D4AF37;
     color: #22243D;
     font-weight: bold;
@@ -154,4 +155,29 @@ h2 {
         background-color: #ffe0e0;
         border: 2px solid #e03131;
         color: #721c24;
+    }
+
+.load-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.load-input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+    background-color: #fff;
+    color: #000;
+}
+
+    .load-input.readonly {
+        background-color: #444;
+        color: #aaa;
+        border: 1px solid #666;
+        cursor: not-allowed;
     }
