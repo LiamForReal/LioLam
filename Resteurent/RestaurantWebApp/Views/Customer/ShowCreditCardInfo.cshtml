@@ -7,58 +7,75 @@
 
 @section Styles
 {
-    <link href="~/css/customer/cardForm.css" rel="stylesheet" />
+<link href="~/css/customer/cardForm.css" rel="stylesheet" />
 }
 @section Js
 {
-    <script src="~\javascript\customer\cardvalidation.js"></script>
+    <script src="~/javascript/customer/cardValidation.js"></script>
 }
 
-<div class="credit-card-form">
-    <h2>Price is: @Model NIS</h2>
-    <p>pls enter card details</p>
+@if(ViewBag.Error == true)
+{
+    <div class="payment-message error">
+        <h2>Payment Failed</h2>
+        <p>Something went wrong. Your money has <strong>not</strong> been taken. Please try again.</p>
+    </div>
+}
+else if(ViewBag.Success == true)
+{
+    <div class="payment-message success">
+        <h2>Payment Successful!</h2>
+        <p>Your order has been paid and will arrive at your house within one hour. Thank you!</p>
+    </div>
+}
+else
+{
+    <div class="credit-card-form">
+        <h2>Price is: @Model NIS</h2>
+        <p>pls enter card details</p>
 
-    <form id="cardForm" method="post" action="https://localhost:7287/Customer/PayWithCardDetails">
-        <label>*Card Name</label>
+        <form id="cardForm" method="post" action="https://localhost:7287/Customer/PayWithCardDetails">
+            <label>*Card Name</label>
 
-        <select id="cardName" class="cities" name="CityId" required>  
-            <option>visa</option>
-            <option>mir</option>
-            <option>rupay</option>
-            <option>maestro</option>
-            <option>unionpay</option>
-            <option>jcb</option>
-            <option>diners club</option>
-            <option>discover</option>
-            <option>american express</option>
-            <option>mastercard</option>
-            <option>solo</option>
-            <option>tarjeta shopping</option>
-            <option>verve</option>
-            <option>uzcard</option>
-            <option>cabal</option>
-            <option>naranja</option>
-            <option>carnet</option>
-            <option>elo</option>
-            <option>laser</option>
-        </select>
-        <lable class="nameError" id="nameError"></lable>
+            <select id="cardName" class="cities" name="CityId" required>
+                <option>visa</option>
+                <option>mir</option>
+                <option>rupay</option>
+                <option>maestro</option>
+                <option>unionpay</option>
+                <option>jcb</option>
+                <option>diners club</option>
+                <option>discover</option>
+                <option>american express</option>
+                <option>mastercard</option>
+                <option>solo</option>
+                <option>tarjeta shopping</option>
+                <option>verve</option>
+                <option>uzcard</option>
+                <option>cabal</option>
+                <option>naranja</option>
+                <option>carnet</option>
+                <option>elo</option>
+                <option>laser</option>
+            </select>
+            <lable class="nameError" id="nameError"></lable>
 
-        <label>*Card Number</label>
-        <input type="text" id="cardNumber" placeholder="Enter card number" required>
-        <lable class="numberError" id="numberError"></lable>
+            <label>*Card Number</label>
+            <input type="text" id="cardNumber" placeholder="Enter card number" required>
+            <lable class="numberError" id="numberError"></lable>
 
-        <label>*CVC</label>
-        <input type="text" id="cardCVC" placeholder="Enter CVC" required>
-        <lable class="cvcError" id="cvcError"></lable>
+            <label>*CVC</label>
+            <input type="text" id="cardCVC" placeholder="Enter CVC" required>
+            <lable class="cvcError" id="cvcError"></lable>
 
-        <label>*Card Date</label>
-        <input type="text" id="cardDate" placeholder="MM/YY" required>
-        <lable class="dateError" id="dateError"></lable>
+            <label>*Card Date</label>
+            <input type="text" id="cardDate" placeholder="MM/YY" required>
+            <lable class="dateError" id="dateError"></lable>
 
-        <div class="form-buttons">
-            <button type="reset" class="cancel-btn">Cancel</button>
-            <button type="button" onclick="checkForm()" class="submit-btn">Submit</button>
-        </div>
-    </form>
-</div>
+            <div class="form-buttons">
+                <button type="reset" class="cancel-btn">Cancel</button>
+                <button type="submit" onclick="checkForm()" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+}

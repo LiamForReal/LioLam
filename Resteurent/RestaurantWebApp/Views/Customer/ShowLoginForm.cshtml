@@ -10,7 +10,10 @@
 
 @if (ViewBag.Error == true)
 {
-    <h4 class="error">Something went wrong. Authenticate your details and try again.</h4>
+    <div class="Login-message error">
+        <h2>Login Failed</h2>
+        <p>Something went wrong. Authenticate your details and try again</p>
+    </div>
 }
 
 <div class="login-container">

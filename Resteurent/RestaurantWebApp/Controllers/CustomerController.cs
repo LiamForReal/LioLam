@@ -98,7 +98,7 @@ namespace RestaurantWebApp.Controllers
 
             // Send the request with customer data and image
             bool result = await client.Post(customers, Image.OpenReadStream());
-
+            ViewBag.Error = true;
             if (!result)
             {
                 ViewBag.Error = true;
@@ -203,7 +203,8 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateDishQuantity([FromBody] DishQuantityUpdateRequest request)
+        [IgnoreAntiforgeryToken]
+        public IActionResult UpdateDishInOrder([FromBody] DishQuantityUpdateRequest request)
         {
             List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
             foreach (var Iproduct in products)
@@ -306,7 +307,9 @@ namespace RestaurantWebApp.Controllers
                     break;
                 }
             }
-            HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
+            if(products.Count == 0)
+                HttpContext.Session.SetObject<List<OrderProduct>>("productList", null);
+            else HttpContext.Session.SetObject<List<OrderProduct>>("productList", products);
             
             return RedirectToAction("ShowOrderScreen", "customer");
         }
@@ -346,7 +349,7 @@ namespace RestaurantWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowCreditCardInfo()
+        public async Task<IActionResult> AddNewOrder()
         {
             Order order = new Order()
             {
@@ -356,36 +359,43 @@ namespace RestaurantWebApp.Controllers
                 products = HttpContext.Session.GetObject<List<OrderProduct>>("productList")
             };
 
-            if (order.products == null)
+            WebClient<Order> client = new WebClient<Order>()
+            {
+                Scheme = "https",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/AddNewOrder"
+            };
+
+            bool result = await client.Post(order);
+
+            if (result == true)
+            {
+                ViewBag.Success = true;
+                HttpContext.Session.SetObject<List<OrderProduct>>("productList", null);
+            }
+            else ViewBag.Error = true;
+
+            return View("ShowCreditCardInfo");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowCreditCardInfo()
+        {
+            List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            if (products == null || products.Count == 0)
             {
                 ViewBag.Error = true;
                 return View("ShowOrderScreen");
             }
-
-            //WebClient<Order> client = new WebClient<Order>()
-            //{
-            //    Scheme = "https",
-            //    Port = 5125,
-            //    Host = "localhost",
-            //    Path = "api/Customer/AddNewOrder"
-            //};
-
-            //bool result = await client.Post(order);
-
-            //if(result == true)
-            //{
-            //    return View();//cradit card 
-            //}
-
-            //ViewBag.Error = true;
-            return View(order.products.Sum(item => item.totalPrice));
+            return View(products.Sum(item => item.totalPrice));
         }
 
         [HttpPost]
         public async Task<IActionResult> PayWithCardDetails()
         {
             //no need to take the info bc it only to simulate paying 
-            return View();
+            return RedirectToAction("AddNewOrder", "Customer");
         }
     }
 }

@@ -40,8 +40,8 @@
         isFormValid = false;
     }
 
-    if (isFormValid == true) {
-        document.forms[0].submit(); 
+    if (isFormValid == false) {
+        event.preventDefault();
     }
 }
 

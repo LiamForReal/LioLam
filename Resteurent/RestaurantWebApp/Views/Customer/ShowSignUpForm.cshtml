@@ -17,11 +17,17 @@
 
 @if (ViewBag.Error == true)
 {
-    <h4 class="error">your user name or Id is maching other user details (recommended user name firstName_LastName)</h4>
+    <div class="signup-message error">
+        <h2>Sign Up Failed</h2>
+        <p>your user name or Id is maching other user details (recommended user name firstName_LastName)</p>
+    </div>
 }
 else if (Model == null)
 {
-    <h4 class="error">someting went wrong. try again later</h4>
+    <div class="signup-message error">
+        <h2>Sign Up Failed</h2>
+        <p>someting went wrong. try again later</p>
+    </div>
 }
 else
 {
