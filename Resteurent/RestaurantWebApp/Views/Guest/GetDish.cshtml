@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "GetDish";
     Layout = "~/Views/Shared/MasterPage.cshtml";
+    var customerId = Context.Session.GetString("Id");
 }
 
 @section Styles
 {
-    <link href="~/css/Guest/GetDish.css" rel="stylesheet" />
+<link href="~/css/guest/GetDish.css" rel="stylesheet" />
 }
 
 @if (Model == null)
@@ -48,9 +49,21 @@ else
                     <h2 class="section-title">Dish Types</h2>
                     <p class="dish-types">@string.Join(", ", Model.types.Select(t => t.TypeName))</p>
                 </div>
-                <div class="back-button-container">
-                    <a href="/Guest/GetMenu" class="back-button">Back to Menu</a>
-                </div>
+                @if(customerId == null || customerId == "")
+                {
+                    <div class="back-button-container">
+                        <a href = "https://localhost:7287/guest/GetMenu" class="back-button">Back To Menu</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="back-button-container">
+                        <a href="https://localhost:7287/guest/GetMenu" class="back-button">Back To Menu</a>
+                    </div>
+                    <div class="order-button-container">
+                        <a href="https://localhost:7287/Customer/AddNewDishToOrder?dishId=@Model.Id" class="order-button">Add To Order</a>
+                    </div>
+                }
             </div>
         </div>
     </div>

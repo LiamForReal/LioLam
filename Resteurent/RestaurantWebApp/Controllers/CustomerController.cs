@@ -53,7 +53,15 @@ namespace RestaurantWebApp.Controllers
 
         }
 
-
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Remove("Id");
+            HttpContext.Session.Remove("orderId");
+            HttpContext.Session.Remove("productList");
+            HttpContext.Session.Remove("prevOrders");
+            return RedirectToAction("GetDefaultScreen");
+        }
         [HttpGet]
         public async Task<IActionResult> GetDefaultScreen()
         {

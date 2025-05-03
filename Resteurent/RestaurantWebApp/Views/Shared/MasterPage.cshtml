@@ -20,25 +20,29 @@
 @RenderSection("Js", required: false)
 
 <div class="header">
-    <i class="fas fa-utensils headerIcon"></i>
-    <p class="headerTitle">LioLam</p>
-    
-    @if (customerId == null || customerId == "")
-    {
-        <a href="https://localhost:7287/Guest/GetDefaultScreen" class="firstHeaderMenu" onclk="HomePage()">Home</a>
-        <a class="headerMenu" href="https://localhost:7287/Guest/GetMenu">Menu</a>
-        <a class="headerMenu" href="https://localhost:7287/Customer/ShowLogInForm">LogIn</a>
-        <a class="headerMenu" href="https://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
-    }
-    else
-    {
-        <a href="https://localhost:7287/Customer/GetDefaultScreen" class="firstHeaderMenu" style="margin-left: 15%;" onclk="HomePage()">Home</a>
-        <a href="https://localhost:7287/Guest/GetDefaultScreen" class="headerMenu">LogOut</a>
-        <a href="https://localhost:7287/Customer/ShowEditSignUpForm" class="headerMenu">Edit Account Info</a>
-        <a class="headerMenu">Reservations</a>
-        <a href="https://localhost:7287/Customer/ShowOrderDefaultScreen" class="headerMenu">Orders</a>
-    }
+    <div class="header-left">
+        <i class="fas fa-utensils headerIcon"></i>
+        <p class="headerTitle">LioLam</p>
+    </div>
+
+    <div class="header-buttons">
+        <a href="https://localhost:7287/Guest/GetDefaultScreen" class="headerMenu" onclk="HomePage()">Home</a>
+        @if (customerId == null || customerId == "")
+        {
+            <a class="headerMenu" href="https://localhost:7287/Guest/GetMenu">Menu</a>
+            <a class="headerMenu" href="https://localhost:7287/Customer/ShowLogInForm">LogIn</a>
+            <a class="headerMenu" href="https://localhost:7287/Customer/ShowSignUpForm">SignUp</a>
+        }
+        else
+        {
+            <a href="https://localhost:7287/Customer/GetDefaultScreen" class="headerMenu" onclk="HomePage()">Profile</a>
+            <a href="https://localhost:7287/Customer/LogOut" class="headerMenu">LogOut</a>
+            <a href="https://localhost:7287/Customer/ShowEditSignUpForm" class="headerMenu">Edit Profile</a>
+            <a href="https://localhost:7287/Customer/ShowOrderDefaultScreen" class="headerMenu">Order</a>
+        }
+    </div>
 </div>
+
 <div class="body" id="body">
     @RenderBody()
 </div>

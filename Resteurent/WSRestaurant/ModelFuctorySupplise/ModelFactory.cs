@@ -10,7 +10,6 @@ namespace WSRestaurant
         DishCreator dishCreator;
         CityCreator cityCreator;
         CustomerCreator customerCreator;
-        ReservationCreator reservationCreator;
         StreetCreator streetCreator;
         TypeCreator typeCreator;
         OrdersCreator ordersCreator;
@@ -78,19 +77,6 @@ namespace WSRestaurant
                 if (this.customerCreator == null)
                     this.customerCreator = new CustomerCreator();
                 return this.customerCreator;
-            }
-        }
-
-        /// <summary>
-        /// Property to create or retrieve a ReservationCreator instance.
-        /// </summary>
-        public ReservationCreator createReservationObject
-        {
-            get
-            {
-                if (this.reservationCreator == null)
-                    this.reservationCreator = new ReservationCreator();
-                return this.reservationCreator;
             }
         }
 

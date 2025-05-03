@@ -7,7 +7,6 @@
         CustomerRerposetory customerRerposetory;
         DishRerposetory dishRerposetory;
         OrderRerposetory orderRerposetory;
-        ReservationRerposetory reservationRerposetory;
         StreetReposetory streetReposetory;
         TypeReposetory typeReposetory;
 
@@ -60,15 +59,6 @@
                 if (this.orderRerposetory == null)
                     this.orderRerposetory = new OrderRerposetory(dbContext);
                 return this.orderRerposetory;
-            }
-        }
-        public ReservationRerposetory reservationRerposetoryObject
-        {
-            get
-            {
-                if (this.reservationRerposetory == null)
-                    this.reservationRerposetory = new ReservationRerposetory(dbContext);
-                return this.reservationRerposetory;
             }
         }
         public StreetReposetory streetReposetoryObject

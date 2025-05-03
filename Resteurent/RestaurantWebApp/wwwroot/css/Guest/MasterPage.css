@@ -1,63 +1,65 @@
+
 body {
     width: 100%;
-    color: white;
-    height: auto;
-    margin: auto;
+    margin: 0;
     font-size: 20px;
+    background-color: #22243d;
+    color: white;
+    font-family: Arial, sans-serif;
 }
+
 
 .header {
     background-color: #1a1a2e;
-    height: 100px;
-    display: block;
+    padding: 10px 0;
+}
+
+
+.header-left {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
 }
 
 .headerIcon {
     font-size: 28px;
     color: gold;
-    margin-left: 1%;
-    margin-top: 35px;
+    margin-right: 10px;
 }
 
 .headerTitle {
-    margin-left: 3%;
-    margin-top: 45px;
-    display: inline;
     font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+}
+
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 20px;
 }
 
 .headerMenu {
-    margin-left: 3%;
-    margin-top: 25px;
     font-size: 16px;
-    border-width: 0;
     color: white;
-    background-color: #1a1a2e;
     text-decoration: none;
-    display: inline-block;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
     .headerMenu:hover {
-        background-color: #1a1a2e;
         color: gold;
+        border-color: gold;
+        background-color: rgba(255, 255, 255, 0.05);
     }
 
-.firstHeaderMenu {
-    margin-left: 23.5%;
-    margin-top: 45px;
-    border-color: #1a1a2e;
-    border-width: 0;
-    color: white;
-    font-size: 16px;
-    background-color: #1a1a2e;
-    text-decoration: none;
-    display: inline-block;
-}
-
-    .firstHeaderMenu:hover {
-        background-color: #1a1a2e;
-        color: gold;
-    }
 
 .body {
     background-color: #22243d;

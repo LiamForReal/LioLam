@@ -2,6 +2,8 @@
 using LiolamResteurent;
 using WebApiClient;
 using System.Runtime.CompilerServices;
+using RestaurantWebApplication.externals;
+using Models;
 
 namespace ResteurantWebApp.Controllers
 {
@@ -10,7 +12,6 @@ namespace ResteurantWebApp.Controllers
         [HttpGet]
         public IActionResult GetDefaultScreen()
         {
-            HttpContext.Session.SetString("Id", "");
             return View();
         }
 

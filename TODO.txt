@@ -1,5 +1,4 @@
-1. add view dish in the orders before adding to order 
-2.remove reservations from the hole project
+
 3.remove the option to remove the manager account in customers
 4.make in orders statistics and order log view
 5.fix desines in all the project
