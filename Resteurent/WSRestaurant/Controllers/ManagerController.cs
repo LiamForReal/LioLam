@@ -166,28 +166,22 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
+                string savedImage = unitOfWorkReposetory.dishRerposetoryObject.getById(dish.Id).DishImage;
                 if (!isImageExist)
-                {
-                    string savedImage = unitOfWorkReposetory.dishRerposetoryObject.getById(dish.Id).DishImage;
                     dish.DishImage = $"{dish.Id}{Path.GetExtension(savedImage)}";
-                }
+
                 flag = unitOfWorkReposetory.dishRerposetoryObject.update(dish);
+
                 if (isImageExist && flag)
                 {
                     IFormFile file = Request.Form.Files[0];
 
                     string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Dishes");
-                    string fileNameWithoutExt = dish.Id; // or customer.CustomerImage if it's just the name
-
-                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
-
-                    foreach (var ext in possibleExtensions)
+            
+                    string fullPath = Path.Combine(basePath, savedImage);
+                    if (System.IO.File.Exists(fullPath))
                     {
-                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
+                        System.IO.File.Delete(fullPath);
                     }
 
                     string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Dishes\{dish.DishImage}";
@@ -346,30 +340,23 @@ namespace WSRestaurant.Controllers
             {
                 this.dBContext.Open();
                 this.dBContext.BeginTransaction();
-                if(customer.CustomerPassword != "")
+                string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
+                if (customer.CustomerPassword != "")
                     customer.CustomerPassword = BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword);
                 if (!isImageExist)
-                {
-                    string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
                     customer.CustomerImage = $"{customer.Id}{Path.GetExtension(savedImage)}";
-                }
+
                 flag = unitOfWorkReposetory.customerRerposetoryObject.update(customer);
                 if (isImageExist && flag)
                 {
                     IFormFile file = Request.Form.Files[0];
 
                     string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
-                    string fileNameWithoutExt = customer.Id; // or customer.CustomerImage if it's just the name
 
-                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
-
-                    foreach (var ext in possibleExtensions)
+                    string fullPath = Path.Combine(basePath, savedImage);
+                    if (System.IO.File.Exists(fullPath))
                     {
-                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
+                        System.IO.File.Delete(fullPath);
                     }
 
                     string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
@@ -544,11 +531,10 @@ namespace WSRestaurant.Controllers
             try
             {
                 this.dBContext.Open();
+                string savedImage = unitOfWorkReposetory.chefRepositoryObject.getById(chef.Id).ChefImage;
                 if (!isImageExsist)
-                {
-                    string savedImage = unitOfWorkReposetory.chefRepositoryObject.getById(chef.Id).ChefImage;
                     chef.ChefImage = $"{chef.Id}{Path.GetExtension(savedImage)}";
-                }
+
 
                 flag = unitOfWorkReposetory.chefRepositoryObject.update(chef);
 
@@ -557,17 +543,11 @@ namespace WSRestaurant.Controllers
                     IFormFile file = Request.Form.Files[0];
 
                     string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Chefs");
-                    string fileNameWithoutExt = chef.Id; // or customer.CustomerImage if it's just the name
 
-                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
-
-                    foreach (var ext in possibleExtensions)
+                    string fullPath = Path.Combine(basePath, savedImage);
+                    if (System.IO.File.Exists(fullPath))
                     {
-                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
+                        System.IO.File.Delete(fullPath);
                     }
 
                     string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Chefs\{chef.ChefImage}";

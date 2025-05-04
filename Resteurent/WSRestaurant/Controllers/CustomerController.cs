@@ -133,9 +133,9 @@ namespace WSRestaurant.Controllers
             {    
                 this.dBContext.Open();
                 dBContext.BeginTransaction();
-                if(!customer.CustomerImage.Contains("."))
-                {
-                    string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
+                string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
+                if (!customer.CustomerImage.Contains("."))
+                { 
                     customer.CustomerImage = $"{customer.Id}{Path.GetExtension(savedImage)}";
                 }
                 Console.WriteLine($"customer Image is {customer.CustomerImage}");
@@ -156,15 +156,10 @@ namespace WSRestaurant.Controllers
                     string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Customers");
                     string fileNameWithoutExt = customer.Id; // or customer.CustomerImage if it's just the name
 
-                    string[] possibleExtensions = { ".png", ".jpg", ".jpeg", ".webp", ".jfif" };
-
-                    foreach (var ext in possibleExtensions)
+                    string fullPath = Path.Combine(basePath, savedImage);
+                    if (System.IO.File.Exists(fullPath))
                     {
-                        string fullPath = Path.Combine(basePath, fileNameWithoutExt + ext);
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                        }
+                        System.IO.File.Delete(fullPath);
                     }
 
                     string filePath = $@"{Directory.GetCurrentDirectory()}\wwwroot\Images\Customers\{customer.CustomerImage}";
