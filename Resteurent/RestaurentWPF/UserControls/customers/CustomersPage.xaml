@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
              mc:Ignorable="d" 
              Width="1100" Height="750" Background="#FF22243D">
+    
     <Canvas>
+        
         <TextBlock Text="Customers" Canvas.Left="100" Canvas.Top="10" FontSize="30" Foreground="White" FontWeight="Bold" />
 
         <ListView x:Name="listView" Background="#5DADEC" Height="550" Width="900" Canvas.Left="100" Canvas.Top="50"
@@ -16,15 +18,19 @@
                     <Border Background="#E6F2FF" CornerRadius="10" Margin="5" Padding="10">
                         <StackPanel Orientation="Horizontal" Width="860">
                             <Image x:Name="CustomerImage" Source="{Binding CustomerImage}" Width="60" Height="60" Margin="10"/>
+
                             <Label x:Name="CustomerName" Content="{Binding CustomerUserName}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="20,0"/>
 
                             <Button x:Name="inspectCustomer" Content="Inspect" Tag="{Binding Id}" Width="70" Height="40" Margin="50,0,0,0" Click="inspectCustomer_Click" 
-                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
 
                             <Button x:Name="updateCustomer" Content="Update" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="updateCustomer_Click" 
-                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
-                            <Button x:Name="deleteCustomer" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="deleteCustomer_Click" 
-                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"/>
+
+                            <Button x:Name="deleteCustomer" Content="Delete" Tag="{Binding Id}" Width="70" Height="40" Margin="10,0" Click="deleteCustomer_Click"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1"
+                                 IsEnabled="{Binding IsOwner}"/>
+
                         </StackPanel>
                     </Border>
                 </DataTemplate>

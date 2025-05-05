@@ -41,7 +41,16 @@ namespace RestaurantWindowsPF.UserControls
                 Path = "api/Manager/GetCustomers"
             };
 
-            this.listView.ItemsSource = await client.Get();
+            List<Customer> customers = await client.Get();
+            foreach (Customer customer in customers)
+            {
+                if (customer.IsOwner == true)
+                {
+                    customer.CustomerUserName += " (Manager)";
+                }
+                customer.IsOwner = !customer.IsOwner;
+            }
+            this.listView.ItemsSource = customers;
         }
 
         private void inspectCustomer_Click(object sender, RoutedEventArgs e)
