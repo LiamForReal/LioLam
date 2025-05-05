@@ -19,12 +19,12 @@
         <TextBox x:Name="lastNameTextBox" Background="#FF22243D" FontSize="18" Canvas.Left="302" Canvas.Top="292" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="148"/>
 
         <!-- Chef Image -->
-        <Button x:Name="picktureInput" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="586" Canvas.Top="418" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Picture" Click="picktureInput_Click"/>
+        <Button x:Name="picktureInput" Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="12" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="586" Canvas.Top="418" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Picture" Click="picktureInput_Click"/>
         <Image x:Name="imgRenderer" Source="{Binding ChefImage}"  Height="199" Width="220"
                Canvas.Left="536" Canvas.Top="160" Stretch="UniformToFill"/>
 
         <Button Content="Create" x:Name="createButton" Tag="{Binding Id}" Canvas.Left="275" Canvas.Top="475" Width="200" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"
-            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click"/>
+            Background="Transparent" BorderBrush="White" BorderThickness="1" Foreground="White" FontWeight="Bold" Click="createButton_Click"/>
 
         <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="219" FontSize="18" Foreground="red" Canvas.Top="413" Width="312" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Canvas>

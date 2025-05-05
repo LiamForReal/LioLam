@@ -9,13 +9,13 @@
         Title="Master Page" Height="750" Width="1300" ResizeMode="NoResize">
     <Canvas Height="750" Width="1300" VerticalAlignment="Top">
         <Border BorderThickness="3" BorderBrush="Gold">
-            <Canvas
-            Width="200"
-            Height="750"
-            x:Name="headers"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Background="#1a1a2e" RenderTransformOrigin="0.5,0.5">
+            <Canvas Width="200"
+                    Height="750"
+                    x:Name="headers"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Background="#1a1a2e"
+                    RenderTransformOrigin="0.5,0.5">
                 <Canvas.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -25,22 +25,133 @@
                     </TransformGroup>
                 </Canvas.RenderTransform>
 
-                <Button Content="Log In" x:Name="LogInButton" Canvas.Left="40" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="185" HorizontalAlignment="Center" VerticalAlignment="Center"
-                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="LogInButton_Click"/>
-                <StackPanel Canvas.Left="40" x:Name="buttons" Canvas.Top="294" HorizontalAlignment="Center" VerticalAlignment="Top" Height="441" >
-                    <Button Content="Dishes" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="94" Margin="0,0,0,20" x:Name="DishesButton" Click="DishesButton_Click"/>
-                    <Button Content="Chefs" x:Name="ChefsButton" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="80" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Margin="0,0,0,20" Click="ChefsButton_Click"/>
-                    <Button Content="Types" x:Name="TypesButton" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="236" Margin="0,0,0,20" Click="TypesButton_Click"/>
-                    <Button Content="Customers" x:Name="CustomersButton" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="312" Margin="0,0,0,20" Click="CustomersButton_Click"/>
-                    <Button Content="Orders" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Canvas.Left="30" Height="60" Width="120" RenderTransformOrigin="0.475,-0.391" Canvas.Top="384"  Margin="0,0,0,20"/>
+                <Button x:Name="LogInButton"
+                    Canvas.Left="40"
+                    Canvas.Top="185"
+                    Width="120"
+                    Height="60"
+                    Background="Transparent"
+                    BorderBrush="White"
+                    BorderThickness="1"
+                    Foreground="White"
+                    FontSize="16"
+                    Click="LogInButton_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="LogIcon" Source="/Icons/user.png" Width="30" Height="30" />
+                        <TextBlock x:Name="LogLabel" Text="Log In" />
+                    </StackPanel>
+                </Button>
+
+
+                <!-- Navigation Buttons -->
+                <StackPanel Canvas.Left="40"
+                            x:Name="buttons"
+                            Canvas.Top="294"
+                            Height="441"
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top">
+
+                    <!-- Dishes -->
+                    <Button x:Name="DishesButton"
+                            Click="DishesButton_Click"
+                            Height="60"
+                            Width="120"
+                            Margin="0,0,0,20"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            Foreground="White"
+                            FontWeight="Bold">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="79">
+                            <Image Source="/Icons/cloche.png" Width="30" Height="30" />
+                            <TextBlock Text="Dishes" Height="30" Width="54" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Chefs -->
+                    <Button x:Name="ChefsButton"
+                            Click="ChefsButton_Click"
+                            Height="60"
+                            Width="120"
+                            Margin="0,0,0,20"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            Foreground="White"
+                            FontWeight="Bold">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="/Icons/chef.png" Width="30" Height="30" />
+                            <TextBlock Text="Chefs" Height="30" Width="54" TextAlignment="Center"/>
+  
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Types -->
+                    <Button x:Name="TypesButton"
+                            Click="TypesButton_Click"
+                            Height="60"
+                            Width="120"
+                            Margin="0,0,0,20"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            Foreground="White"
+                            FontWeight="Bold">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="/Icons/options-lines.png" Width="30" Height="30" />
+                            <TextBlock Text="Types" Height="30" Width="54" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Customers -->
+                    <Button x:Name="CustomersButton"
+                            Click="CustomersButton_Click"
+                            Height="60"
+                            Width="120"
+                            Margin="0,0,0,20"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            Foreground="White"
+                            FontWeight="Bold">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="/Icons/customer.png" Width="30" Height="30" />
+                            <TextBlock Text="Customers" Height="30" Width="54" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Orders -->
+                    <Button Height="60"
+                            Width="120"
+                            Margin="0,0,0,20"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            Foreground="White"
+                            FontWeight="Bold">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="/Icons/trend.png" Width="30" Height="30" />
+                            <TextBlock Text="Orders" Height="30" Width="54" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
-                <Image Height="200"  Width="200" x:Name="LioLamIcon" Source="/Images/Icon.png" Stretch="Fill" Canvas.Top="-15" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <!-- Logo -->
+                <Image Height="200"
+                       Width="200"
+                       x:Name="LioLamIcon"
+                       Source="/Images/Icon.png"
+                       Stretch="Fill"
+                       Canvas.Top="-15"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"/>
             </Canvas>
         </Border>
 
-        <Border  x:Name="data" Canvas.Left="200" BorderThickness="5" BorderBrush="Gold">
-            <Canvas Background="#FF22243D" Height="750" Width="1100" HorizontalAlignment="Left" Canvas.Left="200" VerticalAlignment="Center"></Canvas>
+        <!-- Main Content -->
+        <Border x:Name="data" Canvas.Left="200" BorderThickness="5" BorderBrush="Gold">
+            <Canvas Background="#FF22243D" Height="750" Width="1100" HorizontalAlignment="Left" Canvas.Left="200" VerticalAlignment="Center"/>
         </Border>
-        
     </Canvas>
 </Window>

@@ -33,6 +33,6 @@
 
         <Button Content="Add new dish" x:Name="addNewDish" Canvas.Left="450" Canvas.Top="619" Height="50" Width="200"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
-                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="addNewDish_Click"/>
+               Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="addNewDish_Click"/>
     </Canvas>
 </UserControl>

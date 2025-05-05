@@ -9,10 +9,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\chef.png" />
+    <None Remove="Icons\cloche.png" />
+    <None Remove="Icons\customer.png" />
+    <None Remove="Icons\logout.png" />
+    <None Remove="Icons\options-lines.png" />
+    <None Remove="Icons\trend.png" />
+    <None Remove="Icons\user.png" />
     <None Remove="Images\restaurant_open_screen.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Icons\options-lines.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\chef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\cloche.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\customer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\logout.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\trend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\user.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Icon.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

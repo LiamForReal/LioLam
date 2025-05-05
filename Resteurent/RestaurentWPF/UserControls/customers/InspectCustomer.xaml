@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="InspectCustomer" Height="550" Width="900"
         ResizeMode="NoResize"
-        Background="#FF0B2545">
+        Background="#FF22243D">
     <Canvas>
 
         <!-- Title -->
@@ -62,10 +62,12 @@
         <Button Content="Back"
                 Width="100" Height="35"
                 Canvas.Left="770" Canvas.Top="451"
-                Background="#FF3A5F87"
+                Background="Transparent" 
                 Foreground="White"
-                BorderBrush="#FFE0E0E0"
                 FontWeight="Bold"
-                Cursor="Hand" Click="BackButton_Click"/>
+                FontSize="16"
+                BorderBrush="White"
+                BorderThickness="1"
+                Click="BackButton_Click"/>
     </Canvas>
 </Window>

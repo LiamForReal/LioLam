@@ -65,11 +65,7 @@
         <TextBlock Text="City:" Foreground="#FFE0E0E0" FontSize="16" Canvas.Left="30" Canvas.Top="440"/>
         <ComboBox x:Name="CityComboBox" Canvas.Left="150" Canvas.Top="439" Background="#FF102840" Foreground="black" Width="200" Height="30" FontSize="14" DisplayMemberPath="CityName" SelectedValuePath="Id"  BorderBrush="Gold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <Button x:Name="picktureInput" Content="Add Picture" Width="100" Height="35"
-                Canvas.Left="720" Canvas.Top="201"
-                Background="#FF3A5F87"
-                Foreground="White"
-                BorderBrush="#FFE0E0E0" Click="picktureInput_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="picktureInput" Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="12" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="710" Canvas.Top="206" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Picture" Click="picktureInput_Click"/>
 
         <!-- Error Label -->
         <Label x:Name="errorLable" Content="" Canvas.Left="275" Canvas.Top="469" Width="400" FontSize="18"
@@ -79,10 +75,12 @@
         <Button Content="Create" Tag="{Binding Id}"
                 Width="150" Height="43"
                 Canvas.Left="695" Canvas.Top="439"
-                Background="#FF3A5F87"
-                Foreground="White"
-                BorderBrush="#FFE0E0E0"
-                FontWeight="Bold"
-                Cursor="Hand" Click="createButton_Click"/>
+                Background="Transparent" 
+                Foreground="White" 
+                FontWeight="Bold" 
+                FontSize="16" 
+                BorderBrush="White" 
+                BorderThickness="1" 
+                Click="createButton_Click"/>
     </Canvas>
 </Window>

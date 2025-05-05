@@ -34,14 +34,12 @@
         <Image x:Name="imgRenderer" Height="199" Width="220"
                Canvas.Left="525" Canvas.Top="90" Stretch="UniformToFill" />
 
-        <Button x:Name="picktureInput" Content="Add Picture" Canvas.Left="635" Canvas.Top="330" Width="120" Height="35"
-                Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16"
-                BorderBrush="White" BorderThickness="1" Click="picktureInput_Click"/>
+        <Button x:Name="picktureInput" Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="12" BorderBrush="White" BorderThickness="1" Height="33" Width="120" Canvas.Left="635" Canvas.Top="330" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Add Picture" Click="picktureInput_Click"/>
 
         <!-- Types -->
         <Label Content="Types:" Canvas.Left="60" Canvas.Top="300" FontSize="18" Foreground="White"/>
         <ListBox x:Name="types" ItemsSource="{Binding types}" SelectionMode="Multiple" Canvas.Left="60" Canvas.Top="330" Width="180" Height="120"
-                 Background="#FF5DADEC" BorderThickness="0">
+                 Background="#FF22243D" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label FontSize="16" Content="{Binding TypeName}" Foreground="White" Padding="10,5"/>
@@ -52,7 +50,7 @@
         <!-- Chefs -->
         <Label Content="Chefs:" Canvas.Left="270" Canvas.Top="300" FontSize="18" Foreground="White"/>
         <ListBox x:Name="chefs" ItemsSource="{Binding chefs}" SelectionMode="Multiple" Canvas.Left="270" Canvas.Top="330" Width="330" Height="120"
-                 Background="#FF5DADEC" BorderThickness="0">
+                 Background="#FF22243D" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="5">

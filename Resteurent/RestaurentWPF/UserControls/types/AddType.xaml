@@ -15,7 +15,7 @@
         <TextBox x:Name="nameTextBox" Background="#FF22243D" FontSize="18" Canvas.Left="400" Canvas.Top="249" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150"/>
 
         <Button Content="Create" x:Name="createButton" Canvas.Left="317" Canvas.Top="420" Width="187" Height="61" HorizontalAlignment="Left" VerticalAlignment="Top"
-            Background="#FF5DADEC" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click"/>
+            Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="createButton_Click"/>
         <Label x:Name="errorLable" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="304" FontSize="16" Foreground="red" Canvas.Top="341" Width="200" Height="28"/>
     </Canvas>
 </Window>

@@ -46,19 +46,31 @@ public partial class MainWindow : Window
     private void LogInButton_Click(object sender, RoutedEventArgs e)
     {
         if (!isLogin)
+        {
             loginPage = new LogInPage();
-
-        Button button = (Button)(sender);
-        button.Content = "Log In";
-        this.data.Child = loginPage;
-        isLogin = false;
-        this.buttons.Visibility = Visibility.Hidden;
-        loginPage.LoginSuccessful += OnLoginSuccessful;
+            this.LogLabel.Text = "Log In";
+            
+            this.LogIcon.Source = new BitmapImage(new Uri("/Icons/user.png", UriKind.Relative)); ; // Login icon
+            isLogin = false;
+            this.buttons.Visibility = Visibility.Hidden;
+            this.data.Child = loginPage;
+            loginPage.LoginSuccessful += OnLoginSuccessful;
+        }
+        else
+        {
+            this.LogLabel.Text = "Log In";
+            this.LogIcon.Source = new BitmapImage(new Uri("/Icons/user.png", UriKind.Relative)); ; // Revert to login icon
+            isLogin = false;
+            this.buttons.Visibility = Visibility.Hidden;
+            Index();
+        }
     }
 
     private void OnLoginSuccessful(object sender, EventArgs e)
     {
-        this.LogInButton.Content = "Log out";
+        this.LogLabel.Text = "Log Out";
+        
+        this.LogIcon.Source = new BitmapImage(new Uri("/Icons/logout.png", UriKind.Relative)); ; // Logout icon
         isLogin = true;
         this.buttons.Visibility = Visibility.Visible;
     }

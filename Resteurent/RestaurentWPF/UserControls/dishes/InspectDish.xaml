@@ -32,7 +32,7 @@
 
         <!-- Types -->
         <Label Content="Types:" FontSize="18" Canvas.Left="60" Canvas.Top="300" Foreground="White"/>
-        <ListView x:Name="types" Background="#FF5DADEC" Canvas.Left="60" Canvas.Top="330" Width="180" Height="120"
+        <ListView x:Name="types" Background="#FF22243D" Canvas.Left="60" Canvas.Top="330" Width="180" Height="120"
                   ItemsSource="{Binding types}" BorderThickness="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -43,7 +43,7 @@
 
         <!-- Chefs -->
         <Label Content="Chefs:" FontSize="18" Canvas.Left="270" Canvas.Top="300" Foreground="White"/>
-        <ListView x:Name="chefs" Background="#FF5DADEC" Canvas.Left="270" Canvas.Top="330" Width="330" Height="120"
+        <ListView x:Name="chefs" Background="#FF22243D" Canvas.Left="270" Canvas.Top="330" Width="330" Height="120"
                   ItemsSource="{Binding chefs}" BorderThickness="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -58,6 +58,6 @@
 
         <!-- Back Button -->
         <Button Content="Back" Canvas.Left="353" Canvas.Top="503" Width="80" Height="35"
-          Background="#FF5DADEC" Foreground="White" FontWeight="Bold" Click="BackButton_Click"/>
+          Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="16" BorderBrush="White" BorderThickness="1" Click="BackButton_Click"/>
     </Canvas>
 </Window>
