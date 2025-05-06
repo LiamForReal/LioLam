@@ -3,10 +3,63 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:local="clr-namespace:RestaurantWindowsPF.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             Width="1100" Height="750" Background="#FF22243D">
+
+    <Canvas>
+        <!-- Pie Chart: Customer Order Distribution -->
+        <Border Canvas.Left="30" Canvas.Top="30" Width="500" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+            <StackPanel Background="#FF1E1E2E" Margin="10">
+                <TextBlock Text="Customer Order Share" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <lc:PieChart x:Name="CustomerPieChart" LegendLocation="Right" />
+            </StackPanel>
+        </Border>
+
+        <!-- Line Chart: Orders Per Day -->
+        <Border Canvas.Left="580" Canvas.Top="30" Width="490" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+            <StackPanel Background="#FF1E1E2E" Margin="10">
+                <TextBlock Text="Orders Per Day" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <lc:CartesianChart x:Name="OrdersLineChart">
+                    <lc:CartesianChart.AxisX>
+                        <lc:Axis Title="Date" LabelsRotation="15"/>
+                    </lc:CartesianChart.AxisX>
+                    <lc:CartesianChart.AxisY>
+                        <lc:Axis Title="Orders" />
+                    </lc:CartesianChart.AxisY>
+                </lc:CartesianChart>
+            </StackPanel>
+        </Border>
+
+        <!-- Bar Chart: Top 10 Dishes -->
+        <Border Canvas.Left="30" Canvas.Top="380" Width="500" Height="320" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+            <StackPanel Background="#FF1E1E2E" Margin="10">
+                <TextBlock Text="Top 10 Popular Dishes" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <lc:CartesianChart x:Name="TopDishesBarChart">
+                    <lc:CartesianChart.AxisX>
+                        <lc:Axis Title="Dishes" LabelsRotation="15"/>
+                    </lc:CartesianChart.AxisX>
+                    <lc:CartesianChart.AxisY>
+                        <lc:Axis Title="Times Ordered" />
+                    </lc:CartesianChart.AxisY>
+                </lc:CartesianChart>
+            </StackPanel>
+        </Border>
+
+        <!-- Area Chart: Daily Profit -->
+        <Border Canvas.Left="580" Canvas.Top="380" Width="490" Height="320" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+            <StackPanel Background="#FF1E1E2E" Margin="10">
+                <TextBlock Text="Daily Profit" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <lc:CartesianChart x:Name="ProfitAreaChart">
+                    <lc:CartesianChart.AxisX>
+                        <lc:Axis Title="Date" LabelsRotation="15"/>
+                    </lc:CartesianChart.AxisX>
+                    <lc:CartesianChart.AxisY>
+                        <lc:Axis Title="Profit ($)" />
+                    </lc:CartesianChart.AxisY>
+                </lc:CartesianChart>
+            </StackPanel>
+        </Border>
+    </Canvas>
 </UserControl>

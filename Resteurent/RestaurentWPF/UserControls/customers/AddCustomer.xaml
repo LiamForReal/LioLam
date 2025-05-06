@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="AddCustomer" Height="550" Width="900"
-        Background="#FF0B2545">
+        Background="#FF22243D">
     <Canvas>
 
         <!-- Title -->

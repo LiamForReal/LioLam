@@ -1,4 +1,5 @@
-﻿using LiolamResteurent;
+﻿using Aspose.Cells.Charts;
+using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WSRestaurant.Controllers
 {
@@ -821,5 +821,127 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Close();
             }
         }
+
+        //statistics//
+
+        [HttpGet]
+        public Dictionary<string, int> GetPieChart()
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>();
+            try
+            {
+                
+                this.dBContext.Open();
+                List<Customer> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
+                foreach(Customer customer in customers)
+                {
+                    data.Add(customer.CustomerUserName, unitOfWorkReposetory.orderRerposetoryObject.getByCustomer(customer.Id).Count);
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public Dictionary<string, int> GetLineChart()
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>();
+            try
+            {
+
+                this.dBContext.Open();
+                List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
+                data = orders.GroupBy(order => order.OrderDate.Date).ToDictionary(
+                    date => date.Key.ToString("yyyy-MM-dd"),
+                    ordersRate => ordersRate.Count()
+                );
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public Dictionary<string, int> BarChart()
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>();
+            try
+            {
+
+                this.dBContext.Open();
+                List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
+                foreach (Order order in orders)
+                    order.products = unitOfWorkReposetory.orderRerposetoryObject.getOrderProducts(order.Id);
+
+                data = orders.SelectMany(order => order.products)
+                    .GroupBy(product => product.Name).ToDictionary(
+                    name => name.Key,
+                    dishRate => dishRate.Count()
+                );
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
+        [HttpGet]
+        public Dictionary<string, int> AriaChart()
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>();
+            try
+            {
+
+                this.dBContext.Open();
+                List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
+                foreach (Order order in orders)
+                    order.products = unitOfWorkReposetory.orderRerposetoryObject.getOrderProducts(order.Id);
+
+                data = orders
+                    .GroupBy(order => order.OrderDate)  // Group orders by their date
+                    .ToDictionary(
+                        orderDate => orderDate.Key.ToString("MM/dd/yyyy"),  // Format the date as "MM/dd/yyyy"
+                        totalPrice => totalPrice
+                            .Sum(order => order.products.Sum(product => product.totalPrice))  // Sum all prices for the date
+                    );
+                return data;
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return null;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
+
     }
 }
