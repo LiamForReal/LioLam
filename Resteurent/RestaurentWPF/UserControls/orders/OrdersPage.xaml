@@ -10,20 +10,20 @@
 
     <Canvas>
         <!-- Pie Chart: Customer Order Distribution -->
-        <Border Canvas.Left="30" Canvas.Top="30" Width="500" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+        <Border Canvas.Left="55" Canvas.Top="30" Width="450" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Left" VerticalAlignment="Center">
             <StackPanel Background="#FF1E1E2E" Margin="10">
                 <TextBlock Text="Customer Order Share" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <lc:PieChart x:Name="CustomerPieChart" LegendLocation="Right" />
+                <lc:PieChart x:Name="customerPieChart"  LegendLocation="Right" Height="240" />
             </StackPanel>
         </Border>
 
         <!-- Line Chart: Orders Per Day -->
-        <Border Canvas.Left="580" Canvas.Top="30" Width="490" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+        <Border Canvas.Left="580" Canvas.Top="30" Width="450" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
             <StackPanel Background="#FF1E1E2E" Margin="10">
                 <TextBlock Text="Orders Per Day" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <lc:CartesianChart x:Name="OrdersLineChart">
+                <lc:CartesianChart x:Name="ordersLineChart" Height="240">
                     <lc:CartesianChart.AxisX>
-                        <lc:Axis Title="Date" LabelsRotation="15"/>
+                        <lc:Axis Title="Date" LabelsRotation="15" LabelFormatter="{Binding DateFormatter}" />
                     </lc:CartesianChart.AxisX>
                     <lc:CartesianChart.AxisY>
                         <lc:Axis Title="Orders" />
@@ -33,10 +33,10 @@
         </Border>
 
         <!-- Bar Chart: Top 10 Dishes -->
-        <Border Canvas.Left="30" Canvas.Top="380" Width="500" Height="320" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+        <Border Canvas.Left="55" Canvas.Top="375" Width="450" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
             <StackPanel Background="#FF1E1E2E" Margin="10">
-                <TextBlock Text="Top 10 Popular Dishes" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <lc:CartesianChart x:Name="TopDishesBarChart">
+                <TextBlock Text="Popular Dishes In Orders" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <lc:CartesianChart x:Name="topDishesBarChart" Height="240">
                     <lc:CartesianChart.AxisX>
                         <lc:Axis Title="Dishes" LabelsRotation="15"/>
                     </lc:CartesianChart.AxisX>
@@ -48,12 +48,12 @@
         </Border>
 
         <!-- Area Chart: Daily Profit -->
-        <Border Canvas.Left="580" Canvas.Top="380" Width="490" Height="320" BorderBrush="Gold" BorderThickness="2" CornerRadius="10">
+        <Border Canvas.Left="580" Canvas.Top="375" Width="450" Height="300" BorderBrush="Gold" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Left" VerticalAlignment="Center">
             <StackPanel Background="#FF1E1E2E" Margin="10">
                 <TextBlock Text="Daily Profit" Foreground="Gold" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <lc:CartesianChart x:Name="ProfitAreaChart">
+                <lc:CartesianChart x:Name="profitAreaChart" Height="240">
                     <lc:CartesianChart.AxisX>
-                        <lc:Axis Title="Date" LabelsRotation="15"/>
+                        <lc:Axis Title="Date" LabelsRotation="15" />
                     </lc:CartesianChart.AxisX>
                     <lc:CartesianChart.AxisY>
                         <lc:Axis Title="Profit ($)" />

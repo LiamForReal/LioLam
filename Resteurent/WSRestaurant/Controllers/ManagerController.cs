@@ -1,4 +1,4 @@
-﻿using Aspose.Cells.Charts;
+﻿
 using LiolamResteurent;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -852,16 +852,16 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public Dictionary<string, int> GetLineChart()
+        public Dictionary<DateTime, int> GetLineChart()
         {
-            Dictionary<string, int> data = new Dictionary<string, int>();
+            Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
             try
             {
 
                 this.dBContext.Open();
                 List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
                 data = orders.GroupBy(order => order.OrderDate.Date).ToDictionary(
-                    date => date.Key.ToString("yyyy-MM-dd"),
+                    date => date.Key,
                     ordersRate => ordersRate.Count()
                 );
                 return data;
@@ -888,7 +888,13 @@ namespace WSRestaurant.Controllers
                 this.dBContext.Open();
                 List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
                 foreach (Order order in orders)
+                {
                     order.products = unitOfWorkReposetory.orderRerposetoryObject.getOrderProducts(order.Id);
+                    foreach (OrderProduct product in order.products)
+                    {
+                        product.Name = unitOfWorkReposetory.dishRerposetoryObject.getById(product.Id).DishName;
+                    }
+                }
 
                 data = orders.SelectMany(order => order.products)
                     .GroupBy(product => product.Name).ToDictionary(
@@ -910,10 +916,11 @@ namespace WSRestaurant.Controllers
             }
         }
 
+
         [HttpGet]
-        public Dictionary<string, int> AriaChart()
+        public Dictionary<DateTime, int> AreaChart()
         {
-            Dictionary<string, int> data = new Dictionary<string, int>();
+            Dictionary<DateTime, int> data = new Dictionary<DateTime, int>();
             try
             {
 
@@ -921,11 +928,12 @@ namespace WSRestaurant.Controllers
                 List<Order> orders = unitOfWorkReposetory.orderRerposetoryObject.getAll();
                 foreach (Order order in orders)
                     order.products = unitOfWorkReposetory.orderRerposetoryObject.getOrderProducts(order.Id);
+                   
 
                 data = orders
                     .GroupBy(order => order.OrderDate)  // Group orders by their date
                     .ToDictionary(
-                        orderDate => orderDate.Key.ToString("MM/dd/yyyy"),  // Format the date as "MM/dd/yyyy"
+                        orderDate => orderDate.Key,  // Format the date as "MM/dd/yyyy"
                         totalPrice => totalPrice
                             .Sum(order => order.products.Sum(product => product.totalPrice))  // Sum all prices for the date
                     );
