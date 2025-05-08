@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -78,6 +79,7 @@ namespace RestaurantWindowsPF.UserControls
 
         private async Task OrdersLineChart()
         {
+            List<string> Labels= new List<string>();
             WebClient<Dictionary<DateTime, int>> client = new WebClient<Dictionary<DateTime, int>>()
             {
                 Scheme = "https",
@@ -89,17 +91,31 @@ namespace RestaurantWindowsPF.UserControls
             Dictionary<DateTime, int> data = await client.Get();
 
             DayOrderSeries.Clear();
+            Labels.Clear();
 
-            foreach (var item in data)
+            ChartValues<int> values = new ChartValues<int>();
+
+            foreach (var item in data.OrderBy(d => d.Key))
             {
-                DayOrderSeries.Add(new LineSeries
-                {
-                    Title = item.Key.ToString("YYYY-MM-DD"),
-                    Values = new ChartValues<int> { item.Value }
-                });
+                values.Add(item.Value);
+                Labels.Add(item.Key.ToString("dd/MM/yyyy"));
             }
 
-            this.ordersLineChart.Series = DayOrderSeries;
+            DayOrderSeries.Add(new LineSeries
+            {
+                Title = "Orders",
+                Values = values
+            });
+
+            ordersLineChart.Series = DayOrderSeries;
+
+            // Set the X axis labels
+            ordersLineChart.AxisX.Clear();
+            ordersLineChart.AxisX.Add(new Axis
+            {
+                Title = "Date",
+                Labels = Labels
+            });
         }
 
         private async Task DishesBarChart()
@@ -130,6 +146,7 @@ namespace RestaurantWindowsPF.UserControls
 
         private async Task ProfitAreaChart()
         {
+            List<string> Labels = new List<string>();
             WebClient<Dictionary<DateTime, int>> client = new WebClient<Dictionary<DateTime, int>>()
             {
                 Scheme = "https",
@@ -140,18 +157,35 @@ namespace RestaurantWindowsPF.UserControls
 
             Dictionary<DateTime, int> data = await client.Get();
 
+            Labels.Clear();
             ProfitSeries.Clear();
+
+
+            ChartValues<int> values = new ChartValues<int>();
+
+            foreach (var item in data.OrderBy(d => d.Key))
+            {
+                values.Add(item.Value);
+                Labels.Add(item.Key.ToString("dd/MM/yyyy"));
+            }
 
             ProfitSeries.Add(new LineSeries
             {
                 Title = "Profit",
-                Values = new ChartValues<int>(data.Values),
+                Values = values,
                 Fill = Brushes.LightGreen,
                 LineSmoothness = 0.5,
                 PointGeometry = null
             });
 
             this.profitAreaChart.Series = ProfitSeries;
+
+            profitAreaChart.AxisX.Clear();
+            profitAreaChart.AxisX.Add(new Axis
+            {
+                Title = "Date",
+                Labels = Labels
+            });
         }
     }
 }
