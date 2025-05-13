@@ -1,5 +1,4 @@
-4.make in orders statistics and order log view
-4.5 check order validations 
+4. check order validations 
 5.fix desines in all the project
 6. project inishialization file
 done!!!
