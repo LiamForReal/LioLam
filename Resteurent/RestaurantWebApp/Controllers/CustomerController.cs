@@ -65,7 +65,7 @@ namespace RestaurantWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDefaultScreen()
         {
-            WebClient<WelcomeDetails> client = new WebClient<WelcomeDetails>
+            WebClient<ProfileView> client = new WebClient<ProfileView>
             {
                 Scheme = "https",
                 Port = 5125,
@@ -76,7 +76,7 @@ namespace RestaurantWebApp.Controllers
             if(HttpContext.Session.GetString("Id") != null)
             {
                 client.AddParameter("id", HttpContext.Session.GetString("Id"));
-                WelcomeDetails welcomeDetails = await client.Get();
+                ProfileView welcomeDetails = await client.Get();
                 return View("GetDefaultScreen", welcomeDetails);
             }
             return View("GetDefaultScreen");

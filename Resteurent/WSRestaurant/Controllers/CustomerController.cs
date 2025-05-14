@@ -52,12 +52,12 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
-        public WelcomeDetails GetWelcomeDetails(string id)
+        public ProfileView GetWelcomeDetails(string id)
         {
             try
             {
                 //Console.WriteLine($"the id is: {id}");
-                WelcomeDetails wD = new WelcomeDetails(); 
+                ProfileView wD = new ProfileView(); 
                 this.dBContext.Open();//add cities and streets and house number 
                 Customer customer = unitOfWorkReposetory.customerRerposetoryObject.getById(id);
                 wD.name = customer.CustomerUserName;
