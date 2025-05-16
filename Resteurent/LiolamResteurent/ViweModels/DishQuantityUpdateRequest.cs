@@ -8,7 +8,7 @@ namespace Models
 {
     public class DishQuantityUpdateRequest
     {
-        public int DishId { get; set; }
+        public string DishId { get; set; }
         public int Quantity { get; set; }
     }
 }

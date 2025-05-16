@@ -246,23 +246,24 @@ namespace RestaurantWebApp.Controllers
 
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public IActionResult UpdateDishInOrder([FromBody] DishQuantityUpdateRequest request)
+        public OrderProduct UpdateDishInOrder([FromBody] DishQuantityUpdateRequest request)
         {
             List<OrderProduct> products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
-            foreach (var Iproduct in products)
+            OrderProduct? product = products.Find(d => d.Id == request.DishId.ToString());
+            try
             {
-                if (Iproduct.Id == request.DishId.ToString())
-                {
-                    int priceForOne = Iproduct.totalPrice / Iproduct.Quatity;
-                    Iproduct.Quatity = request.Quantity;
-                    Iproduct.totalPrice = priceForOne * Iproduct.Quatity;
-                    HttpContext.Session.SetObject("productList", products);
-                    // RETURN JSON here:
-                    return Ok(new { newTotalPrice = Iproduct.totalPrice, newQuantity = Iproduct.Quatity });
-                }
+                int priceForOne = product.totalPrice / product.Quatity;
+                product.Quatity = request.Quantity;
+                product.totalPrice = priceForOne * product.Quatity;
+                HttpContext.Session.SetObject("productList", products);
             }
-            return BadRequest(); // If product not found
+            catch (Exception e)
+            {
+
+            }
+            return product;
         }
+
         [HttpGet]
         public async Task<IActionResult> AddNewDishToOrder(string dishId)
         {

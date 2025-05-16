@@ -41,8 +41,8 @@ else
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <input class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity" onchange="updateQuantity('@product.Id', @product.Quatity)" />
-                        <span id="total_@product.Id" class="dish-price">@product.totalPrice.ToString()</span>
+                        <input id="dish-quantity_@product.Id" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity" onchange="updateQuantity('@product.Id')" />
+                        <span id="total_price_@product.Id" class="dish-price">@product.totalPrice.ToString()</span>
                         <a class="remove-button" href="https://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>
                 }
@@ -53,7 +53,7 @@ else
             <a class="add-button" href="https://localhost:7287/customer/ShowOrderMenu">+</a>
         </div>
 
-        <div class="sum-box">
+        <div class="sum-box" id="sum-box">
             Sum: @(Model.products?.Sum(d => d.totalPrice) ?? 0) $
         </div>
 
