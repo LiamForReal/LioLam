@@ -195,7 +195,7 @@ namespace WSRestaurant.Controllers
             customer.CustomerPassword =  BCrypt.Net.BCrypt.HashPassword(customer.CustomerPassword); //hash the password with salt
             customer.CustomerImage=$"{customer.Id}{Path.GetExtension(customer.CustomerImage)}";
             try
-            { //216849635
+            { 
               
                 dBContext.Open();
                 List<Customer> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();

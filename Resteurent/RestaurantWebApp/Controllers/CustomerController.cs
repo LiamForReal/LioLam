@@ -301,8 +301,8 @@ namespace RestaurantWebApp.Controllers
                 {
                     if(Iproduct.Id == product.Id)
                     {
-                        Iproduct.Quatity++;
                         alreadyExsist = true;
+                        break;
                     }
                 }
                 if(!alreadyExsist)

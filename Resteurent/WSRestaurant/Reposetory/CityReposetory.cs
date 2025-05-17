@@ -11,15 +11,14 @@ namespace WSRestaurant
             
             string sql = $@"INSERT INTO Cities (CityName) VALUES (@CityName)";
             this.dbContext.AddParameter("@ChefFirstName", model.CityName);
-             return this.dbContext.Insert(sql);
-            
+            return this.dbContext.Insert(sql);
         }
 
         public bool delete(string id)
         {
             string sql = $@"DELETE FROM Cities WHERE CityId=@CityId";
             this.dbContext.AddParameter("@CityId", id);
-             return this.dbContext.Delete(sql);
+            return this.dbContext.Delete(sql);
         }
 
         public List<City> getAll()
