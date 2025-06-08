@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LiolamResteurent;
+using Models;
 using WebApiClient;
 using System.Runtime.CompilerServices;
 using RestaurantWebApplication.externals;
@@ -20,11 +20,14 @@ namespace ResteurantWebApp.Controllers
         {
             try
             {
-                WebClient<Menu> client = new WebClient<Menu>();
-                client.Scheme = "https";
-                client.Port = 5125;
-                client.Host = "localhost";
-                client.Path = "api/Guest/GetMenu";
+                WebClient<Menu> client = new WebClient<Menu>()
+                {
+                    Scheme = "https",
+                    Port = 5125,
+                    Host = "localhost",
+                    Path = "api/Guest/GetMenu"
+                };
+               
                 if(chefId != null || typeId != null || pageNumber != 1 || dishesPerPage != 12)
                 {
                     client.Path = "api/Guest/GetSortedMenu";

@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using LiolamResteurent;
+using Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace WSRestaurant
@@ -109,7 +109,6 @@ namespace WSRestaurant
         {
             string sql = "SELECT * FROM Customers WHERE CustomerUserName = @CustomerUserName";
             this.dbContext.AddParameter("@CustomerUserName", userName);
-            //($"sql is: {sql}, id is: {id}");
             try
             {
                 Customer customer;
@@ -121,7 +120,7 @@ namespace WSRestaurant
                 }
                 if (BCrypt.Net.BCrypt.Verify(password, customer.CustomerPassword)) // check if the password and the already exisiting password are mached
                     return customer.Id;
-                return null;
+                return "";
             }
             catch(Exception e)
             {

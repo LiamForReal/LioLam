@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace LiolamResteurent
+namespace Models
 {
     public class Dish : IModel
     {

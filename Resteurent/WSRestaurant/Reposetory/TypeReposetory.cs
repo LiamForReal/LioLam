@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using LiolamResteurent;
+using Models;
 
 namespace WSRestaurant
 {

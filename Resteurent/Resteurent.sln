@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantWebSerice", "WSRestaurant\RestaurantWebSerice.csproj", "{A0A6CF25-0694-418D-9A40-8E72FF330088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantWebService", "WSRestaurant\RestaurantWebService.csproj", "{A0A6CF25-0694-418D-9A40-8E72FF330088}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient", "WebApiClient\WebApiClient.csproj", "{A2552119-E7D9-4C03-AD3F-53C9C98AE30C}"
 EndProject

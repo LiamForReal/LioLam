@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LiolamResteurent;
+using Models;
 using WebApiClient;
 
 namespace RestaurantWPF.UserControls
@@ -30,8 +30,6 @@ namespace RestaurantWPF.UserControls
         public LogInPage()
         {
             InitializeComponent();
-            this.userNameInput.Text = "manager";//for debuge
-            this.passwordInput.Password = "tmp1";
         }
 
         private void clear_Click(object sender, RoutedEventArgs e)

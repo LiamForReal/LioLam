@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using LiolamResteurent;
+using Models;
 
 namespace WSRestaurant
 {

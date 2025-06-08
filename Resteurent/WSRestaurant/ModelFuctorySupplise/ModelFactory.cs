@@ -1,4 +1,4 @@
-﻿using LiolamResteurent;
+﻿using Models;
 using RestaurantWebSerice;
 
 namespace WSRestaurant
