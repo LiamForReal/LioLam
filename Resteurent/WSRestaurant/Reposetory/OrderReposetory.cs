@@ -2,8 +2,7 @@
 using System.Data;
 using System.Diagnostics.Metrics;
 using Models;
-using Models;
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class OrderRerposetory : Reposetory, IReposetory<Order>
     {

@@ -7,7 +7,7 @@ using Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

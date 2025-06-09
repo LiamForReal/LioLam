@@ -9,9 +9,8 @@ using System.Web;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Identity;
-using Models;
 
-namespace WSRestaurant.Controllers
+namespace RestaurantWebService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [Produces("application/json")]
@@ -28,7 +27,26 @@ namespace WSRestaurant.Controllers
         }
 
         [HttpGet]
+        public int GetCityIdByCustomer(string customerId)
+        {
+            try
+            {
+                this.dBContext.Open();//add cities and streets and house number 
+                return int.Parse(this.unitOfWorkReposetory.cityRerposetoryObject.getByCustomer(customerId).Id);
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                Console.WriteLine(msg);
+                return 0;
+            }
+            finally
+            {
+                this.dBContext.Close();
+            }
+        }
 
+        [HttpGet]
         public Customer GetCustomerById(string id)
         {
             try
@@ -251,27 +269,6 @@ namespace WSRestaurant.Controllers
             }
         }
 
-        //[HttpPost] make it when it will be relevent
-        //public bool AddDishToOrder()
-        //{
-
-        //    try
-        //    {
-        //        this.dBContext.Open();
-        //        unitOfWorkReposetory.orderRerposetoryObject.
-        //        return order;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string msg = ex.Message;
-        //        Console.WriteLine(msg);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        this.dBContext.Close();
-        //    }
-        //}
 
         [HttpGet]
         public List<string> getOrderList(string Id)

@@ -1,7 +1,7 @@
 ﻿using Models;
 using System.Data;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class StreetCreator : IModelCreator<Street>
     {

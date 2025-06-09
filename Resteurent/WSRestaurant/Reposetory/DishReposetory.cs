@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using Models;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class DishRerposetory : Reposetory, IReposetory<Dish>
     {

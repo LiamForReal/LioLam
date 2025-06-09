@@ -1,4 +1,4 @@
-﻿async function updateQuantity(dishId) {
+﻿async function updateQuantity(dishId, delivery) {
     try {
         const quantityInput = document.getElementById("dish-quantity_" + dishId);
         const SearchQuantity = quantityInput?.value ?? '';
@@ -32,14 +32,13 @@
         document.querySelectorAll(".dish-price").forEach(el => {
             sum += parseFloat(el.textContent) || 0;
         });
-        console.log("Total sum:", sum);
 
-        const sumx = document.getElementById(`sum-box`);
+        sum += delivery;
+
+        const sumx = document.getElementById('sum-box');
         if (sumx) {
-            sumx.textContent = "Sum: $" + sum;
+            sumx.textContent = "Sum: " + sum + " ₪";
         }
-
-        console.log("Total sum:", sum);
 
     } catch (error) {
         console.error('Error updating quantity:', error);

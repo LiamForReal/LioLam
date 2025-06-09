@@ -1,7 +1,7 @@
 ﻿using Models;
 using RestaurantWebSerice;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class ModelFactory
     {

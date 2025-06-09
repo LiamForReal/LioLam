@@ -1,7 +1,6 @@
 ﻿using Models;
-using Models;
 using System.Data;
-using WSRestaurant;
+using RestaurantWebService;
 
 namespace RestaurantWebSerice
 {

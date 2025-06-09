@@ -1,4 +1,4 @@
-﻿namespace WSRestaurant
+﻿namespace RestaurantWebService
 {
     public class UnitOfWorkReposetory
     {

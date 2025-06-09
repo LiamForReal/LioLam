@@ -1,6 +1,6 @@
 ﻿@using Models
 @using RestaurantWebApplication.externals
-@model Order
+@model OrderView
 
 @{
     ViewData["Title"] = "ShowOrderScreen";
@@ -30,19 +30,20 @@ else
         <h2>Online Order</h2>
 
         <div class="order-header">
-            Order Number: @Model.Id
+            Order Number: @Model.order.Id
         </div>
 
         <div class="dishes-list">
-            @if (Model.products != null)
+            @if (Model.order.products != null)
             {
-                foreach (var product in Model.products)
+                @foreach (var product in Model.order.products)
                 {
                     <div class="dish-item">
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
-                        <input id="dish-quantity_@product.Id" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity" onchange="updateQuantity('@product.Id')" />
-                        <span id="total_price_@product.Id" class="dish-price">@product.totalPrice.ToString()</span>
+                        <input id="dish-quantity_@product.Id" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity"
+                               onchange='@($"updateQuantity(\"{product.Id}\", \"{Model.delivery}\")")' />
+                        <span id="total_price_@product.Id" class="dish-price"> @product.totalPrice.ToString() </span>
                         <a class="remove-button" href="https://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>
                 }
@@ -54,7 +55,7 @@ else
         </div>
 
         <div class="sum-box" id="sum-box">
-            Sum: @(Model.products?.Sum(d => d.totalPrice) ?? 0) $
+            Sum: @((Model.order.products?.Sum(d => d.totalPrice) ?? 0) + Model.delivery) ₪
         </div>
 
         <div class="action-buttons">

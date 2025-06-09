@@ -1,4 +1,4 @@
-﻿namespace WSRestaurant
+﻿namespace RestaurantWebService
 {
     public interface IReposetory<T>
     {

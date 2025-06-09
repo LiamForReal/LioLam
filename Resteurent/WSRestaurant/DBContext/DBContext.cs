@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Reflection.PortableExecutable;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class DBContext : IDBContext
     {
@@ -166,11 +166,5 @@ namespace WSRestaurant
             clearCollection();
             return flag;
         }
-
-       
-       
-
-
-
     }
 }

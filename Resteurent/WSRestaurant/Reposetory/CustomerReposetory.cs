@@ -2,7 +2,7 @@
 using Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class CustomerRerposetory : Reposetory, IReposetory<Customer>
     {

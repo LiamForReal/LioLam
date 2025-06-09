@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using RestaurantWebApplication.externals;
 using Models;
 using System.Collections.Generic;
+using System.Net;
 
 namespace RestaurantWebApp.Controllers
 {
@@ -360,13 +361,15 @@ namespace RestaurantWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowOrderScreen()
         {
-            Order order = new Order();
+            OrderView orderView = new OrderView();
+
             if (HttpContext.Session.GetString("orderId") != null)
-                order.Id = HttpContext.Session.GetString("orderId");
+                orderView.order.Id = HttpContext.Session.GetString("orderId");
             if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
-                order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+                orderView.order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
             await GetCustomerOrders(HttpContext.Session.GetString("Id"));
-            return View(order);
+            orderView.delivery = int.Parse(HttpContext.Session.GetString("delivery"));
+            return View(orderView);
         }
 
         [HttpGet]
@@ -380,18 +383,62 @@ namespace RestaurantWebApp.Controllers
                 Host = "localhost",
                 Path = "api/Customer/getCurrentOrderId"
             };
-            client.AddParameter("customerId", HttpContext.Session.GetString("Id"));
 
-            Order order = await client.Get();
-            //save order Id
-            HttpContext.Session.SetString("orderId", order.Id);
+            WebClient<int> key_client = new WebClient<int>()
+            {
+                Scheme = "https",
+                Port = 5125,
+                Host = "localhost",
+                Path = "api/Customer/GetCityIdByCustomer"
+            };
+            key_client.AddParameter("customerId", HttpContext.Session.GetString("Id"));
+      
+            // Delivery costs in NIS from a restaurant based in Ramla
+            Dictionary<int, int> deliveryCosts = new Dictionary<int, int>
+            {
+                { 1, 20 }, 
+                { 2, 25 },  
+                { 3, 25 },  
+                { 4, 15 },  
+                { 5, 15 },  
+                { 6, 20 }, 
+                { 7, 20 },  
+                { 8, 30 }, 
+                { 9, 15 }, 
+                { 10, 15 },
+                { 11, 15 },
+                { 12, 20 },
+                { 13, 15 }, 
+                { 14, 15 }, 
+                { 15, 25 }, 
+                { 16, 15 },
+                { 17, 20 },
+                { 18, 20 }, 
+                { 19, 15 }, 
+                { 20, 5 }  
+            };
 
-            await GetCustomerOrders(HttpContext.Session.GetString("Id"));
+            OrderView orderView = new OrderView();
+            try
+            {
+               
+                orderView.order = await client.Get();
+                orderView.delivery = deliveryCosts[await key_client.Get()];
 
-            if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
-                order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+                HttpContext.Session.SetString("delivery", orderView.delivery.ToString());
+                //save order Id
+                HttpContext.Session.SetString("orderId", orderView.order.Id);
 
-            return View("ShowOrderScreen", order);
+                await GetCustomerOrders(HttpContext.Session.GetString("Id"));
+
+                if (HttpContext.Session.GetObject<List<OrderProduct>>("productList") != null)
+                    orderView.order.products = HttpContext.Session.GetObject<List<OrderProduct>>("productList");
+            }
+            catch(Exception e)
+            {
+                ViewBag.Error = true;
+            }
+            return View("ShowOrderScreen", orderView);
         }
 
         [HttpGet]

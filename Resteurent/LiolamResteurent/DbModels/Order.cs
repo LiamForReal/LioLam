@@ -11,8 +11,7 @@ namespace Models
     {
         public DateTime OrderDate { get; set; }
         public string CustomerId { get; set; } //To change maybe
-        public List<OrderProduct> products { get; set; }
-
+        public List<OrderProduct> products { get; set; }        
         public override bool Equals(object obj)
         {
             if(obj is Order order)

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public interface IModelCreator<T>
     {

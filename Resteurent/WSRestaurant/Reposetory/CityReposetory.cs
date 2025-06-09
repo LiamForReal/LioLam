@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Models;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class CityRerposetory : Reposetory, IReposetory<City>
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Models;
 
-namespace WSRestaurant
+namespace RestaurantWebService
 {
     public class ChefReposetory : Reposetory, IReposetory<Chef>
     {

@@ -2,13 +2,12 @@
 using Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace WSRestaurant.Controllers
+namespace RestaurantWebService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
