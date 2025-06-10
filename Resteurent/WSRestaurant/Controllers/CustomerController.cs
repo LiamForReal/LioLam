@@ -151,6 +151,10 @@ namespace RestaurantWebService.Controllers
             {    
                 this.dBContext.Open();
                 dBContext.BeginTransaction();
+                if(this.unitOfWorkReposetory.customerRerposetoryObject.getByName(customer.CustomerUserName) != null)
+                {
+                    return false;
+                }
                 string savedImage = unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id).CustomerImage;
                 if (!customer.CustomerImage.Contains("."))
                 { 
@@ -216,12 +220,9 @@ namespace RestaurantWebService.Controllers
             { 
               
                 dBContext.Open();
-                List<Customer> customers = unitOfWorkReposetory.customerRerposetoryObject.getAll();
-                foreach(Customer Icustomer in customers)
-                {
-                    if (Icustomer.CustomerUserName == customer.CustomerUserName || Icustomer.Id == customer.Id)
-                        return false;
-                }
+                if (unitOfWorkReposetory.customerRerposetoryObject.getByName(customer.CustomerUserName) != null ||
+                    unitOfWorkReposetory.customerRerposetoryObject.getById(customer.Id) != null)
+                    return false;
                 bool flag = unitOfWorkReposetory.customerRerposetoryObject.create(customer);
                 if(flag)
                 {

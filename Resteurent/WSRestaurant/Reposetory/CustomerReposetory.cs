@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Models;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace RestaurantWebService
 {
@@ -98,10 +99,17 @@ namespace RestaurantWebService
             this.dbContext.AddParameter("@CustomerUserName", userName);
 
             //($"sql is: {sql}, id is: {id}");
-            using (IDataReader dataReader = this.dbContext.Read(sql))
+            try
             {
-                dataReader.Read();
-                return this.modelFactory.createCustomerObject.CreateModel(dataReader);
+                using (IDataReader dataReader = this.dbContext.Read(sql))
+                {
+                    dataReader.Read();
+                    return this.modelFactory.createCustomerObject.CreateModel(dataReader);
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
             }
         }
 

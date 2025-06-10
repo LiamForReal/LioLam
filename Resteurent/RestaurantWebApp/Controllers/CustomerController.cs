@@ -149,7 +149,7 @@ namespace RestaurantWebApp.Controllers
             if (!result)
             {
                 ViewBag.Error = true;
-                return RedirectToAction("ShowEditSignUpForm", "Customer");
+                return View("ShowSignUpForm",  null);
             }
             // Redirect to a successful page
             return RedirectToAction("GetDefaultScreen", "Customer"); // Change "Dashboard" to your actual target page
