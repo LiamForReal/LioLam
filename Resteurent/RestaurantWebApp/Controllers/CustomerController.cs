@@ -415,7 +415,7 @@ namespace RestaurantWebApp.Controllers
                 { 17, 20 },
                 { 18, 20 }, 
                 { 19, 15 }, 
-                { 20, 0 }  
+                { 20, 0 }   
             };
 
             OrderView orderView = new OrderView();
