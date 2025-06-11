@@ -1,12 +1,13 @@
 ﻿.credit-card-form {
-    display:inline-block;
+    display: inline-block;
     width: 400px;
-    margin: auto;
+    /* margin: auto; */
+    margin-top: 20px;
     padding: 30px;
     background-color: #5e2d2d; /* Dark reddish like your site */
     border-radius: 10px;
     color: white;
-    height:90vh;
+    height: 84vh;
     text-align: center;
 }
 
@@ -58,9 +59,12 @@
     padding: 10px;
     border: none;
     border-radius: 5px;
+    text-decoration: none;
     background-color: gray;
     color: white;
     font-weight: bold;
+    font-size: 16px;
+    font-family: sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -68,14 +72,15 @@
     .cancel-btn:hover, .submit-btn:hover {
         background-color: darkgray;
     }
-.nameError, cvcError, dateError, numberError{
-    margin-top:10px;
-    font-size:16px;
-    color:red;
+
+.nameError, cvcError, dateError, numberError {
+    margin-top: 10px;
+    font-size: 16px;
+    color: red;
 }
 
 .payment-message {
-    display:inline-block;
+    display: inline-block;
     border-radius: 10px;
     padding: 20px;
     margin: 30px auto;

@@ -29,6 +29,7 @@
         }
 
         let sum = 0;
+
         document.querySelectorAll(".dish-price").forEach(el => {
             sum += parseFloat(el.textContent) || 0;
         });

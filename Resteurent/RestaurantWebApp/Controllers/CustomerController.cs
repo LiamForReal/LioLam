@@ -481,7 +481,8 @@ namespace RestaurantWebApp.Controllers
                 ViewBag.Error = true;
                 return View("ShowOrderScreen");
             }
-            return View(products.Sum(item => item.totalPrice));
+            int sum = products.Sum(item => item.totalPrice) + int.Parse(HttpContext.Session.GetString("delivery"));
+            return View(sum);
         }
 
         [HttpPost]

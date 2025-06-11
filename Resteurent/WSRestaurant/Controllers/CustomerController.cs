@@ -151,7 +151,8 @@ namespace RestaurantWebService.Controllers
             {    
                 this.dBContext.Open();
                 dBContext.BeginTransaction();
-                if(this.unitOfWorkReposetory.customerRerposetoryObject.getByName(customer.CustomerUserName) != null)
+                if(this.unitOfWorkReposetory.customerRerposetoryObject.getByName(customer.CustomerUserName) != null &&
+                    customer.Id != this.unitOfWorkReposetory.customerRerposetoryObject.getByName(customer.CustomerUserName).Id)
                 {
                     return false;
                 }

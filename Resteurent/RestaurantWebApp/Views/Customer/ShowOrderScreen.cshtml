@@ -42,7 +42,7 @@ else
                         <img src="@product.Image" alt="Dish Image" class="dish-image" />
                         <span class="dish-name">@product.Name</span>
                         <input id="dish-quantity_@product.Id" class="dish-quantity" type="number" min="1" max="10" value="@product.Quatity"
-                               onchange='@($"updateQuantity(\"{product.Id}\", \"{Model.delivery}\")")' />
+                               onchange='@($"updateQuantity(\"{product.Id}\", {Model.delivery})")' />
                         <span id="total_price_@product.Id" class="dish-price"> @product.totalPrice.ToString() </span>
                         <a class="remove-button" href="https://localhost:7287/customer/RemoveDishFromOrder?dishId=@product.Id">-</a>
                     </div>

@@ -15,8 +15,8 @@
     dateError.style.visibility = "hidden";
 
     let isFormValid = true;
-
-    if (!isNumeric(cardNumber) || cardNumber.length < 12 || cardNumber.length > 19) {
+    cardNumber = cardNumber.replaceAll(" ", "")
+    if (!isNumeric(cardNumber) || cardNumber.length != 16) {
         numberError.style.visibility = "visible";
         numberError.innerHTML = "card number must contains 12 - 19 numeric characters";
         isFormValid = false;
