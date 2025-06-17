@@ -21,7 +21,7 @@
                     dataType: "html",
                     beforeSend: function () {
                          let loader = "<div class=loader>" + 
-                           "<img src='../../Images/loader.png'/>" +
+                           "<img src='../../Images/loader.gif'/>" +
                             "</div>";
                         $("#dishes").html(loader);
                     },
@@ -38,7 +38,7 @@
 
                             $("#dishes").html(dishesData); //dishes container id 
                             $("#pagination").html(paginationData);
-                        }, 500); //only to simulate real time getting
+                        });
                     },
                     complete: function () {
                         // your code here;
