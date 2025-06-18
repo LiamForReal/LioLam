@@ -63,8 +63,7 @@ h2 {
     display:inline-block;
     background-color: #ff5555;
     color: #fff;
-    text-align:center;
-    align-items:center;
+    align-content:center;
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -87,15 +86,15 @@ h2 {
 
 .add-button {
     display: inline-block;
-    width: 50px; /* or whatever you want */
+    width: 50px;
     height: 50px;
-    background-color: #4CAF50; /* button color */
+    background-color: #4CAF50; 
     color: white;
     text-align: center;
-    line-height: 50px; /* vertical center the + */
-    text-decoration: none; /* remove underline */
-    border-radius: 8px; /* rounded corners if you want */
-    font-size: 24px; /* bigger + */
+    line-height: 50px; 
+    text-decoration: none;
+    border-radius: 8px; 
+    font-size: 24px; 
 }
 
     .add-button:hover {
@@ -109,7 +108,7 @@ h2 {
     font-size: 18px;
     text-align: center;
     color: #ccc;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .action-buttons {

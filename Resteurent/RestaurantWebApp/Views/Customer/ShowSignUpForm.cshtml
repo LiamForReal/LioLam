@@ -77,7 +77,7 @@ else
             <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*" required/><br>
             <lable class="error" id="ImageError"></lable>
 
-            <button type="submit" class="submit" onclick="checkForm()">Submit</button>
+            <button type="submit" class="submit" onclick="return checkForm(event)">Submit</button>
             <button type="reset" class="clear">Clear</button>
         </form>
     }
@@ -140,7 +140,7 @@ else
             <input class="image" type="file" id="image" name="Image" placeholder="Upload your Image" accept="image/*"/><br>
             <lable class="error" id="ImageError"></lable>
 
-            <button type="submit" class="submit" onclick="checkForm()">Submit</button>
+            <button type="submit" class="submit" onclick="return checkForm(event)">Submit</button>
             <button type="reset" class="clear">Clear</button>
         </form>
     }

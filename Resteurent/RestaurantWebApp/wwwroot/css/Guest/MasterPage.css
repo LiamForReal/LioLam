@@ -10,15 +10,26 @@ body {
 
 .header {
     background-color: #1a1a2e;
-    padding: 10px 0;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
-
 
 .header-left {
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    margin-left: 20px;
 }
+
+.header-buttons {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
 
 .headerIcon {
     font-size: 28px;
@@ -31,16 +42,6 @@ body {
     font-weight: bold;
     margin: 0;
     color: white;
-}
-
-
-.header-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    gap: 20px;
-    margin-bottom: 10px;
 }
 
 .headerMenu {
@@ -66,7 +67,7 @@ body {
     width: 100%;
     height: auto;
     margin: auto;
-    text-align:center;
+    text-align: center;
     box-sizing: border-box;
 }
 
@@ -123,7 +124,7 @@ body {
     justify-content: space-evenly;
     margin-top: 50px;
     padding: 0 5%;
-    margin-bottom:50px;
+    margin-bottom: 50px;
 }
 
 .featureChunk {
@@ -182,34 +183,38 @@ body {
 }
 
 .footer {
-    display: block;
-    width: 100%;
+    display: flex;
+    /* width: 100%; */
+    height: auto;
     height: 50px;
+    justify-items: center;
     background-color: #1a1a2e;
     color: white;
 }
 
 .footerBles {
-    margin-left: 2%;
+    margin-left: 20px;
     font-size: 14px;
-    margin-bottom: 0;
-    display: inline-block;
+    /* margin-bottom: 0; */
+    /* display: inline-block; */
+    display: flex;
 }
 
 .decorative-icons {
     font-size: 24px;
     color: #f7c873;
     display: flex;
-    margin-top: -20px;
-    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     gap: 20px;
-    margin-left: 17%;
+    padding: 10px;
 }
 
 .footerphone {
     font-size: 14px;
-    margin-bottom: 0;
-    display: inline-block;
-    float: right;
-    margin-right: 2%;
+    display: flex;
+    position: absolute;
+    right: 20px;
+
 }

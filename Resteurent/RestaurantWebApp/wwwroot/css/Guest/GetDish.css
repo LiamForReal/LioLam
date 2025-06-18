@@ -38,6 +38,7 @@
     max-width: 800px;
     max-height: 80vh;
     box-sizing: border-box;
+    margin-bottom: 70px;
 }
 
 /* Dish Image */
@@ -86,7 +87,6 @@
     gap: 15px;
     list-style: none;
     padding: 0;
-    /* margin-bottom: 20px; */
     flex-wrap: wrap;
 }
 
@@ -110,21 +110,33 @@
 }
 
 /* Buttons */
-.order-button,
-.back-button {
+.order-button {
     background-color: #00aa00;
     color: #fff;
-    border: none;
+    display: flex;
+    /* flex-direction: row; */
+    transform: translateX(150%);
+    position: absolute;
     border-radius: 8px;
+    margin-top: 30px;
     padding: 10px 20px;
     font-size: 16px;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
+}
+
+.back-button {
+    background-color: #00aa00;
+    color: #fff;
     display: flex;
-    flex-direction: column;
-    /* margin-top: 20px; */
+    position: absolute;
+    border-radius: 8px;
+    transform: translateX(25%);
+    padding: 10px 20px;
+    margin-top: 30px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .back-button {
@@ -141,6 +153,5 @@
 .order-button-container,
 .back-button-container {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+    flex-direction: row;
 }

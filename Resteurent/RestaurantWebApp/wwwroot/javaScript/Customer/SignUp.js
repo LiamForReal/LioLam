@@ -1,149 +1,147 @@
-﻿var isFormValid;
+﻿function checkForm(event) {
+    var isFormValid = true;
 
-function checkForm()
-{
-    isFormValid = true;
-    checkId();
-    checkUserName();
-    checkPassword();
-    checkEmail();
-    checkPhone();
+    if (!checkId()) isFormValid = false;
+    if (!checkUserName()) isFormValid = false;
+    if (!checkPassword()) isFormValid = false;
+    if (!checkEmail()) isFormValid = false;
+    if (!checkPhone()) isFormValid = false;
 
-    if (isFormValid == false) {
-        event.preventDefault();
+    if (!isFormValid) {
+        if (event) event.preventDefault();
+        return false; 
     }
+
+    return true; // Allow submission
 }
 
 function checkId() {
     var id = document.getElementById("userId").value;
     var lbl = document.getElementById("idError");
     lbl.style.visibility = "hidden";
+
     if (id == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Id can not be empty";
-        isFormValid = false;
-        return;
+        return false;
     }
-    var regex = /^[0-9]{9}/
-    if (regex.test(id) == false) {
+
+    var regex = /^[0-9]{9}$/;
+    if (!regex.test(id)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Id is invalid";
-        isFormValid = false;
+        return false;
     }
+
+    return true;
 }
 
 function checkPassword() {
     var password = document.getElementById("password").value;
     var lbl = document.getElementById("passwordError");
-    var formAction = document.querySelector("form").action
+    var formAction = document.querySelector("form").action;
     lbl.style.visibility = "hidden";
 
     if (formAction.includes("EditAccount") && password == "")
-        return;
+        return true; // Password can be empty when editing
 
-    // Check if password is empty
     if (password == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password can not be empty";
-        isFormValid = false;
-        return;
+        return false;
     }
 
-    // Check password length (at least 8 characters)
     if (password.length < 8) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must be at least 8 characters long";
-        isFormValid = false;
-        return;
+        return false;
     }
 
-    // Check for at least one uppercase letter
-    var upperCasePattern = /[A-Z]/;
-    if (!upperCasePattern.test(password)) {
+    if (!/[A-Z]/.test(password)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one uppercase letter";
-        isFormValid = false;
-        return;
+        return false;
     }
 
-    // Check for at least one lowercase letter
-    var lowerCasePattern = /[a-z]/;
-    if (!lowerCasePattern.test(password)) {
+    if (!/[a-z]/.test(password)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one lowercase letter";
-        isFormValid = false;
-        return;
+        return false;
     }
 
-    // Check for at least one number
-    var numberPattern = /[0-9]/;
-    if (!numberPattern.test(password)) {
+    if (!/[0-9]/.test(password)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one number";
-        isFormValid = false;
-        return;
+        return false;
     }
 
-    // Check for at least one special character
-    var specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/;
-    if (!specialCharPattern.test(password)) {
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Password must contain at least one special character";
-        isFormValid = false;
-        return;
+        return false;
     }
+
+    return true;
 }
 
 function checkPhone() {
     var phone = document.getElementById("phone").value;
     var lbl = document.getElementById("phoneError");
     lbl.style.visibility = "hidden";
+
     if (phone == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone can not be empty";
-        isFormValid = false;
-        return;
+        return false;
     }
-    var regex = /^05[0-9]{8}$/
-    if (regex.test(phone) == false) {
+
+    var regex = /^05[0-9]{8}$/;
+    if (!regex.test(phone)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Phone is invalid";
-        isFormValid = false;
+        return false;
     }
+
+    return true;
 }
 
 function checkUserName() {
     var userName = document.getElementById("userName").value;
     var lbl = document.getElementById("userNameError");
     lbl.style.visibility = "hidden";
+
     if (userName == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "User Name can not be empty";
-        isFormValid = false;
-        return;
+        return false;
     }
-    var regex = /^[A-Za-z][A-Za-z0-9_.-]*$/
-    if (regex.test(userName) == false) {
+
+    var regex = /^[A-Za-z][A-Za-z0-9_.-]*$/;
+    if (!regex.test(userName)) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Username is invalid";
-        isFormValid = false;
+        return false;
     }
+
+    return true;
 }
 
 function checkEmail() {
     var email = document.getElementById("email");
     var lbl = document.getElementById("emailError");
     lbl.style.visibility = "hidden";
-    if (email == "") {
+
+    if (email.value == "") {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Email can not be empty";
-        isFormValid = false;
-        return;
+        return false;
     }
-   
+
     if (!email.checkValidity()) {
         lbl.style.visibility = "visible";
         lbl.innerHTML = "Email is invalid";
-        isFormValid = false;
+        return false;
     }
+
+    return true;
 }
