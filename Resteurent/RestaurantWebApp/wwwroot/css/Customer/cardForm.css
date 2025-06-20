@@ -1,14 +1,15 @@
 ﻿.credit-card-form {
     display: inline-block;
-    width: 400px;
+    width: 500px;
     /* margin: auto; */
     margin-top: 20px;
-    padding: 30px;
+    padding: 20px;
     background-color: #5e2d2d; /* Dark reddish like your site */
     border-radius: 10px;
     color: white;
-    height: 84vh;
+    height: 80vh;
     text-align: center;
+    margin-bottom: 20px;
 }
 
     .credit-card-form h2 {
@@ -17,18 +18,19 @@
     }
 
     .credit-card-form p {
-        font-size: 14px;
+        font-size: 16px;
         margin-bottom: 20px;
     }
 
 #cardForm {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 2px;
 }
 
     #cardForm label {
         text-align: left;
+        font-size: 16px;
         font-weight: bold;
         margin-top: 10px;
     }

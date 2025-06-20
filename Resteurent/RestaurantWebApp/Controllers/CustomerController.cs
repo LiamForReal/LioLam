@@ -107,11 +107,11 @@ namespace RestaurantWebApp.Controllers
 
             // Send the request with customer data and image
             bool result = await client.Post(customers, Image.OpenReadStream());
-            ViewBag.Error = true;
+
             if (!result)
             {
                 ViewBag.Error = true;
-                return RedirectToAction("ShowSignUpForm", "Customer");
+                return View("ShowSignUpForm", null);
             }
 
             HttpContext.Session.SetString("Id", customers.Id);

@@ -114,26 +114,11 @@
     background-color: #00aa00;
     color: #fff;
     display: flex;
-    /* flex-direction: row; */
     transform: translateX(150%);
     position: absolute;
     border-radius: 8px;
-    margin-top: 30px;
+    margin-top: 35px;
     padding: 10px 20px;
-    font-size: 16px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.back-button {
-    background-color: #00aa00;
-    color: #fff;
-    display: flex;
-    position: absolute;
-    border-radius: 8px;
-    transform: translateX(25%);
-    padding: 10px 20px;
-    margin-top: 30px;
     font-size: 16px;
     text-decoration: none;
     cursor: pointer;
@@ -141,13 +126,22 @@
 
 .back-button {
     background-color: #aa0000;
+    color: #fff;
+    display: flex;
+    position: absolute;
+    border-radius: 8px;
+    transform: translateX(25%);
+    padding: 10px 20px;
+    margin-top: 35px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
     .order-button:hover,
     .back-button:hover {
         background-color: gold;
         color: #22243d;
-        transform: translateY(-2px);
     }
 
 .order-button-container,
