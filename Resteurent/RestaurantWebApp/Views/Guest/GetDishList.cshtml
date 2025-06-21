@@ -4,7 +4,7 @@
 <div class="dishes" id="dishes">
     @foreach (Dish dish in Model.Dishes)
     {
-        <a class="link" href="https://localhost:7287/Guest/GetDish?dishId=@dish.Id">
+        <a href="https://localhost:7287/Guest/GetDish?dishId=@dish.Id">
             <div class="dish">
                 <img src="@dish.DishImage" alt="@dish.DishName" class="dish-image" />
                 <p class="dish-name">@dish.DishName</p>
